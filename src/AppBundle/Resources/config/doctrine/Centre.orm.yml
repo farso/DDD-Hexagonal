@@ -1,0 +1,18 @@
+AppBundle\Entity\Centre:
+    type: entity
+    table: null
+    repositoryClass: AppBundle\Repository\CentreRepository
+    id:
+        id:
+            type: integer
+            id: true
+            generator:
+                strategy: AUTO
+    fields:
+        nombre:
+            type: string
+            length: 255
+        codigo:
+            type: string
+            length: 255
+    lifecycleCallbacks: {  }

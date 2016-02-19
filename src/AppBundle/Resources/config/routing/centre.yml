@@ -1,0 +1,24 @@
+centre_index:
+    path:     /
+    defaults: { _controller: "AppBundle:Centre:index" }
+    methods:  GET
+
+centre_show:
+    path:     /{id}/show
+    defaults: { _controller: "AppBundle:Centre:show" }
+    methods:  GET
+
+centre_new:
+    path:     /new
+    defaults: { _controller: "AppBundle:Centre:new" }
+    methods:  [GET, POST]
+
+centre_edit:
+    path:     /{id}/edit
+    defaults: { _controller: "AppBundle:Centre:edit" }
+    methods:  [GET, POST]
+
+centre_delete:
+    path:     /{id}/delete
+    defaults: { _controller: "AppBundle:Centre:delete" }
+    methods:  DELETE

@@ -1,0 +1,1 @@
+{"virtualbox":{"/application":{"guestpath":"/application","hostpath":"/home/ddt/application","disabled":false},"/domain":{"guestpath":"/domain","hostpath":"/home/ddt/domain","disabled":false},"/vagrant":{"guestpath":"/vagrant","hostpath":"/home/ddt/infraestructura","disabled":false}}}

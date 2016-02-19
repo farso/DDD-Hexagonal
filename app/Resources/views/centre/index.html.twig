@@ -1,0 +1,41 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+    <h1>Centre list</h1>
+
+    <table>
+        <thead>
+            <tr>
+                <th>Id</th>
+                <th>Nombre</th>
+                <th>Codigo</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for centre in centres %}
+            <tr>
+                <td><a href="{{ path('centre_show', { 'id': centre.id }) }}">{{ centre.id }}</a></td>
+                <td>{{ centre.nombre }}</td>
+                <td>{{ centre.codigo }}</td>
+                <td>
+                    <ul>
+                        <li>
+                            <a href="{{ path('centre_show', { 'id': centre.id }) }}">show</a>
+                        </li>
+                        <li>
+                            <a href="{{ path('centre_edit', { 'id': centre.id }) }}">edit</a>
+                        </li>
+                    </ul>
+                </td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+
+    <ul>
+        <li>
+            <a href="{{ path('centre_new') }}">Create a new entry</a>
+        </li>
+    </ul>
+{% endblock %}
