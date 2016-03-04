@@ -20,7 +20,14 @@ class Centre
     /**
      * @var string
      */
-    private $codigo;
+    private $codi;
+
+    public function __construct($id = null, $nombre = null, $codi = null) {
+
+        $this->id = $id; 
+        $this->nombre = $nombre;
+        $this->codi = $codi;
+    }
 
 
     /**
@@ -58,27 +65,27 @@ class Centre
     }
 
     /**
-     * Set codigo
+     * Set codi
      *
-     * @param string $codigo
+     * @param string $codi
      *
      * @return Centre
      */
-    public function setCodigo($codigo)
+    public function setCodi($codi)
     {
-        $this->codigo = $codigo;
+        $this->codi = $codi;
 
         return $this;
     }
 
     /**
-     * Get codigo
+     * Get codi
      *
      * @return string
      */
-    public function getCodigo()
+    public function getCodi()
     {
-        return $this->codigo;
+        return $this->codi;
     }
 }
 

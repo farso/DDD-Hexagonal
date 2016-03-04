@@ -1,18 +1,20 @@
 AppBundle\Entity\Centre:
     type: entity
-    table: null
-    repositoryClass: AppBundle\Repository\CentreRepository
+    table: centros
+    repositoryClass: AppBundle\Adapter\Repository\CentreRepositoryDoctrine
     id:
         id:
             type: integer
             id: true
+            column: codigo
             generator:
                 strategy: AUTO
     fields:
         nombre:
             type: string
-            length: 255
-        codigo:
+            length: '80'
+        codi:
             type: string
-            length: 255
+            length: '5'
+            column: cod_centro
     lifecycleCallbacks: {  }

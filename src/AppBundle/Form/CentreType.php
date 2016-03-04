@@ -16,7 +16,7 @@ class CentreType extends AbstractType
     {
         $builder
             ->add('nombre')
-            ->add('codigo')
+            ->add('codi')
         ;
     }
     

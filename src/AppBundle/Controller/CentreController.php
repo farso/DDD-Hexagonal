@@ -6,7 +6,15 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 
 use AppBundle\Entity\Centre;
+use AppBundle\Factory\CentreFactory;
 use AppBundle\Form\CentreType;
+
+use Uic\Application\UseCase\Centre\FindAllCentreUseCase;
+use Uic\Application\UseCase\Centre\FindCentreUseCase;
+use Uic\Application\UseCase\Centre\UpdateCentreUseCase;
+use Uic\Application\UseCase\Centre\CreateCentreUseCase;
+use Uic\Application\UseCase\Centre\DeleteCentreUseCase;
+
 
 /**
  * Centre controller.
@@ -22,11 +30,15 @@ class CentreController extends Controller
     {
         $em = $this->getDoctrine()->getManager();
 
-        $centres = $em->getRepository('AppBundle:Centre')->findAll();
+        $centreFindAllUseCase = new FindAllCentreUseCase($em->getRepository('AppBundle:Centre'));
+        $centresDomini = $centreFindAllUseCase->run();
+
+        $centresInf = CentreFactory::transform($centresDomini);
 
         return $this->render('centre/index.html.twig', array(
-            'centres' => $centres,
+            'centres' => $centresInf,
         ));
+
     }
 
     /**
