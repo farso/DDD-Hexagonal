@@ -69,14 +69,27 @@ class CentreController extends Controller
      * Finds and displays a Centre entity.
      *
      */
-    public function showAction(Centre $centre)
+    public function showAction($id)
     {
+
+        $em = $this->getDoctrine()->getManager();
+
+        $centreFindUseCase = new FindCentreUseCase($em->getRepository('AppBundle:Centre'));
+        $centreDomini = $centreFindUseCase->run($id);
+
+        if (!$centreDomini) {
+            throw $this->createNotFoundException('Unable to find Centre entity.');
+        }
+
+        $centre = CentreFactory::create($centreDomini->getId(), $centreDomini->getNombre(), $centreDomini->getCodi());
+
         $deleteForm = $this->createDeleteForm($centre);
 
         return $this->render('centre/show.html.twig', array(
             'centre' => $centre,
             'delete_form' => $deleteForm->createView(),
         ));
+
     }
 
     /**
