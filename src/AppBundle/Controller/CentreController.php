@@ -96,16 +96,41 @@ class CentreController extends Controller
      * Displays a form to edit an existing Centre entity.
      *
      */
-    public function editAction(Request $request, Centre $centre)
+    public function editAction(Request $request, $id)
     {
+
+        $em = $this->getDoctrine()->getManager();
+
+        $centreFindUseCase = new FindCentreUseCase($em->getRepository('AppBundle:Centre'));
+        $centreDomini = $centreFindUseCase->run($id);
+
+        if (!$centreDomini) {
+            throw $this->createNotFoundException('Unable to find Centre entity.');
+        }
+
+        $centre = CentreFactory::create($centreDomini->getId(), $centreDomini->getNombre(), $centreDomini->getCodi());
+
         $deleteForm = $this->createDeleteForm($centre);
         $editForm = $this->createForm('AppBundle\Form\CentreType', $centre);
         $editForm->handleRequest($request);
+        //handleRequest: s'encarrega de fer les modificacions a l'objecte de INF
 
         if ($editForm->isSubmitted() && $editForm->isValid()) {
-            $em = $this->getDoctrine()->getManager();
-            $em->persist($centre);
-            $em->flush();
+            // si tot és vàlid, es fa el COMMIT de la transacció
+       
+            $centreUpdateUseCase = new UpdateCentreUseCase($em->getRepository('AppBundle:Centre'));
+
+            $paramsEntity = $request->request->get('centre');
+
+
+//@todo l'update no funciona, lio entre atributs codi, id i nombre
+            $centreDomini = $centreUpdateUseCase->run(
+                $id, 
+                $paramsEntity['nombre'],
+                $paramsEntity['codi']
+            ); 
+
+            $centre = CentreFactory::create($centreDomini->getId(), $centreDomini->getNombre(), $centreDomini->getCodi());
 
             return $this->redirectToRoute('centre_edit', array('id' => $centre->getId()));
         }
@@ -115,6 +140,7 @@ class CentreController extends Controller
             'edit_form' => $editForm->createView(),
             'delete_form' => $deleteForm->createView(),
         ));
+
     }
 
     /**
