@@ -104,10 +104,11 @@ class CentreRepositoryDoctrine extends \Doctrine\ORM\EntityRepository implements
 
     public function create($nom, $codi)
     {
+
         $em = $this->getEntityManager();
 
         //@todo ID per surrogate
-        $entity = new Centre($nom, $codi);
+        $entity = new Centre(null,$nom, $codi);
 
         $em->persist($entity);
         $em->flush();

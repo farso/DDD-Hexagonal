@@ -52,11 +52,22 @@ class CentreController extends Controller
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
-            $em = $this->getDoctrine()->getManager();
-            $em->persist($centre);
-            $em->flush();
 
-            return $this->redirectToRoute('centre_show', array('id' => $centre->getId()));
+            $em = $this->getDoctrine()->getManager();
+
+            $centreCreateUseCase = new CreateCentreUseCase($em->getRepository('AppBundle:Centre'));
+
+            $paramsEntity = $request->request->get('centre');
+
+            $centreDomini = $centreCreateUseCase->run(
+                    $paramsEntity['nombre'],
+                    $paramsEntity['codi']
+                );
+
+
+            $centre = CentreFactory::create($centreDomini->getId(), $centreDomini->getNombre(), $centreDomini->getCodi());
+
+            return $this->redirectToRoute('centre_index');
         }
 
         return $this->render('centre/new.html.twig', array(
@@ -122,8 +133,6 @@ class CentreController extends Controller
 
             $paramsEntity = $request->request->get('centre');
 
-
-//@todo l'update no funciona, lio entre atributs codi, id i nombre
             $centreDomini = $centreUpdateUseCase->run(
                 $id, 
                 $paramsEntity['nombre'],
@@ -132,7 +141,7 @@ class CentreController extends Controller
 
             $centre = CentreFactory::create($centreDomini->getId(), $centreDomini->getNombre(), $centreDomini->getCodi());
 
-            return $this->redirectToRoute('centre_edit', array('id' => $centre->getId()));
+            return $this->redirectToRoute('centre_index');
         }
 
         return $this->render('centre/edit.html.twig', array(
@@ -147,15 +156,27 @@ class CentreController extends Controller
      * Deletes a Centre entity.
      *
      */
-    public function deleteAction(Request $request, Centre $centre)
+    public function deleteAction(Request $request, $id)
     {
+        $em = $this->getDoctrine()->getManager();
+
+        $centreFindUseCase = new FindCentreUseCase($em->getRepository('AppBundle:Centre'));
+        $centreDomini = $centreFindUseCase->run($id);
+
+        if (!$centreDomini) {
+            throw $this->createNotFoundException('Unable to find Centre entity.');
+        }
+
+        $centre = CentreFactory::create($centreDomini->getId(), $centreDomini->getNombre(), $centreDomini->getCodi());
+
         $form = $this->createDeleteForm($centre);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
-            $em = $this->getDoctrine()->getManager();
-            $em->remove($centre);
-            $em->flush();
+
+            $centreDeleteUseCase = new DeleteCentreUseCase($em->getRepository('AppBundle:Centre'));
+            $centreDeleteUseCase->run($id); 
+
         }
 
         return $this->redirectToRoute('centre_index');
