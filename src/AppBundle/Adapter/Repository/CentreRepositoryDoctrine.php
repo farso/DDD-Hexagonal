@@ -42,15 +42,20 @@ class CentreRepositoryDoctrine extends \Doctrine\ORM\EntityRepository implements
      */
     public function findAll()
 	{    
-        $centresInf = parent::findAll();
-        $centresDom = array();
-        // echo "<pre>";var_dump($centresInf);die;
-        foreach($centresInf as $centreInf) {
 
-            $centreDom = CentreFactory::instance($centreInf->getId(), $centreInf->getNombre(), $centreInf->getCodi());
+        $centresDom = parent::findAll();
+        
+        // SÓN DE DOMINI PERQUÈ EL FINDALL DE DOCTRINE ACABA CRIDANT AL FINDBY, 
+        // QUE NOSALTRES EL SOBREESCRIBIM :-)
+        
+        // $centresDom = array();
+        // // echo "<pre>";var_dump($centresInf);die;
+        // foreach($centresInf as $centreInf) {
+        //      dump($centreInf);   
+        //     $centreDom = CentreFactory::instance($centreInf->getId(), $centreInf->getNombre(), $centreInf->getCodi());
             
-            $centresDom[] = $centreDom;
-        }
+        //     $centresDom[] = $centreDom;
+        // }
         
         return $centresDom;
     }  
@@ -67,6 +72,7 @@ class CentreRepositoryDoctrine extends \Doctrine\ORM\EntityRepository implements
      */
     public function findBy(array $criteria, array $orderBy = null, $limit = null, $offset = null)
     {
+
         $centresInf = parent::findBy($criteria,$orderBy,$limit,$offset);
 
         $centresDom = array();
@@ -122,7 +128,7 @@ class CentreRepositoryDoctrine extends \Doctrine\ORM\EntityRepository implements
     {
         $em = $this->getEntityManager();
 
-        $centreDom = CentreFactory::instance(new CentreId($id), $nom, $codi);
+        $centreDom = CentreFactory::instance($id, $nom, $codi);
 
         $centreInf = parent::find($id);
 

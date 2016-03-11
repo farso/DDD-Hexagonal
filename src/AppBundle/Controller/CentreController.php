@@ -35,7 +35,6 @@ class CentreController extends Controller
 
         $centresInf = CentreFactory::transform($centresDomini);
 
-        // echo "<pre>";var_dump($centresDomini);die;
         return $this->render('centre/index.html.twig', array(
             'centres' => $centresInf,
         ));
@@ -64,7 +63,6 @@ class CentreController extends Controller
                     $paramsEntity['nombre'],
                     $paramsEntity['codi']
                 );
-
 
             $centre = CentreFactory::create($CentreDom->getId(), $CentreDom->getNombre(), $CentreDom->getCodi());
 
