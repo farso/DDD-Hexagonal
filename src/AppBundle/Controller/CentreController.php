@@ -35,6 +35,7 @@ class CentreController extends Controller
 
         $centresInf = CentreFactory::transform($centresDomini);
 
+        // echo "<pre>";var_dump($centresDomini);die;
         return $this->render('centre/index.html.twig', array(
             'centres' => $centresInf,
         ));
@@ -59,13 +60,13 @@ class CentreController extends Controller
 
             $paramsEntity = $request->request->get('centre');
 
-            $centreDomini = $centreCreateUseCase->run(
+            $CentreDom = $centreCreateUseCase->run(
                     $paramsEntity['nombre'],
                     $paramsEntity['codi']
                 );
 
 
-            $centre = CentreFactory::create($centreDomini->getId(), $centreDomini->getNombre(), $centreDomini->getCodi());
+            $centre = CentreFactory::create($CentreDom->getId(), $CentreDom->getNombre(), $CentreDom->getCodi());
 
             return $this->redirectToRoute('centre_index');
         }
@@ -86,13 +87,13 @@ class CentreController extends Controller
         $em = $this->getDoctrine()->getManager();
 
         $centreFindUseCase = new FindCentreUseCase($em->getRepository('AppBundle:Centre'));
-        $centreDomini = $centreFindUseCase->run($id);
+        $CentreDom = $centreFindUseCase->run($id);
 
-        if (!$centreDomini) {
+        if (!$CentreDom) {
             throw $this->createNotFoundException('Unable to find Centre entity.');
         }
 
-        $centre = CentreFactory::create($centreDomini->getId(), $centreDomini->getNombre(), $centreDomini->getCodi());
+        $centre = CentreFactory::create($CentreDom->getId(), $CentreDom->getNombre(), $CentreDom->getCodi());
 
         $deleteForm = $this->createDeleteForm($centre);
 
@@ -113,13 +114,13 @@ class CentreController extends Controller
         $em = $this->getDoctrine()->getManager();
 
         $centreFindUseCase = new FindCentreUseCase($em->getRepository('AppBundle:Centre'));
-        $centreDomini = $centreFindUseCase->run($id);
+        $CentreDom = $centreFindUseCase->run($id);
 
-        if (!$centreDomini) {
+        if (!$CentreDom) {
             throw $this->createNotFoundException('Unable to find Centre entity.');
         }
 
-        $centre = CentreFactory::create($centreDomini->getId(), $centreDomini->getNombre(), $centreDomini->getCodi());
+        $centre = CentreFactory::create($CentreDom->getId(), $CentreDom->getNombre(), $CentreDom->getCodi());
 
         $deleteForm = $this->createDeleteForm($centre);
         $editForm = $this->createForm('AppBundle\Form\CentreType', $centre);
@@ -133,13 +134,13 @@ class CentreController extends Controller
 
             $paramsEntity = $request->request->get('centre');
 
-            $centreDomini = $centreUpdateUseCase->run(
+            $CentreDom = $centreUpdateUseCase->run(
                 $id, 
                 $paramsEntity['nombre'],
                 $paramsEntity['codi']
             ); 
 
-            $centre = CentreFactory::create($centreDomini->getId(), $centreDomini->getNombre(), $centreDomini->getCodi());
+            $centre = CentreFactory::create($CentreDom->getId(), $CentreDom->getNombre(), $CentreDom->getCodi());
 
             return $this->redirectToRoute('centre_index');
         }
@@ -161,13 +162,13 @@ class CentreController extends Controller
         $em = $this->getDoctrine()->getManager();
 
         $centreFindUseCase = new FindCentreUseCase($em->getRepository('AppBundle:Centre'));
-        $centreDomini = $centreFindUseCase->run($id);
+        $CentreDom = $centreFindUseCase->run($id);
 
-        if (!$centreDomini) {
+        if (!$CentreDom) {
             throw $this->createNotFoundException('Unable to find Centre entity.');
         }
 
-        $centre = CentreFactory::create($centreDomini->getId(), $centreDomini->getNombre(), $centreDomini->getCodi());
+        $centre = CentreFactory::create($CentreDom->getId(), $CentreDom->getNombre(), $CentreDom->getCodi());
 
         $form = $this->createDeleteForm($centre);
         $form->handleRequest($request);

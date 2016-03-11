@@ -24,14 +24,14 @@ class CentreRepositoryDoctrine extends \Doctrine\ORM\EntityRepository implements
      */
     public function find($id)
     {
-    	$entity = parent::find($id);
+    	$centreInf = parent::find($id);
 
-        $centre = null;
-        if (null !== $entity) {
-            $centre = CentreFactory::create($entity->getId(), $entity->getNombre(), $entity->getCodi());
+        $centreDom = null;
+        if (null !== $centreInf) {
+            $centreDom = CentreFactory::instance($centreInf->getId(), $centreInf->getNombre(), $centreInf->getCodi());
         }
 
-        return $centre;
+        return $centreDom;
     } 
 
 	
@@ -42,16 +42,17 @@ class CentreRepositoryDoctrine extends \Doctrine\ORM\EntityRepository implements
      */
     public function findAll()
 	{    
-        $entities = parent::findAll();
-        $centres = array();
-        foreach($entities as $entity) {
+        $centresInf = parent::findAll();
+        $centresDom = array();
+        // echo "<pre>";var_dump($centresInf);die;
+        foreach($centresInf as $centreInf) {
 
-            $centre = CentreFactory::create($entity->getId(), $entity->getNombre(), $entity->getCodi());
+            $centreDom = CentreFactory::instance($centreInf->getId(), $centreInf->getNombre(), $centreInf->getCodi());
             
-            $centres[] = $centre;
+            $centresDom[] = $centreDom;
         }
         
-        return $centres;
+        return $centresDom;
     }  
 
      /**
@@ -66,17 +67,17 @@ class CentreRepositoryDoctrine extends \Doctrine\ORM\EntityRepository implements
      */
     public function findBy(array $criteria, array $orderBy = null, $limit = null, $offset = null)
     {
-        $entities = parent::findBy($criteria,$orderBy,$limit,$offset);
+        $centresInf = parent::findBy($criteria,$orderBy,$limit,$offset);
 
-        $centres = array();
-        foreach($entities as $entity) {
+        $centresDom = array();
+        foreach($centresInf as $centreInf) {
 
-            $centre = CentreFactory::create($entity->getId(), $entity->getNombre(), $entity->getCodi());
+            $centreDom = CentreFactory::instance($centreInf->getId(), $centreInf->getNombre(), $centreInf->getCodi());
             
-            $centres[] = $centre;
+            $centresDom[] = $centreDom;
         }
         
-        return $centres;
+        return $centresDom;
 
     }
 
@@ -90,14 +91,14 @@ class CentreRepositoryDoctrine extends \Doctrine\ORM\EntityRepository implements
      */
     public function findOneBy(array $criteria, array $orderBy = null)
     {
-        $entity = parent::findOneBy($criteria,$orderBy);
+        $centreInf = parent::findOneBy($criteria,$orderBy);
         
-        $centre = null;
-        if (null !== $entity) {
-            $centre = CentreFactory::create($entity->getId(), $entity->getNombre(), $entity->getCodi());
+        $centreDom = null;
+        if (null !== $centreInf) {
+            $centreDom = CentreFactory::instance($centreInf->getId(), $centreInf->getNombre(), $centreInf->getCodi());
         }
 
-        return $centre;
+        return $centreDom;
     }
 
 
@@ -107,34 +108,35 @@ class CentreRepositoryDoctrine extends \Doctrine\ORM\EntityRepository implements
 
         $em = $this->getEntityManager();
 
-        //@todo ID per surrogate
-        $entity = new Centre(null,$nom, $codi);
+        $centreDom = CentreFactory::create($nom, $codi);
+        
+        $centreInf = new Centre($centreDom->getId(),$centreDom->getNombre(), $centreDom->getCodi());
 
-        $em->persist($entity);
+        $em->persist($centreInf);
         $em->flush();
 
-        $centre = CentreFactory::create($entity->getId(), $entity->getNombre(), $entity->getCodi());
-        
-        return $centre;
+        return $centreDom;
     }
 
     public function update($id, $nom, $codi)
     {
         $em = $this->getEntityManager();
 
-        $entity = parent::find($id);
+        $centreDom = CentreFactory::instance(new CentreId($id), $nom, $codi);
 
-        if (null !== $entity) {
-            $entity->setNombre($nom);
-            $entity->setCodi($codi);
+        $centreInf = parent::find($id);
+
+        if (null !== $centreInf) {
+            $centreInf->setNombre($nom);
+            $centreInf->setCodi($codi);
 
             $em->flush();    
         }
 
 
-        $centre = CentreFactory::create($entity->getId(), $entity->getNombre(), $entity->getCodi());
         
-        return $centre;
+        
+        return $centreDom;
     }
 
 
@@ -143,9 +145,9 @@ class CentreRepositoryDoctrine extends \Doctrine\ORM\EntityRepository implements
     {
         $em = $this->getEntityManager();
 
-        $entity = parent::find($id);
+        $centreInf = parent::find($id);
 
-        $em->remove($entity);
+        $em->remove($centreInf);
         $em->flush();
     }
 }

@@ -1,14 +1,13 @@
 AppBundle\Entity\Centre:
     type: entity
     table: centros
+    schema: hexagonal
     repositoryClass: AppBundle\Adapter\Repository\CentreRepositoryDoctrine
     id:
         id:
-            type: integer
+            type: string
             id: true
-            column: codigo
-            generator:
-                strategy: AUTO
+            column: uuid
     fields:
         nombre:
             type: string
