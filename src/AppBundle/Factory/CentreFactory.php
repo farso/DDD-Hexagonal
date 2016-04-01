@@ -12,8 +12,8 @@ use AppBundle\Entity\Centre;
  */
 class CentreFactory
 {
-    public static function create($id, $nom, $codi) {
-        return new Centre($id, $nom, $codi);
+    public static function create($id, $nom, $codi, $mailCentre, $codiOficial) {
+        return new Centre($id, $nom, $codi, $mailCentre, $codiOficial);
     }
 
     public static function transform($centresDomini) {
@@ -21,7 +21,7 @@ class CentreFactory
     		$centresInf = array();
     		foreach($centresDomini as $centreDomini) {
 
-    			$centresInf[] = self::create($centreDomini->getId(), $centreDomini->getNombre(), $centreDomini->getCodi());
+    			$centresInf[] = self::create($centreDomini->getId(), $centreDomini->getNombre(), $centreDomini->getCodi(),$centreDomini->getMailCentre(),$centreDomini->getCodiOficial());
 
     		}
     		return $centresInf;

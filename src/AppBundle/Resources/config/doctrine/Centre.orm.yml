@@ -16,4 +16,13 @@ AppBundle\Entity\Centre:
             type: string
             length: '5'
             column: cod_centro
+        mailCentre:
+            type: string
+            length: '50'
+            column: mail_centre
+        codiOficial:
+            type: string
+            length: '8'
+            column: codigo_oficial
+
     lifecycleCallbacks: {  }

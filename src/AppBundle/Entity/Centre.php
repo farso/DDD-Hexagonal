@@ -22,11 +22,23 @@ class Centre
      */
     private $codi;
 
-    public function __construct($id = null, $nombre = null, $codi = null) {
+     /**
+     * @var string
+     */
+    private $mailCentre;
+
+    /**
+     * @var string
+     */
+    private $codiOficial;
+
+    public function __construct($id = null, $nombre = null, $codi = null, $mailCentre = null, $codiOficial = null) {
 
         $this->id = $id; 
         $this->nombre = $nombre;
         $this->codi = $codi;
+        $this->mailCentre = $mailCentre;
+        $this->codiOficial = $codiOficial;
     }
 
 
@@ -86,6 +98,54 @@ class Centre
     public function getCodi()
     {
         return $this->codi;
+    }
+
+    /**
+     * Set codiOficial
+     *
+     * @param string $codiOficial
+     *
+     * @return Centre
+     */
+    public function setCodiOficial($codiOficial)
+    {
+        $this->codiOficial = $codiOficial;
+
+        return $this;
+    }
+
+    /**
+     * Get codiOficial
+     *
+     * @return string
+     */
+    public function getCodiOficial()
+    {
+        return $this->codiOficial;
+    }
+
+    /**
+     * Set mailCentre
+     *
+     * @param string $mailCentre
+     *
+     * @return Centre
+     */
+    public function setMailCentre($mailCentre)
+    {
+        $this->mailCentre = $mailCentre;
+
+        return $this;
+    }
+
+    /**
+     * Get mailCentre
+     *
+     * @return string
+     */
+    public function getMailCentre()
+    {
+        return $this->mailCentre;
     }
 }
 
