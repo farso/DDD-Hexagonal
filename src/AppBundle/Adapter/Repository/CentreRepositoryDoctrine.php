@@ -5,7 +5,7 @@ use  \Doctrine\ORM\EntityRepository;
 use  \Doctrine\ORM\EntityManager;
 use  Uic\Application\Contract\CentreRepositoryInterface;
 use  Uic\Application\Factory\CentreFactory;
-use  AppBundle\Entity\Centre;
+use  AppBundle\Factory\CentreFactoryInf;
 
 /**
  * CentreRepository
@@ -116,7 +116,7 @@ class CentreRepositoryDoctrine extends \Doctrine\ORM\EntityRepository implements
 
         $centreDom = CentreFactory::create($nom, $codi, $mailCentre, $codiOficial);
         
-        $centreInf = new Centre($centreDom->getId(),$centreDom->getNombre(), $centreDom->getCodi(), $centreDom->getMailCentre(), $centreDom->getCodiOficial());
+        $centreInf = CentreFactoryInf::create($centreDom->getId(),$centreDom->getNombre(), $centreDom->getCodi(), $centreDom->getMailCentre(), $centreDom->getCodiOficial());
 
         $em->persist($centreInf);
         $em->flush();
