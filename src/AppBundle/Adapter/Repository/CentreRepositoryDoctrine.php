@@ -28,7 +28,7 @@ class CentreRepositoryDoctrine extends \Doctrine\ORM\EntityRepository implements
 
         $centreDom = null;
         if (null !== $centreInf) {
-            $centreDom = CentreFactory::instance($centreInf->getId(), $centreInf->getNombre(), $centreInf->getCodi(), $centreInf->getMailCentre(), $centreInf->getCodiOficial());
+            $centreDom = CentreFactory::instance($centreInf->toArray());
         }
 
         return $centreDom;
@@ -44,18 +44,6 @@ class CentreRepositoryDoctrine extends \Doctrine\ORM\EntityRepository implements
 	{    
 
         $centresDom = parent::findAll();
-        
-        // SÓN DE DOMINI PERQUÈ EL FINDALL DE DOCTRINE ACABA CRIDANT AL FINDBY, 
-        // QUE NOSALTRES EL SOBREESCRIBIM :-)
-        
-        // $centresDom = array();
-        // // echo "<pre>";var_dump($centresInf);die;
-        // foreach($centresInf as $centreInf) {
-        //      dump($centreInf);   
-        //     $centreDom = CentreFactory::instance($centreInf->getId(), $centreInf->getNombre(), $centreInf->getCodi(), $centreInf->getMailCentre(), $centreInf->getCodiOficial());
-            
-        //     $centresDom[] = $centreDom;
-        // }
         
         return $centresDom;
     }  
@@ -77,12 +65,10 @@ class CentreRepositoryDoctrine extends \Doctrine\ORM\EntityRepository implements
 
         $centresDom = array();
         foreach($centresInf as $centreInf) {
-
-            $centreDom = CentreFactory::instance($centreInf->getId(), $centreInf->getNombre(), $centreInf->getCodi(), $centreInf->getMailCentre(), $centreInf->getCodiOficial());
+            $centreDom = CentreFactory::instance($centreInf->toArray());
             
             $centresDom[] = $centreDom;
         }
-        
         return $centresDom;
 
     }
@@ -101,7 +87,7 @@ class CentreRepositoryDoctrine extends \Doctrine\ORM\EntityRepository implements
         
         $centreDom = null;
         if (null !== $centreInf) {
-            $centreDom = CentreFactory::instance($centreInf->getId(), $centreInf->getNombre(), $centreInf->getCodi(), $centreInf->getMailCentre(), $centreInf->getCodiOficial());
+            $centreDom = CentreFactory::instance($centreInf->toArray());
         }
 
         return $centreDom;
@@ -113,10 +99,19 @@ class CentreRepositoryDoctrine extends \Doctrine\ORM\EntityRepository implements
     {
 
         $em = $this->getEntityManager();
+        //@todo Crear array per especificacions. DE moment a ma (en aplicacio???)
 
-        $centreDom = CentreFactory::create($nom, $codi, $mailCentre, $codiOficial);
+        $centreDades = array();
+        //$id = $centreInf['id'];
+        $centreDades['nombre'] = $nom;
+        $centreDades['codi'] = $codi;
+        $centreDades['mailCentre'] = $mailCentre;
+        $centreDades['codiOficial'] = $codiOficial;
+        $centreDom = CentreFactory::create($centreDades);
+
+
         
-        $centreInf = CentreFactoryInf::create($centreDom->getId(),$centreDom->getNombre(), $centreDom->getCodi(), $centreDom->getMailCentre(), $centreDom->getCodiOficial());
+        $centreInf = CentreFactoryInf::create($centreDom->toArray());
 
         $em->persist($centreInf);
         $em->flush();
@@ -128,7 +123,14 @@ class CentreRepositoryDoctrine extends \Doctrine\ORM\EntityRepository implements
     {
         $em = $this->getEntityManager();
 
-        $centreDom = CentreFactory::instance($id, $nom, $codi,$mailCentre, $codiOficial);
+        $centreDades = array();
+        $centreDades['id'] = $id;
+        $centreDades['nombre'] = $nom;
+        $centreDades['codi'] = $codi;
+        $centreDades['mailCentre'] = $mailCentre;
+        $centreDades['codiOficial'] = $codiOficial;
+
+        $centreDom = CentreFactory::instance($centreDades);
 
         $centreInf = parent::find($id);
 

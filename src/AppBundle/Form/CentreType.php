@@ -5,6 +5,7 @@ namespace AppBundle\Form;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
+use Symfony\Component\Form\Extension\Core\Type\HiddenType;
 
 class CentreType extends AbstractType
 {
@@ -16,7 +17,7 @@ class CentreType extends AbstractType
     {
         $builder
             ->add('nombre')
-            ->add('codi')
+            ->add('codi', HiddenType::class)
             ->add('mailCentre')
             ->add('codiOficial')
         ;

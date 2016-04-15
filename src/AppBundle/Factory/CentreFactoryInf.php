@@ -12,7 +12,20 @@ use AppBundle\Entity\Centre;
  */
 class CentreFactoryInf
 {
-    public static function create($id, $nom, $codi, $mailCentre, $codiOficial) {
+   /**
+     * Es genera una nova instància de INF a partir d'una de DOM
+     * @param  array $centreDom [description]
+     * @return [type]            [description]
+     */
+    public static function create(array $centreDom) {
+        //@todo comprovacio dels noms de les key de l'array.
+        $id = $centreDom['id'];
+        $nom = $centreDom['nombre'];
+        $codi = $centreDom['codi'];
+        $mailCentre = $centreDom['mailCentre'];
+        $codiOficial = $centreDom['codiOficial'];
+
+
         $centreInf = new Centre($id, $nom, $codi, $mailCentre, $codiOficial);
         return $centreInf;
     }
@@ -22,7 +35,7 @@ class CentreFactoryInf
     		$centresInf = array();
     		foreach($centresDomini as $centreDomini) {
 
-    			$centresInf[] = self::create($centreDomini->getId(), $centreDomini->getNombre(), $centreDomini->getCodi(),$centreDomini->getMailCentre(),$centreDomini->getCodiOficial());
+    			$centresInf[] = self::create($centreDomini->toArray());
 
     		}
     		return $centresInf;

@@ -6,16 +6,16 @@
     <table>
         <tbody>
             <tr>
-                <th>Id</th>
-                <td>{{ centre.id }}</td>
-            </tr>
-            <tr>
                 <th>Nombre</th>
                 <td>{{ centre.nombre }}</td>
             </tr>
             <tr>
                 <th>Codigo</th>
-                <td>{{ centre.codi }}</td>
+                <td>{{ centre.codiOficial }}</td>
+            </tr>
+            <tr>
+                <th>e-Mail</th>
+                <td>{{ centre.mailCentre }}</td>
             </tr>
         </tbody>
     </table>
@@ -27,6 +27,7 @@
         <li>
             <a href="{{ path('centre_edit', { 'id': centre.id }) }}">Edit</a>
         </li>
+
         <li>
             {{ form_start(delete_form) }}
                 <input type="submit" value="Delete">

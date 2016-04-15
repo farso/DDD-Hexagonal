@@ -6,18 +6,18 @@
     <table>
         <thead>
             <tr>
-                <th>Id</th>
                 <th>Nombre</th>
-                <th>Codigo</th>
+                <th>Codigo Oficial</th>
+                <th>Email</th>
                 <th>Actions</th>
             </tr>
         </thead>
         <tbody>
         {% for centre in centres %}
             <tr>
-                <td><a href="{{ path('centre_show', { 'id': centre.id }) }}">{{ centre.id }}</a></td>
-                <td>{{ centre.nombre }}</td>
-                <td>{{ centre.codi }}</td>
+                <td>{{ centre.nombre | upper }}</td>
+                <td>{{ centre.codiOficial }}</td>
+                <td>{{ centre.mailCentre }}</td>
                 <td>
                     <ul>
                         <li>

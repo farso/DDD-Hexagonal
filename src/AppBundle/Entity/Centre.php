@@ -2,10 +2,12 @@
 
 namespace AppBundle\Entity;
 
+use AppBundle\Entity\EntityInfInterface;
+
 /**
  * Centre
  */
-class Centre
+class Centre implements EntityInfInterface
 {
     /**
      * @var int
@@ -146,6 +148,20 @@ class Centre
     public function getMailCentre()
     {
         return $this->mailCentre;
+    }
+
+
+
+    public function toArray() 
+    {
+        //@todo recursiu si els atributs són objectes
+        $centreArray = array();
+        $centreArray['id'] = $this->id;
+        $centreArray['nombre'] = $this->nombre;
+        $centreArray['codi'] = $this->codi;
+        $centreArray['mailCentre'] = $this->mailCentre;
+        $centreArray['codiOficial'] = $this->codiOficial;
+        return $centreArray;
     }
 }
 

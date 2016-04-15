@@ -66,7 +66,7 @@ class CentreController extends Controller
                     $paramsEntity['codiOficial']
                 );
 
-            $centre = CentreFactoryInf::create($centreDom->getId(), $centreDom->getNombre(), $centreDom->getCodi(), $centreDom->getMailCentre(), $centreDom->getCodiOficial());
+            $centre = CentreFactoryInf::create($centreDom->toArray());
 
             return $this->redirectToRoute('centre_index');
         }
@@ -93,7 +93,7 @@ class CentreController extends Controller
             throw $this->createNotFoundException('Unable to find Centre entity.');
         }
 
-        $centre = CentreFactoryInf::create($centreDom->getId(), $centreDom->getNombre(), $centreDom->getCodi(), $centreDom->getMailCentre(), $centreDom->getCodiOficial());
+        $centre = CentreFactoryInf::create($centreDom->toArray());
 
         $deleteForm = $this->createDeleteForm($centre);
 
@@ -120,7 +120,7 @@ class CentreController extends Controller
             throw $this->createNotFoundException('Unable to find Centre entity.');
         }
 
-        $centre = CentreFactoryInf::create($centreDom->getId(), $centreDom->getNombre(), $centreDom->getCodi(), $centreDom->getMailCentre(), $centreDom->getCodiOficial());
+        $centre = CentreFactoryInf::create($centreDom->toArray());
 
         $deleteForm = $this->createDeleteForm($centre);
         $editForm = $this->createForm('AppBundle\Form\CentreType', $centre);
@@ -142,7 +142,7 @@ class CentreController extends Controller
                 $paramsEntity['codiOficial']
             ); 
 
-            $centre = CentreFactoryInf::create($centreDom->getId(), $centreDom->getNombre(), $centreDom->getCodi(), $centreDom->getMailCentre(), $centreDom->getCodiOficial());
+            $centre = CentreFactoryInf::create($centreDom->toArray());
 
             return $this->redirectToRoute('centre_index');
         }
@@ -170,7 +170,7 @@ class CentreController extends Controller
             throw $this->createNotFoundException('Unable to find Centre entity.');
         }
 
-        $centre = CentreFactoryInf::create($centreDom->getId(), $centreDom->getNombre(), $centreDom->getCodi(), $centreDom->getMailCentre(), $centreDom->getCodiOficial());
+        $centre = CentreFactoryInf::create($centreDom->toArray());
 
         $form = $this->createDeleteForm($centre);
         $form->handleRequest($request);
