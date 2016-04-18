@@ -1,4 +1,9 @@
 infraestructura
 ===============
 
-A Symfony project created on February 19, 2016, 11:37 am.
+A Symfony project. It's an approach to the DDD for UIC University.
+
+How to install
+==============
+
+
