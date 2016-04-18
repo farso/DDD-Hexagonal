@@ -39,36 +39,7 @@ export LANGUAGE=ca_ES.UTF-8
 export LC_ALL=en_US.UTF-8
 apt-get install --assume-yes postgresql
 apt-get install --assume-yes postgresql-contrib
-cat << EOF | su - postgres -c psql
-alter user postgres password 'postgres';
-
--- Create extension for pgadmin
-CREATE EXTENSION adminpack;
-
--- creem el schema de hexagonal
-CREATE SCHEMA hexagonal
-  AUTHORIZATION postgres;
--- Table: hexagonal.centros
-CREATE TABLE hexagonal.centros
-(
-  codigo serial NOT NULL,
-  uuid uuid NOT NULL,
-  cod_centro character varying(5),
-  nombre character varying(80),
-  tipus uuid,
-  mail_centre character varying(50),
-  codigo_oficial character varying(8),
-  CONSTRAINT centros__pkey PRIMARY KEY (uuid),
-  CONSTRAINT centros__tipus_centres__fkey FOREIGN KEY (tipus)
-      REFERENCES hexagonal.tipus_centres (uuid) MATCH SIMPLE
-      ON UPDATE NO ACTION ON DELETE NO ACTION
-)
-WITH (
-  OIDS=FALSE
-);
-ALTER TABLE hexagonal.centros
-  OWNER TO nobody;
-EOF
+sudo -u postgres psql -U postgres -d postgres -c "alter user postgres with password 'postgres'"
 
 
 echo "///////////////////////////////////////////////"
@@ -102,18 +73,15 @@ mv /etc/postgresql/9.3/main/postgresql.conf2  /etc/postgresql/9.3/main/postgresq
 awk 'NR==86 {$0="host all all 172.20.2.0/24 trust"} 1' /etc/postgresql/9.3/main/pg_hba.conf > /etc/postgresql/9.3/main/pg_hba.conf2
 mv /etc/postgresql/9.3/main/pg_hba.conf2 /etc/postgresql/9.3/main/pg_hba.conf
 
+awk 'NR==85 {$0=""} 1' /etc/postgresql/9.3/main/pg_hba.conf > /tmp/pg_hba.conf2
+awk 'NR==85 {$0="local   all             postgres                                md5"} 1' /tmp/pg_hba.conf2 > /tmp/pg_hba.conf3
+mv /tmp/pg_hba.conf3 /etc/postgresql/9.3/main/pg_hba.conf 
+sudo /etc/init.d/postgresql reload
+
+export PGUSER=postgres
+export PGPASSWORD=postgres
+createdb hexagonal
+export PGDATABASE=hexagonal
+psql < /vagrant/inici_bd.sql
+
 alias ll='ls -la --color' 
-
-echo "///////////////////////////////////////////////"
-echo "Explicitly set default client_encoding..."
-echo "///////////////////////////////////////////////"
-echo "client_encoding = utf8" >> "/etc/postgresql/9.3/main/postgresql.conf"
-
-echo "///////////////////////////////////////////////"
-echo "Create a new postgresql user with password..."
-echo "///////////////////////////////////////////////"
-cat << EOF | su - postgres -c psql
--- Create the database user:
-CREATE USER dbuser WITH PASSWORD 'db-user';
-ALTER USER dbuser CREATEDB;
-EOF
