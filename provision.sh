@@ -74,14 +74,10 @@ awk 'NR==86 {$0="host all all 172.20.2.0/24 trust"} 1' /etc/postgresql/9.3/main/
 mv /etc/postgresql/9.3/main/pg_hba.conf2 /etc/postgresql/9.3/main/pg_hba.conf
 
 awk 'NR==85 {$0=""} 1' /etc/postgresql/9.3/main/pg_hba.conf > /tmp/pg_hba.conf2
-awk 'NR==85 {$0="local   all             postgres                                md5"} 1' /tmp/pg_hba.conf2 > /tmp/pg_hba.conf3
+awk 'NR==85 {$0="local   all             postgres                                trust"} 1' /tmp/pg_hba.conf2 > /tmp/pg_hba.conf3
 mv /tmp/pg_hba.conf3 /etc/postgresql/9.3/main/pg_hba.conf 
 sudo /etc/init.d/postgresql reload
 
-export PGUSER=postgres
-export PGPASSWORD=postgres
-createdb hexagonal
-export PGDATABASE=hexagonal
-psql < /vagrant/inici_bd.sql
+psql -U postgres < /vagrant/inici_bd.sql
 
 alias ll='ls -la --color' 

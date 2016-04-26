@@ -1,1 +1,0 @@
-{"virtualbox":{"/application":{"guestpath":"/application","hostpath":"/home/ifores/Documents/DDD-Hexagonal/scr/application","disabled":false},"/domain":{"guestpath":"/domain","hostpath":"/home/ifores/Documents/DDD-Hexagonal/scr/domain","disabled":false},"/vagrant":{"guestpath":"/vagrant","hostpath":"/home/ifores/Documents/DDD-Hexagonal/scr/infraestructura","disabled":false}}}
