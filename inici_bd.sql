@@ -1,6 +1,8 @@
  -- Table: hexagonal.tipus_centres
 
 -- DROP TABLE hexagonal.tipus_centres;
+CREATE DATABASE hexagonal;
+
 CREATE SCHEMA hexagonal;
 
 CREATE TABLE hexagonal.tipus_centres
@@ -15,8 +17,6 @@ CREATE TABLE hexagonal.tipus_centres
 WITH (
   OIDS=FALSE
 );
-ALTER TABLE hexagonal.tipus_centres
-  OWNER TO postgres;
 
 
 -- Table: hexagonal.centros
@@ -40,8 +40,6 @@ CREATE TABLE hexagonal.centros
 WITH (
   OIDS=FALSE
 );
-ALTER TABLE hexagonal.centros
-  OWNER TO postgres;
 
 -- Table: hexagonal.departamentos
 
@@ -66,8 +64,6 @@ CREATE TABLE hexagonal.departamentos
 WITH (
   OIDS=FALSE
 );
-ALTER TABLE hexagonal.departamentos
-  OWNER TO postgres;
 
 
 

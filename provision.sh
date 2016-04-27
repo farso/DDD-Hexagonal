@@ -81,3 +81,10 @@ sudo /etc/init.d/postgresql reload
 psql -U postgres < /vagrant/inici_bd.sql
 
 alias ll='ls -la --color' 
+
+echo "////////////////////////////////////////////////////////"
+echo "Copy the folders /application and /domain to vendor/uic/"
+echo "////////////////////////////////////////////////////////"
+cp -fr /application /vagrant/vendor/uic/
+cp -fr /domain /vagrant/vendor/uic/
+

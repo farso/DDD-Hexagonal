@@ -51,7 +51,7 @@ Vagrant.configure(2) do |config|
   #
   #   # Customize the amount of memory on the VM:
   #   vb.memory = "1024"
-  vb.name = "ddt_symfony"
+  vb.name = "ddt_symfony_2"
   end
   #
   # View the documentation for the provider you are using for more
