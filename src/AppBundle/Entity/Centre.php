@@ -2,37 +2,37 @@
 
 namespace AppBundle\Entity;
 
-use AppBundle\Entity\EntityInfInterface;
+use AppBundle\Entity\EntityInf;
 
 /**
  * Centre
  */
-class Centre implements EntityInfInterface
+class Centre extends EntityInf
 {
     /**
      * @var int
      */
-    private $id;
+    protected $id;
 
     /**
      * @var string
      */
-    private $nombre;
+    protected $nombre;
 
     /**
      * @var string
      */
-    private $codi;
+    protected $codi;
 
      /**
      * @var string
      */
-    private $mailCentre;
+    protected $mailCentre;
 
     /**
      * @var string
      */
-    private $codiOficial;
+    protected $codiOficial;
 
     public function __construct($id = null, $nombre = null, $codi = null, $mailCentre = null, $codiOficial = null) {
 
@@ -152,16 +152,16 @@ class Centre implements EntityInfInterface
 
 
 
-    public function toArray() 
-    {
-        //@todo recursiu si els atributs són objectes
-        $centreArray = array();
-        $centreArray['id'] = $this->id;
-        $centreArray['nombre'] = $this->nombre;
-        $centreArray['codi'] = $this->codi;
-        $centreArray['mailCentre'] = $this->mailCentre;
-        $centreArray['codiOficial'] = $this->codiOficial;
-        return $centreArray;
-    }
+    // public function toArray() 
+    // {
+    //     //@todo recursiu si els atributs són objectes
+    //     $centreArray = array();
+    //     $centreArray['id'] = $this->id;
+    //     $centreArray['nombre'] = $this->nombre;
+    //     $centreArray['codi'] = $this->codi;
+    //     $centreArray['mailCentre'] = $this->mailCentre;
+    //     $centreArray['codiOficial'] = $this->codiOficial;
+    //     return $centreArray;
+    // }
 }
 

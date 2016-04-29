@@ -58,13 +58,7 @@ class CentreController extends Controller
             $centreCreateUseCase = new CreateCentreUseCase($em->getRepository('AppBundle:Centre'));
 
             $paramsEntity = $request->request->get('centre');
-
-            $centreDom = $centreCreateUseCase->run(
-                    $paramsEntity['nombre'],
-                    $paramsEntity['codi'],
-                    $paramsEntity['mailCentre'],
-                    $paramsEntity['codiOficial']
-                );
+            $centreDom = $centreCreateUseCase->run($paramsEntity);
 
             $centre = CentreFactoryInf::create($centreDom->toArray());
 
@@ -133,14 +127,9 @@ class CentreController extends Controller
             $centreUpdateUseCase = new UpdateCentreUseCase($em->getRepository('AppBundle:Centre'));
 
             $paramsEntity = $request->request->get('centre');
+            $paramsEntity['id'] = $id;
 
-            $centreDom = $centreUpdateUseCase->run(
-                $id, 
-                $paramsEntity['nombre'],
-                $paramsEntity['codi'],
-                $paramsEntity['mailCentre'],
-                $paramsEntity['codiOficial']
-            ); 
+            $centreDom = $centreUpdateUseCase->run($paramsEntity); 
 
             $centre = CentreFactoryInf::create($centreDom->toArray());
 

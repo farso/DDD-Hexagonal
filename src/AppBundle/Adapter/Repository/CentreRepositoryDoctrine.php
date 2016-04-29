@@ -95,19 +95,13 @@ class CentreRepositoryDoctrine extends \Doctrine\ORM\EntityRepository implements
 
 
 
-    public function create($nom, $codi, $mailCentre, $codiOficial)
+    public function create(array $params)
     {
 
         $em = $this->getEntityManager();
         //@todo Crear array per especificacions. DE moment a ma (en aplicacio???)
 
-        $centreDades = array();
-        //$id = $centreInf['id'];
-        $centreDades['nombre'] = $nom;
-        $centreDades['codi'] = $codi;
-        $centreDades['mailCentre'] = $mailCentre;
-        $centreDades['codiOficial'] = $codiOficial;
-        $centreDom = CentreFactory::create($centreDades);
+        $centreDom = CentreFactory::create($params);
 
 
         
@@ -119,26 +113,19 @@ class CentreRepositoryDoctrine extends \Doctrine\ORM\EntityRepository implements
         return $centreDom;
     }
 
-    public function update($id, $nom, $codi, $mailCentre, $codiOficial)
+    public function update(array $params)
     {
         $em = $this->getEntityManager();
 
-        $centreDades = array();
-        $centreDades['id'] = $id;
-        $centreDades['nombre'] = $nom;
-        $centreDades['codi'] = $codi;
-        $centreDades['mailCentre'] = $mailCentre;
-        $centreDades['codiOficial'] = $codiOficial;
+        $centreDom = CentreFactory::instance($params);
 
-        $centreDom = CentreFactory::instance($centreDades);
-
-        $centreInf = parent::find($id);
+        $centreInf = parent::find($params['id']);
 
         if (null !== $centreInf) {
-            $centreInf->setNombre($nom);
-            $centreInf->setCodi($codi);
-            $centreInf->setMailCentre($mailCentre);
-            $centreInf->setCodiOficial($codiOficial);
+            $centreInf->setNombre($params['nombre']);
+            $centreInf->setCodi($params['codi']);
+            $centreInf->setMailCentre($params['mailCentre']);
+            $centreInf->setCodiOficial($params['codiOficial']);
 
             $em->flush();    
         }

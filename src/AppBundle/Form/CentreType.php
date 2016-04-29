@@ -17,7 +17,7 @@ class CentreType extends AbstractType
     {
         $builder
             ->add('nombre')
-            ->add('codi', HiddenType::class)
+            ->add('codi')
             ->add('mailCentre')
             ->add('codiOficial')
         ;
