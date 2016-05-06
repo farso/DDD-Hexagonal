@@ -24,9 +24,10 @@ class CentreFactoryInf
         $codi = $centreDom['codi'];
         $mailCentre = $centreDom['mailCentre'];
         $codiOficial = $centreDom['codiOficial'];
+        $color = $centreDom['color'];
 
 
-        $centreInf = new Centre($id, $nom, $codi, $mailCentre, $codiOficial);
+        $centreInf = new Centre($id, $nom, $codi, $mailCentre, $codiOficial, $color);
         return $centreInf;
     }
 

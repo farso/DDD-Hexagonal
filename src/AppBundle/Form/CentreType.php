@@ -20,6 +20,7 @@ class CentreType extends AbstractType
             ->add('codi')
             ->add('mailCentre')
             ->add('codiOficial')
+            ->add('color')
         ;
     }
     

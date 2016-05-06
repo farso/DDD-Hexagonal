@@ -5,7 +5,7 @@ AppBundle\Entity\Centre:
     repositoryClass: AppBundle\Adapter\Repository\CentreRepositoryDoctrine
     id:
         id:
-            type: string
+            type: guid
             id: true
             column: uuid
     fields:
@@ -16,13 +16,21 @@ AppBundle\Entity\Centre:
             type: string
             length: '5'
             column: cod_centro
+            nullable: true
         mailCentre:
             type: string
             length: '50'
             column: mail_centre
+            nullable: true
         codiOficial:
             type: string
             length: '8'
             column: codigo_oficial
+            nullable: true
+        color:
+            type: string
+            length: '8'
+            column: color
+            nullable: true
 
     lifecycleCallbacks: {  }
