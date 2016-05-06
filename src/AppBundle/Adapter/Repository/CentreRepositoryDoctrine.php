@@ -6,6 +6,7 @@ use  \Doctrine\ORM\EntityManager;
 use  Uic\Application\Contract\CentreRepositoryInterface;
 use  Uic\Application\Factory\CentreFactory;
 use  AppBundle\Factory\CentreFactoryInf;
+use  AppBundle\Adapter\Logs\LogsAdapter;
 
 /**
  * CentreRepository
@@ -110,6 +111,10 @@ class CentreRepositoryDoctrine extends \Doctrine\ORM\EntityRepository implements
         $em->persist($centreInf);
         $em->flush();
 
+        // S'activa el sistema de LOG (Rabbit)
+        $logAdapter = new LogsAdapter();
+        $logAdapter->writeLog('666','Hello hell!!');
+
         return $centreDom;
     }
 
@@ -129,7 +134,11 @@ class CentreRepositoryDoctrine extends \Doctrine\ORM\EntityRepository implements
             $centreInf->setCodiOficial($params['codiOficial']);
             $centreInf->setColor($params['color']);
 
-            $em->flush();    
+            $em->flush();  
+
+            // S'activa el sistema de LOG (Rabbit)
+            $logAdapter = new LogsAdapter();
+            $logAdapter->writeLog('666','Update hell to sky!!');  
         }
 
 
@@ -148,5 +157,11 @@ class CentreRepositoryDoctrine extends \Doctrine\ORM\EntityRepository implements
 
         $em->remove($centreInf);
         $em->flush();
+
+        // S'activa el sistema de LOG (Rabbit)
+        $logAdapter = new LogsAdapter();
+        $logAdapter->writeLog('666','Bye hell!!');  
     }
+
+
 }
