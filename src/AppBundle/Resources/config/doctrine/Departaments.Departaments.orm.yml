@@ -1,0 +1,25 @@
+AppBundle\Entity\Departaments\Departaments:
+    type: entity
+    table: null
+    repositoryClass: AppBundle\Repository\Departaments\DepartamentsRepository
+    id:
+        id:
+            type: integer
+            id: true
+            generator:
+                strategy: AUTO
+    fields:
+        nombre:
+            type: string
+            length: '50'
+            nullable: true
+        centreId:
+            type: guid
+            nullable: true
+        codigoMec:
+            type: integer
+            nullable: true
+        centreOficialId:
+            type: guid
+            nullable: true
+    lifecycleCallbacks: {  }

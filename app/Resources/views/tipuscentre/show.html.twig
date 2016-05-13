@@ -1,0 +1,40 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+    <h1>TipusCentre</h1>
+
+    <table>
+        <tbody>
+            <tr>
+                <th>Id</th>
+                <td>{{ tipusCentre.id }}</td>
+            </tr>
+            <tr>
+                <th>Descricat</th>
+                <td>{{ tipusCentre.descriCat }}</td>
+            </tr>
+            <tr>
+                <th>Descriesp</th>
+                <td>{{ tipusCentre.descriEsp }}</td>
+            </tr>
+            <tr>
+                <th>Descrieng</th>
+                <td>{{ tipusCentre.descriEng }}</td>
+            </tr>
+        </tbody>
+    </table>
+
+    <ul>
+        <li>
+            <a href="{{ path('tipuscentre_index') }}">Back to the list</a>
+        </li>
+        <li>
+            <a href="{{ path('tipuscentre_edit', { 'id': tipusCentre.id }) }}">Edit</a>
+        </li>
+        <li>
+            {{ form_start(delete_form) }}
+                <input type="submit" value="Delete">
+            {{ form_end(delete_form) }}
+        </li>
+    </ul>
+{% endblock %}

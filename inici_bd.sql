@@ -30,6 +30,8 @@ CREATE TABLE hexagonal.centros
   nombre character varying(80),
   tipus uuid,
   mail_centre character varying(50),
+  cod_centro character varying(50),
+  color character varying(8),
   codigo_oficial character varying(8),
   CONSTRAINT centros__pkey PRIMARY KEY (uuid),
   CONSTRAINT centros__tipus_centres__fkey FOREIGN KEY (tipus)

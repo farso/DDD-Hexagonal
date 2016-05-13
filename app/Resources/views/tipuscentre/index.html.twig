@@ -1,0 +1,43 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+    <h1>TipusCentre list</h1>
+
+    <table>
+        <thead>
+            <tr>
+                <th>Id</th>
+                <th>Descricat</th>
+                <th>Descriesp</th>
+                <th>Descrieng</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for tipusCentre in tipusCentres %}
+            <tr>
+                <td><a href="{{ path('tipuscentre_show', { 'id': tipusCentre.id }) }}">{{ tipusCentre.id }}</a></td>
+                <td>{{ tipusCentre.descriCat }}</td>
+                <td>{{ tipusCentre.descriEsp }}</td>
+                <td>{{ tipusCentre.descriEng }}</td>
+                <td>
+                    <ul>
+                        <li>
+                            <a href="{{ path('tipuscentre_show', { 'id': tipusCentre.id }) }}">show</a>
+                        </li>
+                        <li>
+                            <a href="{{ path('tipuscentre_edit', { 'id': tipusCentre.id }) }}">edit</a>
+                        </li>
+                    </ul>
+                </td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+
+    <ul>
+        <li>
+            <a href="{{ path('tipuscentre_new') }}">Create a new entry</a>
+        </li>
+    </ul>
+{% endblock %}

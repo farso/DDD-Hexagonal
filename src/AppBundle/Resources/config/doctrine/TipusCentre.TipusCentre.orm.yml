@@ -1,0 +1,27 @@
+AppBundle\Entity\TipusCentre\TipusCentre:
+    type: entity
+    table: tipus_centres
+    schema: hexagonal
+    repositoryClass: AppBundle\Repository\TipusCentreRepository
+    id:
+        id:
+            type: guid
+            id: true
+            column: uuid
+    fields:
+        descriCat:
+            type: string
+            length: '32'
+            nullable: true
+            column: descri_cat
+        descriEsp:
+            type: string
+            length: '32'
+            nullable: true
+            column: descri_esp
+        descriEng:
+            type: string
+            length: '32'
+            nullable: true
+            column: descri_eng
+    lifecycleCallbacks: {  }
