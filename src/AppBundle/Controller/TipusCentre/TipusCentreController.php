@@ -4,8 +4,12 @@ namespace AppBundle\Controller\TipusCentre;
 
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
-
+use Uic\Application\UseCase\TipusCentre\CreateTipusCentreUseCase;
+use Uic\Application\UseCase\TipusCentre\FindTipusCentreUseCase;
+use Uic\Application\UseCase\TipusCentre\UpdateTipusCentreUseCase;
+use Uic\Application\UseCase\TipusCentre\DeleteTipusCentreUseCase;
 use AppBundle\Entity\TipusCentre\TipusCentre;
+use AppBundle\Factory\TipusCentreFactoryInf;
 use AppBundle\Form\TipusCentre\TipusCentreType;
 
 /**
@@ -40,11 +44,19 @@ class TipusCentreController extends Controller
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
-            $em = $this->getDoctrine()->getManager();
-            $em->persist($tipusCentre);
-            $em->flush();
 
-            return $this->redirectToRoute('tipuscentre_show', array('id' => $tipusCentre->getId()));
+            $em = $this->getDoctrine()->getManager();
+
+            $createTipusCentreUseCase = new CreateTipusCentreUseCase($em->getRepository('AppBundle:TipusCentre\TipusCentre'));
+
+            $paramsEntity = $request->request->get('tipus_centre');
+
+            $tipusCentreDom = $createTipusCentreUseCase->run($paramsEntity);
+
+            $tipusCentre = TipusCentreFactoryInf::create($tipusCentreDom->toArray());
+            
+            return $this->redirectToRoute('tipuscentre_index');
+
         }
 
         return $this->render('tipuscentre/new.html.twig', array(
@@ -57,8 +69,20 @@ class TipusCentreController extends Controller
      * Finds and displays a TipusCentre\TipusCentre entity.
      *
      */
-    public function showAction(TipusCentre $tipusCentre)
+    public function showAction($id)
     {
+        $em = $this->getDoctrine()->getManager();
+
+        $tipusCentreFindUseCase = new FindTipusCentreUseCase($em->getRepository('AppBundle:TipusCentre\TipusCentre'));
+        $tipusCentreDom = $tipusCentreFindUseCase->run($id);
+
+        if (!$tipusCentreDom) {
+            throw $this->createNotFoundException('Unable to find TipusCentre entity.');
+        }
+
+        $tipusCentre = TipusCentreFactoryInf::create($tipusCentreDom->toArray());
+
+
         $deleteForm = $this->createDeleteForm($tipusCentre);
 
         return $this->render('tipuscentre/show.html.twig', array(
@@ -71,18 +95,38 @@ class TipusCentreController extends Controller
      * Displays a form to edit an existing TipusCentre\TipusCentre entity.
      *
      */
-    public function editAction(Request $request, TipusCentre $tipusCentre)
+    public function editAction(Request $request, $id)
     {
+
+
+        $em = $this->getDoctrine()->getManager();
+
+        $tipusCentreFindUseCase = new FindTipusCentreUseCase($em->getRepository('AppBundle:TipusCentre\TipusCentre'));
+        $tipusCentreDom = $tipusCentreFindUseCase->run($id);
+
+        if (!$tipusCentreDom) {
+            throw $this->createNotFoundException('Unable to find TipusCentre entity.');
+        }
+
+        $tipusCentre = TipusCentreFactoryInf::create($tipusCentreDom->toArray());
+
         $deleteForm = $this->createDeleteForm($tipusCentre);
         $editForm = $this->createForm('AppBundle\Form\TipusCentre\TipusCentreType', $tipusCentre);
         $editForm->handleRequest($request);
 
         if ($editForm->isSubmitted() && $editForm->isValid()) {
-            $em = $this->getDoctrine()->getManager();
-            $em->persist($tipusCentre);
-            $em->flush();
+            // si tot és vàlid, es fa el COMMIT de la transacció
+       
+            $tipusCentreUpdateUseCase = new UpdateTipusCentreUseCase($em->getRepository('AppBundle:TipusCentre\TipusCentre'));
 
-            return $this->redirectToRoute('tipuscentre_edit', array('id' => $tipusCentre->getId()));
+            $paramsEntity = $request->request->get('tipus_centre');
+            $paramsEntity['id'] = $id;
+
+            $tipusCentreDom = $tipusCentreUpdateUseCase->run($paramsEntity); 
+
+            $tipusCentre = TipusCentreFactoryInf::create($tipusCentreDom->toArray());
+
+            return $this->redirectToRoute('tipuscentre_index');
         }
 
         return $this->render('tipuscentre/edit.html.twig', array(
@@ -96,15 +140,28 @@ class TipusCentreController extends Controller
      * Deletes a TipusCentre\TipusCentre entity.
      *
      */
-    public function deleteAction(Request $request, TipusCentre $tipusCentre)
+    public function deleteAction(Request $request, $id)
     {
+
+        $em = $this->getDoctrine()->getManager();
+
+        $tipusCentreFindUseCase = new FindTipusCentreUseCase($em->getRepository('AppBundle:TipusCentre\TipusCentre'));
+        $tipusCentreDom = $tipusCentreFindUseCase->run($id);
+
+        if (!$tipusCentreDom) {
+            throw $this->createNotFoundException('Unable to find TipusCentre entity.');
+        }
+
+        $tipusCentre = TipusCentreFactoryInf::create($tipusCentreDom->toArray());
+
         $form = $this->createDeleteForm($tipusCentre);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
-            $em = $this->getDoctrine()->getManager();
-            $em->remove($tipusCentre);
-            $em->flush();
+
+            $tipusCentreDeleteUseCase = new DeleteTipusCentreUseCase($em->getRepository('AppBundle:TipusCentre\TipusCentre'));
+            $tipusCentreDeleteUseCase->run($id); 
+
         }
 
         return $this->redirectToRoute('tipuscentre_index');

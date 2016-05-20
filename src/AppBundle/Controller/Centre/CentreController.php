@@ -1,13 +1,13 @@
 <?php
 
-namespace AppBundle\Controller;
+namespace AppBundle\Controller\Centre;
 
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 
-use AppBundle\Entity\Centre;
+use AppBundle\Entity\Centre\Centre;
 use AppBundle\Factory\CentreFactoryInf;
-use AppBundle\Form\CentreType;
+use AppBundle\Form\Centre\CentreType;
 
 use Uic\Application\UseCase\Centre\FindAllCentreUseCase;
 use Uic\Application\UseCase\Centre\FindCentreUseCase;
@@ -30,7 +30,7 @@ class CentreController extends Controller
     {
         $em = $this->getDoctrine()->getManager();
 
-        $centreFindAllUseCase = new FindAllCentreUseCase($em->getRepository('AppBundle:Centre'));
+        $centreFindAllUseCase = new FindAllCentreUseCase($em->getRepository('AppBundle:Centre\Centre'));
         $centresDomini = $centreFindAllUseCase->run();
 
         $centresInf = CentreFactoryInf::transform($centresDomini);
@@ -48,14 +48,14 @@ class CentreController extends Controller
     public function newAction(Request $request)
     {
         $centre = CentreFactoryInf::emptyEntity();
-        $form = $this->createForm('AppBundle\Form\CentreType', $centre);
+        $form = $this->createForm('AppBundle\Form\Centre\CentreType', $centre);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
 
             $em = $this->getDoctrine()->getManager();
 
-            $centreCreateUseCase = new CreateCentreUseCase($em->getRepository('AppBundle:Centre'));
+            $centreCreateUseCase = new CreateCentreUseCase($em->getRepository('AppBundle:Centre\Centre'));
 
             $paramsEntity = $request->request->get('centre');
             $centreDom = $centreCreateUseCase->run($paramsEntity);
@@ -80,7 +80,7 @@ class CentreController extends Controller
 
         $em = $this->getDoctrine()->getManager();
 
-        $centreFindUseCase = new FindCentreUseCase($em->getRepository('AppBundle:Centre'));
+        $centreFindUseCase = new FindCentreUseCase($em->getRepository('AppBundle:Centre\Centre'));
         $centreDom = $centreFindUseCase->run($id);
 
         if (!$centreDom) {
@@ -107,7 +107,7 @@ class CentreController extends Controller
 
         $em = $this->getDoctrine()->getManager();
 
-        $centreFindUseCase = new FindCentreUseCase($em->getRepository('AppBundle:Centre'));
+        $centreFindUseCase = new FindCentreUseCase($em->getRepository('AppBundle:Centre\Centre'));
         $centreDom = $centreFindUseCase->run($id);
 
         if (!$centreDom) {
@@ -117,14 +117,14 @@ class CentreController extends Controller
         $centre = CentreFactoryInf::create($centreDom->toArray());
 
         $deleteForm = $this->createDeleteForm($centre);
-        $editForm = $this->createForm('AppBundle\Form\CentreType', $centre);
+        $editForm = $this->createForm('AppBundle\Form\Centre\CentreType', $centre);
         $editForm->handleRequest($request);
         //handleRequest: s'encarrega de fer les modificacions a l'objecte de INF
 
         if ($editForm->isSubmitted() && $editForm->isValid()) {
             // si tot és vàlid, es fa el COMMIT de la transacció
        
-            $centreUpdateUseCase = new UpdateCentreUseCase($em->getRepository('AppBundle:Centre'));
+            $centreUpdateUseCase = new UpdateCentreUseCase($em->getRepository('AppBundle:Centre\Centre'));
 
             $paramsEntity = $request->request->get('centre');
             $paramsEntity['id'] = $id;
@@ -152,7 +152,7 @@ class CentreController extends Controller
     {
         $em = $this->getDoctrine()->getManager();
 
-        $centreFindUseCase = new FindCentreUseCase($em->getRepository('AppBundle:Centre'));
+        $centreFindUseCase = new FindCentreUseCase($em->getRepository('AppBundle:Centre\Centre'));
         $centreDom = $centreFindUseCase->run($id);
 
         if (!$centreDom) {
@@ -166,7 +166,7 @@ class CentreController extends Controller
 
         if ($form->isSubmitted() && $form->isValid()) {
 
-            $centreDeleteUseCase = new DeleteCentreUseCase($em->getRepository('AppBundle:Centre'));
+            $centreDeleteUseCase = new DeleteCentreUseCase($em->getRepository('AppBundle:Centre\Centre'));
             $centreDeleteUseCase->run($id); 
 
         }

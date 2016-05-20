@@ -12,22 +12,22 @@ class TipusCentre extends EntityInf
     /**
      * @var int
      */
-    private $id;
+    protected $id;
 
     /**
      * @var string
      */
-    private $descriCat;
+    protected $descriCat;
 
     /**
      * @var string
      */
-    private $descriEsp;
+    protected $descriEsp;
 
     /**
      * @var string
      */
-    private $descriEng;
+    protected $descriEng;
 
 
     public function __construct($id = null, $descriCat = null, $descriEsp = null, $descriEng = null) 

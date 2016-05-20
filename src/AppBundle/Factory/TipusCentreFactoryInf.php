@@ -2,7 +2,7 @@
 //1.0.2
 namespace AppBundle\Factory;
 
-use AppBundle\Entity\TipusCentre;
+use AppBundle\Entity\TipusCentre\TipusCentre;
 
 /**
  * TipusCentreFactoryInf
@@ -23,7 +23,7 @@ class TipusCentreFactoryInf
         $descriEsp = $tipusCentreDom['descriEsp'];
         $descriEng = $tipusCentreDom['descriEng'];
         $descriCat = $tipusCentreDom['descriCat'];
-        
+
         $tipusCentreInf = new TipusCentre($id, $descriCat, $descriEsp, $descriEng);
         return $tipusCentreInf;
     }

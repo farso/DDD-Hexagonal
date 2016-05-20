@@ -66,6 +66,7 @@ class TipusCentreRepositoryDoctrine extends \Doctrine\ORM\EntityRepository imple
 
         $tipusCentresDom = array();
         foreach($tipusCentresInf as $tipusCentreInf) {
+            
             $tipusCentreDom = TipusCentreFactory::instance($tipusCentreInf->toArray());
             
             $tipusCentresDom[] = $tipusCentreDom;
@@ -103,8 +104,6 @@ class TipusCentreRepositoryDoctrine extends \Doctrine\ORM\EntityRepository imple
         //@todo Crear array per especificacions. DE moment a ma (en aplicacio???)
 
         $tipusCentreDom = TipusCentreFactory::create($params);
-
-
         
         $tipusCentreInf = TipusCentreFactoryInf::create($tipusCentreDom->toArray());
 

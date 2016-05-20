@@ -1,4 +1,4 @@
-AppBundle\Entity\Centre:
+AppBundle\Entity\Centre\Centre:
     type: entity
     table: centros
     schema: hexagonal

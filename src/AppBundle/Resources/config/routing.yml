@@ -1,5 +1,5 @@
 app_centre:
-    resource: "@AppBundle/Resources/config/routing/centre.yml"
+    resource: "@AppBundle/Resources/config/routing/centre_centre.yml"
     prefix:   /centre
 
 app_tipuscentre:

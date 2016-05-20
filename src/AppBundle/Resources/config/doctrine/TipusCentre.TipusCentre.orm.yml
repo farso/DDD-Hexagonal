@@ -2,7 +2,7 @@ AppBundle\Entity\TipusCentre\TipusCentre:
     type: entity
     table: tipus_centres
     schema: hexagonal
-    repositoryClass: AppBundle\Repository\TipusCentreRepository
+    repositoryClass: AppBundle\Adapter\Repository\TipusCentreRepositoryDoctrine
     id:
         id:
             type: guid

@@ -2,7 +2,7 @@
 //1.0.2
 namespace AppBundle\Factory;
 
-use AppBundle\Entity\Centre;
+use AppBundle\Entity\Centre\Centre;
 
 /**
  * CentreFactoryInf

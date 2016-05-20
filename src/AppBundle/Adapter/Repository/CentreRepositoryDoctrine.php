@@ -104,8 +104,6 @@ class CentreRepositoryDoctrine extends \Doctrine\ORM\EntityRepository implements
 
         $centreDom = CentreFactory::create($params);
 
-
-        
         $centreInf = CentreFactoryInf::create($centreDom->toArray());
 
         $em->persist($centreInf);
