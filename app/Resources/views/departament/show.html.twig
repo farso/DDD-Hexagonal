@@ -6,34 +6,30 @@
     <table>
         <tbody>
             <tr>
-                <th>Id</th>
-                <td>{{ departaments\Departament.id }}</td>
-            </tr>
-            <tr>
                 <th>Nombre</th>
-                <td>{{ departaments\Departament.nombre }}</td>
+                <td>{{ departament.nombre }}</td>
             </tr>
             <tr>
                 <th>Centreid</th>
-                <td>{{ departaments\Departament.centreId }}</td>
+                <td>{{ departament.centreId }}</td>
             </tr>
             <tr>
                 <th>Codigomec</th>
-                <td>{{ departaments\Departament.codigoMec }}</td>
+                <td>{{ departament.codigoMec }}</td>
             </tr>
             <tr>
                 <th>Centreoficialid</th>
-                <td>{{ departaments\Departament.centreOficialId }}</td>
+                <td>{{ departament.centreOficialId }}</td>
             </tr>
         </tbody>
     </table>
 
     <ul>
         <li>
-            <a href="{{ path('departaments_index') }}">Back to the list</a>
+            <a href="{{ path('departament_index') }}">Back to the list</a>
         </li>
         <li>
-            <a href="{{ path('departaments_edit', { 'id': departaments\Departament.id }) }}">Edit</a>
+            <a href="{{ path('departament_edit', { 'id': departament.id }) }}">Edit</a>
         </li>
         <li>
             {{ form_start(delete_form) }}

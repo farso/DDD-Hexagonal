@@ -1,6 +1,7 @@
 <?php
 
 namespace AppBundle\Adapter\Repository;
+
 use  \Doctrine\ORM\EntityRepository;
 use  \Doctrine\ORM\EntityManager;
 use  Uic\Application\Contract\CentreRepositoryInterface;

@@ -1,12 +1,12 @@
 <?php
 
-namespace AppBundle\Form\Departaments;
+namespace AppBundle\Form\Departament;
 
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
-class DepartamentsType extends AbstractType
+class DepartamentType extends AbstractType
 {
     /**
      * @param FormBuilderInterface $builder
@@ -28,7 +28,7 @@ class DepartamentsType extends AbstractType
     public function configureOptions(OptionsResolver $resolver)
     {
         $resolver->setDefaults(array(
-            'data_class' => 'AppBundle\Entity\Departaments\Departaments'
+            'data_class' => 'AppBundle\Entity\Departament\Departament'
         ));
     }
 }

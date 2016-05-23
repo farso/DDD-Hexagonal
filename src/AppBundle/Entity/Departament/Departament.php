@@ -1,37 +1,47 @@
 <?php
 
-namespace AppBundle\Entity\Departaments;
+namespace AppBundle\Entity\Departament;
+
+use AppBundle\Entity\EntityInf;
 
 /**
  * Departaments
  */
-class Departaments
+class Departament extends EntityInf
 {
     /**
      * @var int
      */
-    private $id;
+    protected $id;
 
     /**
      * @var string
      */
-    private $nombre;
+    protected $nombre;
 
     /**
      * @var guid
      */
-    private $centreId;
+    protected $centreId;
 
     /**
      * @var int
      */
-    private $codigoMec;
+    protected $codigoMec;
 
     /**
      * @var guid
      */
-    private $centreOficialId;
+    protected $centreOficialId;
 
+    public function __construct($id = null, $nombre = null, $centreId = null, $codigoMec = null, $centreOficialId = null) {
+
+        $this->id = $id; 
+        $this->nombre = $nombre;
+        $this->centreId = $centreId;
+        $this->codigoMec = $codigoMec;
+        $this->centreOficialId = $centreOficialId; 
+    }
 
     /**
      * Get id

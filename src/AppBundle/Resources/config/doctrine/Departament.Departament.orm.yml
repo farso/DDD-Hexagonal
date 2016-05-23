@@ -1,13 +1,13 @@
-AppBundle\Entity\Departaments\Departaments:
+AppBundle\Entity\Departament\Departament:
     type: entity
-    table: null
-    repositoryClass: AppBundle\Repository\Departaments\DepartamentsRepository
+    table: departamentos
+    schema: hexagonal
+    repositoryClass: AppBundle\Adapter\Repository\DepartamentRepositoryDoctrine
     id:
         id:
-            type: integer
+            type: guid
             id: true
-            generator:
-                strategy: AUTO
+            column: uuid
     fields:
         nombre:
             type: string
@@ -16,10 +16,13 @@ AppBundle\Entity\Departaments\Departaments:
         centreId:
             type: guid
             nullable: true
+            column: uuid_centro
         codigoMec:
             type: integer
             nullable: true
+            column: codigo_mec
         centreOficialId:
             type: guid
             nullable: true
+            column: uuid_centro_oficial
     lifecycleCallbacks: {  }

@@ -5,3 +5,7 @@ app_centre:
 app_tipuscentre:
     resource: "@AppBundle/Resources/config/routing/tipuscentre_tipuscentre.yml"
     prefix:   /tipuscentre
+
+app_departaments:
+    resource: "@AppBundle/Resources/config/routing/departament_departament.yml"
+    prefix:   /departament
