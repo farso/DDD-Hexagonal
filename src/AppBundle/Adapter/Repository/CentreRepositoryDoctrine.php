@@ -121,11 +121,13 @@ class CentreRepositoryDoctrine extends \Doctrine\ORM\EntityRepository implements
 
         $centreInf = parent::find($params['id']);
 
+        //@todo agafar per Specification patten els
         if (null !== $centreInf) {
             $centreInf->setNombre($params['nombre']);
             $centreInf->setCodi($params['codi']);
             $centreInf->setMailCentre($params['mailCentre']);
             $centreInf->setCodiOficial($params['codiOficial']);
+            $centreInf->setColor($params['color']);
 
             $em->flush();    
         }

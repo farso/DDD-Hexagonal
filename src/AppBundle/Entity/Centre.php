@@ -34,13 +34,19 @@ class Centre extends EntityInf
      */
     protected $codiOficial;
 
-    public function __construct($id = null, $nombre = null, $codi = null, $mailCentre = null, $codiOficial = null) {
+    /**
+     * @var string
+     */
+    protected $color;
+
+    public function __construct($id = null, $nombre = null, $codi = null, $mailCentre = null, $codiOficial = null, $color = null) {
 
         $this->id = $id; 
         $this->nombre = $nombre;
         $this->codi = $codi;
         $this->mailCentre = $mailCentre;
         $this->codiOficial = $codiOficial;
+        $this->color = $color;
     }
 
 
@@ -150,18 +156,28 @@ class Centre extends EntityInf
         return $this->mailCentre;
     }
 
+ 
+    /**
+     * Set color
+     *
+     * @param string $color
+     *
+     * @return Centre
+     */
+    public function setColor($color)
+    {
+        $this->color = $color;
 
+        return $this;
+    }
 
-    // public function toArray() 
-    // {
-    //     //@todo recursiu si els atributs són objectes
-    //     $centreArray = array();
-    //     $centreArray['id'] = $this->id;
-    //     $centreArray['nombre'] = $this->nombre;
-    //     $centreArray['codi'] = $this->codi;
-    //     $centreArray['mailCentre'] = $this->mailCentre;
-    //     $centreArray['codiOficial'] = $this->codiOficial;
-    //     return $centreArray;
-    // }
+    /**
+     * Get color
+     *
+     * @return string
+     */
+    public function getColor()
+    {
+        return $this->color;
+    }
 }
-
