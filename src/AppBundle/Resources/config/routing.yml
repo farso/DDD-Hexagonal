@@ -2,3 +2,5 @@ app_centre:
     resource: "@AppBundle/Resources/config/routing/centre.yml"
     prefix:   /centre
 
+    resource: "@AppBundle/Resources/config/routing/centre.yml"
+    prefix:   /

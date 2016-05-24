@@ -28,6 +28,7 @@ CREATE TABLE hexagonal.centros
   codigo serial NOT NULL,
   uuid uuid NOT NULL,
   nombre character varying(80),
+  cod_centro character varying(10),
   tipus uuid,
   mail_centre character varying(50),
   codigo_oficial character varying(8),

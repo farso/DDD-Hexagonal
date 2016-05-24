@@ -37,6 +37,10 @@ Vagrant.configure(2) do |config|
   # the path on the host to the actual folder. The second argument is
   # the path on the guest to mount the folder. And the optional third
   # argument is a set of non-required options.
+  #
+  config.vm.synced_folder "./", "/vagrant", id: "vagrant-root",
+    owner: "www-data",
+    group: "www-data"
   # config.vm.synced_folder "../data", "/vagrant_data"
   config.vm.synced_folder "../application", "/application"
   config.vm.synced_folder "../domain", "/domain"
@@ -69,7 +73,7 @@ Vagrant.configure(2) do |config|
   # documentation for more information about their specific syntax and use.
 
   config.vm.provision "shell", path: "provision.sh"
-  config.vm.provision "shell", inline: "php /vagrant/bin/console server:start 0.0.0.0:8000", run: "always"
+  #config.vm.provision "shell", inline: "php /vagrant/bin/console server:start 0.0.0.0:8000", run: "always"
 
   # config.vm.provision "shell", inline: <<-SHELL
   #   sudo apt-get update

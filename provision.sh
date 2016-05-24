@@ -5,11 +5,6 @@
 #echo "///////////////////////////////////////////////"
 #apt-get update > /dev/null
 
-#echo "///////////////////////////////////////////////"
-#echo "Installing apache2..."
-#echo "///////////////////////////////////////////////"
-#apt-get install --assume-yes apache2
-
 echo "///////////////////////////////////////////////"
 echo "Installing rabbitmq..."
 echo "///////////////////////////////////////////////"
@@ -29,9 +24,9 @@ echo "///////////////////////////////////////////////"
 echo "Installing php..."
 echo "///////////////////////////////////////////////"
 apt-get install --assume-yes php5-cli
-#apt-get install --assume-yes libapache2-mod-php5
 apt-get install --assume-yes php5-mcrypt php5-intl php5-pgsql php5-curl
 
+#sudo /etc/init.d/apache2 restart
 echo "///////////////////////////////////////////////"
 echo "Installing PostgreSQL..."
 echo "///////////////////////////////////////////////"
@@ -70,17 +65,32 @@ cp -a  /etc/postgresql/9.3/main/postgresql.conf   /etc/postgresql/9.3/main/postg
 cp -a  /etc/postgresql/9.3/main/pg_hba.conf /etc/postgresql/9.3/main/pg_hba.conf2
 awk 'NR==59 {$0="listen_addresses='\''*'\''"} 1' /etc/postgresql/9.3/main/postgresql.conf > /etc/postgresql/9.3/main/postgresql.conf2
 mv /etc/postgresql/9.3/main/postgresql.conf2  /etc/postgresql/9.3/main/postgresql.conf
-awk 'NR==86 {$0="host all all 172.20.2.0/24 trust"} 1' /etc/postgresql/9.3/main/pg_hba.conf > /etc/postgresql/9.3/main/pg_hba.conf2
-mv /etc/postgresql/9.3/main/pg_hba.conf2 /etc/postgresql/9.3/main/pg_hba.conf
 
 awk 'NR==85 {$0=""} 1' /etc/postgresql/9.3/main/pg_hba.conf > /tmp/pg_hba.conf2
 awk 'NR==85 {$0="local   all             postgres                                trust"} 1' /tmp/pg_hba.conf2 > /tmp/pg_hba.conf3
-mv /tmp/pg_hba.conf3 /etc/postgresql/9.3/main/pg_hba.conf 
-sudo /etc/init.d/postgresql reload
+
+awk 'NR==92 {$0=""} 1' /tmp/pg_hba.conf3 > /tmp/pg_hba.conf4
+awk 'NR==92 {$0="host all all all md5"} 1' /tmp/pg_hba.conf4 > /tmp/pg_hba.conf5
+
+mv /tmp/pg_hba.conf5 /etc/postgresql/9.3/main/pg_hba.conf 
+sudo /etc/init.d/postgresql restart
 
 psql -U postgres < /vagrant/inici_bd.sql
 
 alias ll='ls -la --color' 
+
+echo "///////////////////////////////////////////////"
+echo "Installing apache2..."
+echo "///////////////////////////////////////////////"
+sudo apt-get install --assume-yes apache2
+sudo apt-get install --assume-yes libapache2-mod-php5
+echo "///////////////////////////////////////////////"
+echo "Config apache2..."
+echo "///////////////////////////////////////////////"
+sudo cp /vagrant/apache.conf /etc/apache2/sites-available/000-default.conf
+sudo service apache2 stop
+sudo service apache2 start
+
 
 echo "////////////////////////////////////////////////////////"
 echo "Copy the folders /application and /domain to vendor/uic/"
