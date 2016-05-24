@@ -73,7 +73,7 @@ Vagrant.configure(2) do |config|
   # documentation for more information about their specific syntax and use.
 
   config.vm.provision "shell", path: "provision.sh"
-  #config.vm.provision "shell", inline: "php /vagrant/bin/console server:start 0.0.0.0:8000", run: "always"
+  config.vm.provision "shell", inline: "php /vagrant/bin/console server:start 0.0.0.0:8000", run: "always"
 
   # config.vm.provision "shell", inline: <<-SHELL
   #   sudo apt-get update

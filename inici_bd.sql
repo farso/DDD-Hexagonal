@@ -32,6 +32,7 @@ CREATE TABLE hexagonal.centros
   tipus uuid,
   mail_centre character varying(50),
   codigo_oficial character varying(8),
+  color character varying(8),
   CONSTRAINT centros__pkey PRIMARY KEY (uuid),
   CONSTRAINT centros__tipus_centres__fkey FOREIGN KEY (tipus)
       REFERENCES hexagonal.tipus_centres (uuid) MATCH SIMPLE

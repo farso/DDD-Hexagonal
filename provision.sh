@@ -79,17 +79,18 @@ psql -U postgres < /vagrant/inici_bd.sql
 
 alias ll='ls -la --color' 
 
-echo "///////////////////////////////////////////////"
-echo "Installing apache2..."
-echo "///////////////////////////////////////////////"
-sudo apt-get install --assume-yes apache2
-sudo apt-get install --assume-yes libapache2-mod-php5
-echo "///////////////////////////////////////////////"
-echo "Config apache2..."
-echo "///////////////////////////////////////////////"
-sudo cp /vagrant/apache.conf /etc/apache2/sites-available/000-default.conf
-sudo service apache2 stop
-sudo service apache2 start
+#Ho deixem comentat el tema del apache2
+#echo "///////////////////////////////////////////////"
+#echo "Installing apache2..."
+#echo "///////////////////////////////////////////////"
+#sudo apt-get install --assume-yes apache2
+#sudo apt-get install --assume-yes libapache2-mod-php5
+#echo "///////////////////////////////////////////////"
+#echo "Config apache2..."
+#echo "///////////////////////////////////////////////"
+#sudo cp /vagrant/apache.conf /etc/apache2/sites-available/000-default.conf
+#sudo service apache2 stop
+#sudo service apache2 start
 
 
 echo "////////////////////////////////////////////////////////"
