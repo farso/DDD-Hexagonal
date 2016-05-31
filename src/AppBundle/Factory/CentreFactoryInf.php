@@ -3,6 +3,7 @@
 namespace AppBundle\Factory;
 
 use AppBundle\Entity\Centre\Centre;
+use AppBundle\Entity\TipusCentre\TipusCentre;
 
 /**
  * CentreFactoryInf
@@ -25,9 +26,9 @@ class CentreFactoryInf
         $mailCentre = $centreDom['mailCentre'];
         $codiOficial = $centreDom['codiOficial'];
         $color = $centreDom['color'];
-
-
-        $centreInf = new Centre($id, $nom, $codi, $mailCentre, $codiOficial, $color);
+        $tipusCentre = $centreDom['tipusCentre'];
+        
+        $centreInf = new Centre($id, $nom, $codi, $mailCentre, $codiOficial, $color, $tipusCentre);
         return $centreInf;
     }
 

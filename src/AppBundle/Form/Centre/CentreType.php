@@ -6,6 +6,7 @@ use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Form\Extension\Core\Type\HiddenType;
+use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 
 class CentreType extends AbstractType
 {
@@ -21,7 +22,14 @@ class CentreType extends AbstractType
             ->add('mailCentre')
             ->add('codiOficial')
             ->add('color')
+            ->add('tipusCentre', EntityType::class, array(
+                'class' => 'AppBundle:TipusCentre\TipusCentre',
+                'choice_label' => 'descriCat'
+                ))
         ;
+
+
+
     }
     
     /**

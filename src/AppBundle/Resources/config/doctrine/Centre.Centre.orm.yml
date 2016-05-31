@@ -32,5 +32,10 @@ AppBundle\Entity\Centre\Centre:
             length: '8'
             column: color
             nullable: true
-
+    manyToOne:
+        tipusCentre:
+            targetEntity: AppBundle\Entity\TipusCentre\TipusCentre
+            joinColumn:
+                name: tipus
+                referencedColumnName: uuid
     lifecycleCallbacks: {  }

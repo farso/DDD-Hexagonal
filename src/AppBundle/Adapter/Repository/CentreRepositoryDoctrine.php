@@ -7,6 +7,7 @@ use  \Doctrine\ORM\EntityManager;
 use  Uic\Application\Contract\CentreRepositoryInterface;
 use  Uic\Application\Factory\CentreFactory;
 use  AppBundle\Factory\CentreFactoryInf;
+use  AppBundle\Factory\TipusCentreFactoryInf;
 use  AppBundle\Adapter\Logs\LogsAdapter;
 
 /**
@@ -105,8 +106,16 @@ class CentreRepositoryDoctrine extends \Doctrine\ORM\EntityRepository implements
 
         $centreDom = CentreFactory::create($params);
 
-        $centreInf = CentreFactoryInf::create($centreDom->toArray());
+        $centreDomArray = $centreDom->toArray();
+        $tipusCentre = $centreDomArray['tipusCentre'];
 
+        //find 
+        $tipusCentreInf = TipusCentreFactoryInf::create($tipusCentre);
+        $centreDomArray['tipusCentre'] = $tipusCentreInf;
+
+        $centreInf = CentreFactoryInf::create($centreDomArray);
+
+        $em->persist($tipusCentreInf);
         $em->persist($centreInf);
         $em->flush();
 

@@ -51,11 +51,15 @@ class CentreController extends Controller
         $form = $this->createForm('AppBundle\Form\Centre\CentreType', $centre);
         $form->handleRequest($request);
 
+
+
         if ($form->isSubmitted() && $form->isValid()) {
 
             $em = $this->getDoctrine()->getManager();
 
-            $centreCreateUseCase = new CreateCentreUseCase($em->getRepository('AppBundle:Centre\Centre'));
+            $centreRepository = $em->getRepository('AppBundle:Centre\Centre');
+            $tipusCentreRepository = $em->getRepository('AppBundle:TipusCentre\TipusCentre');
+            $centreCreateUseCase = new CreateCentreUseCase($centreRepository, $tipusCentreRepository);
 
             $paramsEntity = $request->request->get('centre');
             $centreDom = $centreCreateUseCase->run($paramsEntity);
