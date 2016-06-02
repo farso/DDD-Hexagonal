@@ -13,18 +13,17 @@
 echo "///////////////////////////////////////////////"
 echo "Installing rabbitmq..."
 echo "///////////////////////////////////////////////"
-sudo su
+sudo apt-get update -y
 sudo echo "deb http://www.rabbitmq.com/debian testing main" >> /etc/apt/sources.list
 wget https://www.rabbitmq.com/rabbitmq-signing-key-public.asc
 sudo apt-key add rabbitmq-signing-key-public.asc
-sudo apt-get update
-sudo apt-get install --assume-yes  rabbitmq-server 
+sudo apt-get install rabbitmq-server --force-yes -y
 sudo rabbitmq-plugins enable rabbitmq_management
 sudo rabbitmqctl add_user admin nimda
 sudo rabbitmqctl set_user_tags admin administrator
 sudo rabbitmqctl set_permissions -p / admin ".*" ".*" ".*"
 
-
+sudo apt-get update -y
 echo "///////////////////////////////////////////////"
 echo "Installing php..."
 echo "///////////////////////////////////////////////"
