@@ -1,8 +1,8 @@
-AppBundle\Entity\Centre\Centre:
+Uic\Domain\Entity\Centre\Centre:
     type: entity
     table: centros
     schema: hexagonal
-    repositoryClass: AppBundle\Adapter\Repository\CentreRepositoryDoctrine
+    repositoryClass: AppBundle\Domain\Model\Centre\CentreRepositoryDoctrine
     id:
         id:
             type: guid
@@ -32,10 +32,4 @@ AppBundle\Entity\Centre\Centre:
             length: '8'
             column: color
             nullable: true
-    manyToOne:
-        tipusCentre:
-            targetEntity: AppBundle\Entity\TipusCentre\TipusCentre
-            joinColumn:
-                name: tipus
-                referencedColumnName: uuid
     lifecycleCallbacks: {  }

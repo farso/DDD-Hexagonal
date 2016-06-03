@@ -22,10 +22,10 @@ class CentreType extends AbstractType
             ->add('mailCentre')
             ->add('codiOficial')
             ->add('color')
-            ->add('tipusCentre', EntityType::class, array(
+            /*->add('tipusCentre', EntityType::class, array(
                 'class' => 'AppBundle:TipusCentre\TipusCentre',
                 'choice_label' => 'descriCat'
-                ))
+                ))*/
         ;
 
 
