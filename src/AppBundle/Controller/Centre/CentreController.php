@@ -149,21 +149,20 @@ class CentreController extends Controller
     {
         $em = $this->getDoctrine()->getManager();
 
-        $centreFindUseCase = new FindCentreUseCase($em->getRepository('AppBundle:Centre\Centre'));
-        $centreDom = $centreFindUseCase->run($id);
+        $centreRepository = $em->getRepository('UicDomainBundle:Centre\Centre');
+        $centre = $centreRepository->find($id);
 
-        if (!$centreDom) {
+        if (!$centre) {
             throw $this->createNotFoundException('Unable to find Centre entity.');
         }
 
-        $centre = CentreFactoryInf::create($centreDom->toArray());
+        $deleteFormBuilder = $this->createDeleteForm($id);
+        $deleteForm = $deleteFormBuilder->getForm();
+        $deleteForm->handleRequest($request);
 
-        $form = $this->createDeleteForm($centre);
-        $form->handleRequest($request);
+        if ($deleteForm->isSubmitted() && $deleteForm->isValid()) {
 
-        if ($form->isSubmitted() && $form->isValid()) {
-
-            $centreDeleteUseCase = new DeleteCentreUseCase($em->getRepository('AppBundle:Centre\Centre'));
+            $centreDeleteUseCase = new DeleteCentreUseCase($em->getRepository('UicDomainBundle:Centre\Centre'));
             $centreDeleteUseCase->run($id); 
 
         }
