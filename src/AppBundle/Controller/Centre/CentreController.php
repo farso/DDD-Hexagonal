@@ -39,8 +39,8 @@ class CentreController extends Controller
     public function newAction(Request $request)
     {
         
-        $centreType = new CentreTypePro($this->get('form.factory'));
-        $form = $centreType->getForm();
+        $centreFormBuilder = CentreTypePro::newForm($this->get('form.factory'));
+        $form = $centreFormBuilder->getForm();
         
         $form->handleRequest($request);
         if ($form->isSubmitted() && $form->isValid()) {
@@ -71,22 +71,26 @@ class CentreController extends Controller
 
         $em = $this->getDoctrine()->getManager();
 
-        $centreFindUseCase = new FindCentreUseCase($em->getRepository('AppBundle:Centre\Centre'));
-        $centreDom = $centreFindUseCase->run($id);
+        $centreRepository = $em->getRepository('UicDomainBundle:Centre\Centre');        
 
-        if (!$centreDom) {
+        $centre = $centreRepository->find($id);
+
+        if (!$centre) {
             throw $this->createNotFoundException('Unable to find Centre entity.');
         }
 
-        $centre = CentreFactoryInf::create($centreDom->toArray());
+        $centreFormBuilder = CentreTypePro::deleteForm($this->get('form.factory'));
 
-        $deleteForm = $this->createDeleteForm($centre);
+        $centreFormBuilder
+            ->setAction($this->generateUrl('centre_delete', array('id' => $centre->getId())))
+            ->setMethod('DELETE');
+
+        $form = $centreFormBuilder->getForm();
 
         return $this->render('centre/show.html.twig', array(
             'centre' => $centre,
-            'delete_form' => $deleteForm->createView(),
+            'delete_form' => $form->createView(),
         ));
-
     }
 
     /**
@@ -165,19 +169,4 @@ class CentreController extends Controller
         return $this->redirectToRoute('centre_index');
     }
 
-    /**
-     * Creates a form to delete a Centre entity.
-     *
-     * @param Centre $centre The Centre entity
-     *
-     * @return \Symfony\Component\Form\Form The form
-     */
-    private function createDeleteForm(Centre $centre)
-    {
-        return $this->createFormBuilder()
-            ->setAction($this->generateUrl('centre_delete', array('id' => $centre->getId())))
-            ->setMethod('DELETE')
-            ->getForm()
-        ;
-    }
 }

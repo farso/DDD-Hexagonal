@@ -17,17 +17,34 @@ class CentreTypePro
 {
     private $formBuilder;
 
-    public function __construct(FormFactory $formFactory)
+    private function __construct(FormFactory $formFactory)
     {
         $this->formBuilder = $formFactory->createBuilder();
+    }
 
-        $this->formBuilder
+    public static function newForm(FormFactory $formFactory)
+    {
+        $centreTypePro = new self($formFactory);
+        $formBuilder = $centreTypePro->formBuilder;
+
+        $formBuilder
             ->add('nombre')
             ->add('codi')
             ->add('mailCentre')
             ->add('codiOficial')
             ->add('color');
+
+        return $formBuilder;
     }
+
+    public static function deleteForm(FormFactory $formFactory)
+    {
+        $centreTypePro = new self($formFactory);
+        $formBuilder = $centreTypePro->formBuilder;
+
+        return $formBuilder;
+    }
+
 
     public function getForm()
     {
