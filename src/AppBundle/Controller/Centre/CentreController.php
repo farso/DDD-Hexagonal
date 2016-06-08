@@ -39,11 +39,11 @@ class CentreController extends Controller
     public function newAction(Request $request)
     {
         
-        $centreFormBuilder = CentreTypePro::newForm($this->get('form.factory'));
-        $form = $centreFormBuilder->getForm();
+        $newFormBuilder = CentreTypePro::newForm($this->get('form.factory'));
+        $newForm = $newFormBuilder->getForm();
         
-        $form->handleRequest($request);
-        if ($form->isSubmitted() && $form->isValid()) {
+        $newForm->handleRequest($request);
+        if ($newForm->isSubmitted() && $newForm->isValid()) {
 
             $em = $this->getDoctrine()->getManager();
 
@@ -58,7 +58,7 @@ class CentreController extends Controller
         }
 
         return $this->render('centre/new.html.twig', array(
-            'form' => $form->createView(),
+            'form' => $newForm->createView(),
         ));
     }
 
@@ -79,17 +79,13 @@ class CentreController extends Controller
             throw $this->createNotFoundException('Unable to find Centre entity.');
         }
 
-        $centreFormBuilder = CentreTypePro::deleteForm($this->get('form.factory'));
+        $deleteFormBuilder = $this->createDeleteForm($centre->getId());
 
-        $centreFormBuilder
-            ->setAction($this->generateUrl('centre_delete', array('id' => $centre->getId())))
-            ->setMethod('DELETE');
-
-        $form = $centreFormBuilder->getForm();
+        $deleteForm = $deleteFormBuilder->getForm();
 
         return $this->render('centre/show.html.twig', array(
             'centre' => $centre,
-            'delete_form' => $form->createView(),
+            'delete_form' => $deleteForm->createView(),
         ));
     }
 
@@ -102,31 +98,37 @@ class CentreController extends Controller
 
         $em = $this->getDoctrine()->getManager();
 
-        $centreFindUseCase = new FindCentreUseCase($em->getRepository('AppBundle:Centre\Centre'));
-        $centreDom = $centreFindUseCase->run($id);
+        $centreRepository = $em->getRepository('UicDomainBundle:Centre\Centre');
+        $centre = $centreRepository->find($id);        
 
-        if (!$centreDom) {
+        if (!$centre) {
             throw $this->createNotFoundException('Unable to find Centre entity.');
         }
 
-        $centre = CentreFactoryInf::create($centreDom->toArray());
+        $deleteFormBuilder = $this->createDeleteForm($id);
+        $deleteForm = $deleteFormBuilder->getForm();
 
-        $deleteForm = $this->createDeleteForm($centre);
-        $editForm = $this->createForm('AppBundle\Form\Centre\CentreType', $centre);
+        //prova @todo TRANSFORMER CAP A ARRAY PER LA VISTA
+        $values = [ 'nombre' => $centre->getNombre(),
+                    'codi' => $centre->getCodi(),
+                    'codiOficial' => $centre->getCodiOficial(),
+                    'mailCentre' => $centre->getMailCentre(),
+                    'color' => $centre->getColor()
+                    ];
+
+        $editFormBuilder = CentreTypePro::newForm($this->get('form.factory'), $values);
+        $editForm = $editFormBuilder->getForm();
+
         $editForm->handleRequest($request);
-        //handleRequest: s'encarrega de fer les modificacions a l'objecte de INF
 
         if ($editForm->isSubmitted() && $editForm->isValid()) {
-            // si tot és vàlid, es fa el COMMIT de la transacció
        
-            $centreUpdateUseCase = new UpdateCentreUseCase($em->getRepository('AppBundle:Centre\Centre'));
+            $centreUpdateUseCase = new UpdateCentreUseCase($em->getRepository('UicDomainBundle:Centre\Centre'));
 
-            $paramsEntity = $request->request->get('centre');
+            $paramsEntity = $request->request->get('form');
             $paramsEntity['id'] = $id;
 
-            $centreDom = $centreUpdateUseCase->run($paramsEntity); 
-
-            $centre = CentreFactoryInf::create($centreDom->toArray());
+            $centre = $centreUpdateUseCase->run($paramsEntity); 
 
             return $this->redirectToRoute('centre_index');
         }
@@ -167,6 +169,18 @@ class CentreController extends Controller
         }
 
         return $this->redirectToRoute('centre_index');
+    }
+
+
+    private function createDeleteForm($id)
+    {
+        $centreDeleteForm = CentreTypePro::deleteForm($this->get('form.factory'));
+
+        $centreDeleteForm
+            ->setAction($this->generateUrl('centre_delete', array('id' => $id)))
+            ->setMethod('DELETE');
+
+        return $centreDeleteForm;
     }
 
 }
