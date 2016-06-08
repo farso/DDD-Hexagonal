@@ -4,11 +4,7 @@ namespace AppBundle\Controller\Centre;
 
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
-
-use AppBundle\Form\Centre\CentreType;
-
-use Uic\Application\UseCase\Centre\FindAllCentreUseCase;
-use Uic\Application\UseCase\Centre\FindCentreUseCase;
+use AppBundle\Form\Centre\CentreTypePro;
 use Uic\Application\UseCase\Centre\UpdateCentreUseCase;
 use Uic\Application\UseCase\Centre\CreateCentreUseCase;
 use Uic\Application\UseCase\Centre\DeleteCentreUseCase;
@@ -28,8 +24,8 @@ class CentreController extends Controller
     {
         $em = $this->getDoctrine()->getManager();
 
-        $centreFindAllUseCase = new FindAllCentreUseCase($em->getRepository('UicDomainBundle:Centre\Centre'));
-        $centres = $centreFindAllUseCase->run();
+        $centreRepository = $em->getRepository('UicDomainBundle:Centre\Centre');
+        $centres = $centreRepository->findAll();
 
         return $this->render('centre/index.html.twig', array(
             'centres' => $centres,
@@ -42,30 +38,26 @@ class CentreController extends Controller
      */
     public function newAction(Request $request)
     {
-        $centre = CentreFactoryInf::emptyEntity();
-        $form = $this->createForm('AppBundle\Form\Centre\CentreType', $centre);
+        
+        $centreType = new CentreTypePro($this->get('form.factory'));
+        $form = $centreType->getForm();
+        
         $form->handleRequest($request);
-
-
-
         if ($form->isSubmitted() && $form->isValid()) {
 
             $em = $this->getDoctrine()->getManager();
 
-            $centreRepository = $em->getRepository('AppBundle:Centre\Centre');
-            $tipusCentreRepository = $em->getRepository('AppBundle:TipusCentre\TipusCentre');
-            $centreCreateUseCase = new CreateCentreUseCase($centreRepository, $tipusCentreRepository);
+            $centreRepository = $em->getRepository('UicDomainBundle:Centre\Centre');
+            
+            $centreCreateUseCase = new CreateCentreUseCase($centreRepository);
 
-            $paramsEntity = $request->request->get('centre');
-            $centreDom = $centreCreateUseCase->run($paramsEntity);
-
-            $centre = CentreFactoryInf::create($centreDom->toArray());
+            $paramsEntity = $request->request->get('form');
+            $centre = $centreCreateUseCase->run($paramsEntity);
 
             return $this->redirectToRoute('centre_index');
         }
 
         return $this->render('centre/new.html.twig', array(
-            'centre' => $centre,
             'form' => $form->createView(),
         ));
     }
