@@ -5,9 +5,10 @@ namespace AppBundle\Controller\Centre;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use AppBundle\Form\Centre\CentreTypePro;
-use Uic\Application\UseCase\Centre\UpdateCentreUseCase;
-use Uic\Application\UseCase\Centre\CreateCentreUseCase;
-use Uic\Application\UseCase\Centre\DeleteCentreUseCase;
+use ApplicationBundle\UseCase\Centre\UpdateCentreUseCase;
+use ApplicationBundle\UseCase\Centre\CreateCentreUseCase;
+use ApplicationBundle\UseCase\Centre\DeleteCentreUseCase;
+use DomainBundle\Entity\Centre\Centre;
 
 
 /**
@@ -24,7 +25,7 @@ class CentreController extends Controller
     {
         $em = $this->getDoctrine()->getManager();
 
-        $centreRepository = $em->getRepository('UicDomainBundle:Centre\Centre');
+        $centreRepository = $em->getRepository('DomainBundle:Centre\Centre');
         $centres = $centreRepository->findAll();
 
         return $this->render('centre/index.html.twig', array(
@@ -47,12 +48,13 @@ class CentreController extends Controller
 
             $em = $this->getDoctrine()->getManager();
 
-            $centreRepository = $em->getRepository('UicDomainBundle:Centre\Centre');
+            $centreRepository = $em->getRepository('DomainBundle:Centre\Centre');
             
             $centreCreateUseCase = new CreateCentreUseCase($centreRepository);
-
             $paramsEntity = $request->request->get('form');
+
             $centre = $centreCreateUseCase->run($paramsEntity);
+            //$centre = new Centre($request);
 
             return $this->redirectToRoute('centre_index');
         }
@@ -71,7 +73,7 @@ class CentreController extends Controller
 
         $em = $this->getDoctrine()->getManager();
 
-        $centreRepository = $em->getRepository('UicDomainBundle:Centre\Centre');        
+        $centreRepository = $em->getRepository('DomainBundle:Centre\Centre');        
 
         $centre = $centreRepository->find($id);
 
@@ -98,7 +100,7 @@ class CentreController extends Controller
 
         $em = $this->getDoctrine()->getManager();
 
-        $centreRepository = $em->getRepository('UicDomainBundle:Centre\Centre');
+        $centreRepository = $em->getRepository('DomainBundle:Centre\Centre');
         $centre = $centreRepository->find($id);        
 
         if (!$centre) {
@@ -123,7 +125,7 @@ class CentreController extends Controller
 
         if ($editForm->isSubmitted() && $editForm->isValid()) {
        
-            $centreUpdateUseCase = new UpdateCentreUseCase($em->getRepository('UicDomainBundle:Centre\Centre'));
+            $centreUpdateUseCase = new UpdateCentreUseCase($em->getRepository('DomainBundle:Centre\Centre'));
 
             $paramsEntity = $request->request->get('form');
             $paramsEntity['id'] = $id;
@@ -149,7 +151,7 @@ class CentreController extends Controller
     {
         $em = $this->getDoctrine()->getManager();
 
-        $centreRepository = $em->getRepository('UicDomainBundle:Centre\Centre');
+        $centreRepository = $em->getRepository('DomainBundle:Centre\Centre');
         $centre = $centreRepository->find($id);
 
         if (!$centre) {
@@ -162,7 +164,7 @@ class CentreController extends Controller
 
         if ($deleteForm->isSubmitted() && $deleteForm->isValid()) {
 
-            $centreDeleteUseCase = new DeleteCentreUseCase($em->getRepository('UicDomainBundle:Centre\Centre'));
+            $centreDeleteUseCase = new DeleteCentreUseCase($em->getRepository('DomainBundle:Centre\Centre'));
             $centreDeleteUseCase->run($id); 
 
         }

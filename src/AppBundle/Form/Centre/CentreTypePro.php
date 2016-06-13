@@ -64,7 +64,7 @@ class CentreTypePro
     {
         echo ' hola ';die();
         $resolver->setDefaults(array(
-            'data_class' => 'Uic\Domain\Entity\Centre\Centre'
+            'data_class' => 'DomainBundle\Entity\Centre\Centre'
         ));
     }
 }
