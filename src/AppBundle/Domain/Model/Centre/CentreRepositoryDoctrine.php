@@ -4,9 +4,9 @@ namespace AppBundle\Domain\Model\Centre;
 
 use \Doctrine\ORM\EntityRepository;
 use \Doctrine\ORM\EntityManager;
-use Uic\Application\Contract\CentreRepositoryInterface;
-use Uic\Application\Factory\CentreFactory;
-use Uic\Domain\Entity\Centre\Centre; 
+use ApplicationBundle\Contract\CentreRepositoryInterface;
+use ApplicationBundle\Factory\CentreFactory;
+use DomainBundle\Entity\Centre\Centre; 
 use AppBundle\Factory\CentreFactoryInf;
 use AppBundle\Factory\TipusCentreFactoryInf;
 use AppBundle\Adapter\Logs\LogsAdapter;
@@ -28,23 +28,22 @@ class CentreRepositoryDoctrine extends \Doctrine\ORM\EntityRepository implements
      */
     public function find($id)
     {
-    	$centre = parent::find($id);
+        $centre = parent::find($id);
 
         return $centre;
-    } 
-
-	
+    }
+    
     /**
      * Finds all entities in the repository.
      *
      * @return array The entities (DOMAIN).
      */
     public function findAll()
-	{    
+    {
         $centresDom = parent::findAll();
         
         return $centresDom;
-    }  
+    }
 
      /**
      * Finds entities by a set of criteria.
@@ -59,7 +58,7 @@ class CentreRepositoryDoctrine extends \Doctrine\ORM\EntityRepository implements
     public function findBy(array $criteria, array $orderBy = null, $limit = null, $offset = null)
     {
 
-        $centresInf = parent::findBy($criteria,$orderBy,$limit,$offset);
+        $centresInf = parent::findBy($criteria, $orderBy, $limit, $offset);
 
         return $centresInf;
     }
@@ -74,7 +73,7 @@ class CentreRepositoryDoctrine extends \Doctrine\ORM\EntityRepository implements
      */
     public function findOneBy(array $criteria, array $orderBy = null)
     {
-        $centre = parent::findOneBy($criteria,$orderBy);
+        $centre = parent::findOneBy($criteria, $orderBy);
         
         return $centre;
     }
@@ -89,8 +88,8 @@ class CentreRepositoryDoctrine extends \Doctrine\ORM\EntityRepository implements
         $em->flush();
 
         // S'activa el sistema de LOG (Rabbit)
-        $logAdapter = new LogsAdapter();
-        $logAdapter->writeLog('666','Hello hell!!');
+        // $logAdapter = new LogsAdapter();
+        // $logAdapter->writeLog('666','Hello hell!!');
 
         return $centre;
     }
@@ -98,12 +97,11 @@ class CentreRepositoryDoctrine extends \Doctrine\ORM\EntityRepository implements
     public function update()
     {
         $em = $this->getEntityManager();
-
         $em->flush();
 
         // S'activa el sistema de LOG (Rabbit)
-        $logAdapter = new LogsAdapter();
-        $logAdapter->writeLog('666','Update hell to sky!!');  
+        // $logAdapter = new LogsAdapter();
+        // $logAdapter->writeLog('666','Update hell to sky!!');  
     }
 
 
@@ -116,9 +114,7 @@ class CentreRepositoryDoctrine extends \Doctrine\ORM\EntityRepository implements
         $em->flush();
 
         // S'activa el sistema de LOG (Rabbit)
-        $logAdapter = new LogsAdapter();
-        $logAdapter->writeLog('666','Bye hell!!');  
+        // $logAdapter = new LogsAdapter();
+        // $logAdapter->writeLog('666','Bye hell!!');  
     }
-
-
 }

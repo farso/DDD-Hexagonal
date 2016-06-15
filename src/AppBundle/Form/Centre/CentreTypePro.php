@@ -13,7 +13,6 @@ use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\Extension\Core\Type\DateType;
 use Symfony\Component\Form\Extension\Core\Type\FormType;
 
-
 class CentreTypePro
 {
     private $formBuilder;
@@ -23,7 +22,7 @@ class CentreTypePro
         if (null === $values) {
             $this->formBuilder = $formFactory->createBuilder();
         } else {
-            $this->formBuilder = $formFactory->createBuilder(FormType::class,$values);
+            $this->formBuilder = $formFactory->createBuilder(FormType::class, $values);
         }
     }
 
@@ -62,9 +61,8 @@ class CentreTypePro
      */
     public function configureOptions(OptionsResolver $resolver)
     {
-        echo ' hola ';die();
         $resolver->setDefaults(array(
-            'data_class' => 'Uic\Domain\Entity\Centre\Centre'
+            'data_class' => 'DomainBundle\Entity\Centre\Centre'
         ));
     }
 }

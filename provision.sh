@@ -79,12 +79,8 @@ mv /tmp/pg_hba.conf3 /etc/postgresql/9.3/main/pg_hba.conf
 sudo /etc/init.d/postgresql reload
 
 psql -U postgres < /vagrant/inici_bd.sql
-
-alias ll='ls -la --color' 
-
-echo "////////////////////////////////////////////////////////"
-echo "Copy the folders /application and /domain to vendor/uic/"
-echo "////////////////////////////////////////////////////////"
-cp -fr /application /vagrant/vendor/uic/
-cp -fr /domain /vagrant/vendor/uic/
-
+echo "///////////////////////////////////////////////"
+echo "System settings"
+echo "///////////////////////////////////////////////"
+alias ll='ls -la --color'
+source /vagrant/script.sh 

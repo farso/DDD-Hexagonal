@@ -1,4 +1,4 @@
-Uic\Domain\Entity\Centre\Centre:
+DomainBundle\Entity\Centre\Centre:
     type: entity
     table: centros
     schema: hexagonal

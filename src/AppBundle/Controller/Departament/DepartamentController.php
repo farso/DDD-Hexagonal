@@ -7,10 +7,12 @@ use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use AppBundle\Entity\Departament\Departament;
 use AppBundle\Form\Departament\DepartamentType;
 use AppBundle\Factory\DepartamentFactoryInf;
-use Uic\Application\UseCase\Departament\FindAllDepartamentUseCase;
-use Uic\Application\UseCase\Departament\CreateDepartamentUseCase;
-use Uic\Application\UseCase\Departament\FindDepartamentUseCase;
-use Uic\Application\UseCase\Departament\UpdateDepartamentUseCase;
+use ApplicationBundle\UseCase\Departament\FindAllDepartamentUseCase;
+use ApplicationBundle\UseCase\Departament\CreateDepartamentUseCase;
+use ApplicationBundle\UseCase\Departament\FindDepartamentUseCase;
+use ApplicationBundle\UseCase\Departament\UpdateDepartamentUseCase;
+use DomainBundle\Entity\TipusCentre\TipusCentre;
+
 
 /**
  * Departaments\Departaments controller.
