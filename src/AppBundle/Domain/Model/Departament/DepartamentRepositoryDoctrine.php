@@ -4,8 +4,8 @@ namespace AppBundle\Adapter\Repository;
 
 use  \Doctrine\ORM\EntityRepository;
 use  \Doctrine\ORM\EntityManager;
-use  Uic\Application\Contract\DepartamentRepositoryInterface;
-use  Uic\Application\Factory\DepartamentFactory;
+use  ApplicationBundle\Contract\DepartamentRepositoryInterface;
+use  ApplicationBundle\Factory\DepartamentFactory;
 use  AppBundle\Factory\DepartamentFactoryInf;
 use  AppBundle\Adapter\Logs\LogsAdapter;
 

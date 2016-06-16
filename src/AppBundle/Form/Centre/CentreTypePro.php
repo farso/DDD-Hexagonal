@@ -13,7 +13,6 @@ use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\Extension\Core\Type\DateType;
 use Symfony\Component\Form\Extension\Core\Type\FormType;
 
-
 class CentreTypePro
 {
     private $formBuilder;
@@ -49,5 +48,4 @@ class CentreTypePro
 
         return $formBuilder;
     }
-
 }

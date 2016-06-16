@@ -4,9 +4,9 @@ namespace AppBundle\Domain\Model\Centre;
 
 use \Doctrine\ORM\EntityRepository;
 use \Doctrine\ORM\EntityManager;
-use Uic\Application\Contract\CentreRepositoryInterface;
-use Uic\Application\Factory\CentreFactory;
-use Uic\Domain\Entity\Centre\Centre;
+use ApplicationBundle\Contract\CentreRepositoryInterface;
+use ApplicationBundle\Factory\CentreFactory;
+use DomainBundle\Entity\Centre\Centre;
 use AppBundle\Factory\CentreFactoryInf;
 use AppBundle\Factory\TipusCentreFactoryInf;
 use AppBundle\Adapter\Logs\LogsAdapter;

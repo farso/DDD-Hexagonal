@@ -4,8 +4,8 @@ namespace AppBundle\Adapter\Repository;
 
 use  \Doctrine\ORM\EntityRepository;
 use  \Doctrine\ORM\EntityManager;
-use  Uic\Application\Contract\TipusCentreRepositoryInterface;
-use  Uic\Application\Factory\TipusCentreFactory;
+use  ApplicationBundle\Contract\TipusCentreRepositoryInterface;
+use  ApplicationBundle\Factory\TipusCentreFactory;
 use  AppBundle\Factory\TipusCentreFactoryInf;
 use  AppBundle\Adapter\Logs\LogsAdapter;
 

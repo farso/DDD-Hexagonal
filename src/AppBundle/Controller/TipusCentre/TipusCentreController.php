@@ -4,10 +4,10 @@ namespace AppBundle\Controller\TipusCentre;
 
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
-use Uic\Application\UseCase\TipusCentre\CreateTipusCentreUseCase;
-use Uic\Application\UseCase\TipusCentre\FindTipusCentreUseCase;
-use Uic\Application\UseCase\TipusCentre\UpdateTipusCentreUseCase;
-use Uic\Application\UseCase\TipusCentre\DeleteTipusCentreUseCase;
+use ApplicationBundle\UseCase\TipusCentre\CreateTipusCentreUseCase;
+use ApplicationBundle\UseCase\TipusCentre\FindTipusCentreUseCase;
+use ApplicationBundle\UseCase\TipusCentre\UpdateTipusCentreUseCase;
+use ApplicationBundle\UseCase\TipusCentre\DeleteTipusCentreUseCase;
 use AppBundle\Entity\TipusCentre\TipusCentre;
 use AppBundle\Factory\TipusCentreFactoryInf;
 use AppBundle\Form\TipusCentre\TipusCentreType;
