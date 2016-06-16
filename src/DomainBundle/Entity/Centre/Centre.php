@@ -128,7 +128,8 @@ class Centre extends Entity implements CentreInterface
         return $this->tipusCentre;
     }
 
-    public function update($nom, $codi, $mailCentre, $codiOficial, $color, $tipusCentre) {
+    public function update($nom, $codi, $mailCentre, $codiOficial, $color)
+    {
 
         //@todo validació atributs d'entitat (que siguin enters, char(1), ...)
         $this->nombre = $nom;
@@ -136,6 +137,5 @@ class Centre extends Entity implements CentreInterface
         $this->mailCentre = $mailCentre;
         $this->codiOficial = $codiOficial;
         $this->color = $color;
-        $this->tipusCentre = $tipusCentre;
     }
 }

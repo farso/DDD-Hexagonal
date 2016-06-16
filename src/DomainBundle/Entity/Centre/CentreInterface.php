@@ -24,6 +24,5 @@ interface CentreInterface extends EntityInterface
 
     public function getTipusCentre();
     
-    public function update($nom, $codi, $mailCentre, $codiOficial, $color, $tipusCentre);
-
+    public function update($nom, $codi, $mailCentre, $codiOficial, $color);
 }
