@@ -107,7 +107,7 @@ class CentreRepositoryDoctrine extends \Doctrine\ORM\EntityRepository implements
 
 
 
-    public function delete($centre)
+    public function delete(Centre $centre)
     {
         $em = $this->getEntityManager();
 

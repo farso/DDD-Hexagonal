@@ -10,7 +10,7 @@ use ApplicationBundle\UseCase\TipusCentre\UpdateTipusCentreUseCase;
 use ApplicationBundle\UseCase\TipusCentre\DeleteTipusCentreUseCase;
 use AppBundle\Entity\TipusCentre\TipusCentre;
 use AppBundle\Factory\TipusCentreFactoryInf;
-use AppBundle\Form\TipusCentre\TipusCentreType;
+use AppBundle\Form\TipusCentre\TipusCentreTypePro;
 
 /**
  * TipusCentre\TipusCentre controller.
@@ -26,7 +26,7 @@ class TipusCentreController extends Controller
     {
         $em = $this->getDoctrine()->getManager();
 
-        $tipusCentres = $em->getRepository('AppBundle:TipusCentre\TipusCentre')->findAll();
+        $tipusCentres = $em->getRepository('DomainBundle:TipusCentre\TipusCentre')->findAll();
 
         return $this->render('tipuscentre/index.html.twig', array(
             'tipusCentres' => $tipusCentres,
@@ -39,29 +39,28 @@ class TipusCentreController extends Controller
      */
     public function newAction(Request $request)
     {
-        $tipusCentre = new TipusCentre();
-        $form = $this->createForm('AppBundle\Form\TipusCentre\TipusCentreType', $tipusCentre);
-        $form->handleRequest($request);
 
-        if ($form->isSubmitted() && $form->isValid()) {
+        $newForm = TipusCentreTypePro::newForm($this->get('form.factory'));
+
+        $newForm->handleRequest($request);
+
+        if ($newForm->isSubmitted() && $newForm->isValid()) {
 
             $em = $this->getDoctrine()->getManager();
 
-            $createTipusCentreUseCase = new CreateTipusCentreUseCase($em->getRepository('AppBundle:TipusCentre\TipusCentre'));
+            $createTipusCentreUseCase = new CreateTipusCentreUseCase($em->getRepository('DomainBundle:TipusCentre\TipusCentre'));
 
-            $paramsEntity = $request->request->get('tipus_centre');
+            $paramsEntity = $request->request->get(TipusCentreTypePro::NOM_FORM);
 
-            $tipusCentreDom = $createTipusCentreUseCase->run($paramsEntity);
+            $tipusCentre = $createTipusCentreUseCase->run($paramsEntity);
 
-            $tipusCentre = TipusCentreFactoryInf::create($tipusCentreDom->toArray());
             
             return $this->redirectToRoute('tipuscentre_index');
 
         }
 
         return $this->render('tipuscentre/new.html.twig', array(
-            'tipusCentre' => $tipusCentre,
-            'form' => $form->createView(),
+            'form' => $newForm->createView(),
         ));
     }
 
@@ -73,17 +72,14 @@ class TipusCentreController extends Controller
     {
         $em = $this->getDoctrine()->getManager();
 
-        $tipusCentreFindUseCase = new FindTipusCentreUseCase($em->getRepository('AppBundle:TipusCentre\TipusCentre'));
-        $tipusCentreDom = $tipusCentreFindUseCase->run($id);
+        $tipusCentreFindUseCase = new FindTipusCentreUseCase($em->getRepository('DomainBundle:TipusCentre\TipusCentre'));
+        $tipusCentre = $tipusCentreFindUseCase->run($id);
 
-        if (!$tipusCentreDom) {
+        if (!$tipusCentre) {
             throw $this->createNotFoundException('Unable to find TipusCentre entity.');
         }
 
-        $tipusCentre = TipusCentreFactoryInf::create($tipusCentreDom->toArray());
-
-
-        $deleteForm = $this->createDeleteForm($tipusCentre);
+        $deleteForm = $this->createDeleteForm($tipusCentre->getId());
 
         return $this->render('tipuscentre/show.html.twig', array(
             'tipusCentre' => $tipusCentre,
@@ -97,40 +93,38 @@ class TipusCentreController extends Controller
      */
     public function editAction(Request $request, $id)
     {
-
-
         $em = $this->getDoctrine()->getManager();
 
-        $tipusCentreFindUseCase = new FindTipusCentreUseCase($em->getRepository('AppBundle:TipusCentre\TipusCentre'));
-        $tipusCentreDom = $tipusCentreFindUseCase->run($id);
+        $tipusCentreFindUseCase = new FindTipusCentreUseCase($em->getRepository('DomainBundle:TipusCentre\TipusCentre'));
+        $tipusCentre = $tipusCentreFindUseCase->run($id);
 
-        if (!$tipusCentreDom) {
+        if (!$tipusCentre) {
             throw $this->createNotFoundException('Unable to find TipusCentre entity.');
         }
 
-        $tipusCentre = TipusCentreFactoryInf::create($tipusCentreDom->toArray());
+        $values = [ 'descriCat' => $tipusCentre->getDescriCat(),
+                    'descriEsp' => $tipusCentre->getDescriEsp(),
+                    'descriEng' => $tipusCentre->getDescriEng(),
+                    ];
 
-        $deleteForm = $this->createDeleteForm($tipusCentre);
-        $editForm = $this->createForm('AppBundle\Form\TipusCentre\TipusCentreType', $tipusCentre);
+        $deleteForm = $this->createDeleteForm($tipusCentre->getId());
+        $editForm = TipusCentreTypePro::newForm($this->get('form.factory'), $values);
         $editForm->handleRequest($request);
 
         if ($editForm->isSubmitted() && $editForm->isValid()) {
             // si tot és vàlid, es fa el COMMIT de la transacció
        
-            $tipusCentreUpdateUseCase = new UpdateTipusCentreUseCase($em->getRepository('AppBundle:TipusCentre\TipusCentre'));
+            $tipusCentreUpdateUseCase = new UpdateTipusCentreUseCase($em->getRepository('DomainBundle:TipusCentre\TipusCentre'));
 
-            $paramsEntity = $request->request->get('tipus_centre');
+            $paramsEntity = $request->request->get(TipusCentreTypePro::NOM_FORM);
             $paramsEntity['id'] = $id;
 
-            $tipusCentreDom = $tipusCentreUpdateUseCase->run($paramsEntity); 
-
-            $tipusCentre = TipusCentreFactoryInf::create($tipusCentreDom->toArray());
+            $tipusCentre = $tipusCentreUpdateUseCase->run($paramsEntity);
 
             return $this->redirectToRoute('tipuscentre_index');
         }
 
         return $this->render('tipuscentre/edit.html.twig', array(
-            'tipusCentre' => $tipusCentre,
             'edit_form' => $editForm->createView(),
             'delete_form' => $deleteForm->createView(),
         ));
@@ -145,22 +139,20 @@ class TipusCentreController extends Controller
 
         $em = $this->getDoctrine()->getManager();
 
-        $tipusCentreFindUseCase = new FindTipusCentreUseCase($em->getRepository('AppBundle:TipusCentre\TipusCentre'));
-        $tipusCentreDom = $tipusCentreFindUseCase->run($id);
+        $tipusCentreFindUseCase = new FindTipusCentreUseCase($em->getRepository('DomainBundle:TipusCentre\TipusCentre'));
+        $tipusCentre = $tipusCentreFindUseCase->run($id);
 
-        if (!$tipusCentreDom) {
+        if (!$tipusCentre) {
             throw $this->createNotFoundException('Unable to find TipusCentre entity.');
         }
 
-        $tipusCentre = TipusCentreFactoryInf::create($tipusCentreDom->toArray());
+        $deleteForm = $this->createDeleteForm($tipusCentre->getId());
+        $deleteForm->handleRequest($request);
 
-        $form = $this->createDeleteForm($tipusCentre);
-        $form->handleRequest($request);
+        if ($deleteForm->isSubmitted() && $deleteForm->isValid()) {
 
-        if ($form->isSubmitted() && $form->isValid()) {
-
-            $tipusCentreDeleteUseCase = new DeleteTipusCentreUseCase($em->getRepository('AppBundle:TipusCentre\TipusCentre'));
-            $tipusCentreDeleteUseCase->run($id); 
+            $tipusCentreDeleteUseCase = new DeleteTipusCentreUseCase($em->getRepository('DomainBundle:TipusCentre\TipusCentre'));
+            $tipusCentreDeleteUseCase->run($id);
 
         }
 
@@ -174,12 +166,14 @@ class TipusCentreController extends Controller
      *
      * @return \Symfony\Component\Form\Form The form
      */
-    private function createDeleteForm(TipusCentre $tipusCentre)
+    private function createDeleteForm($id)
     {
-        return $this->createFormBuilder()
-            ->setAction($this->generateUrl('tipuscentre_delete', array('id' => $tipusCentre->getId())))
-            ->setMethod('DELETE')
-            ->getForm()
-        ;
+        $tipusCentreDeleteFormBuilder = TipusCentreTypePro::deleteFormBuilder($this->get('form.factory'));
+
+        $tipusCentreDeleteFormBuilder
+            ->setAction($this->generateUrl('tipuscentre_delete', array('id' => $id)))
+            ->setMethod('DELETE');
+
+        return $tipusCentreDeleteFormBuilder->getForm();
     }
 }

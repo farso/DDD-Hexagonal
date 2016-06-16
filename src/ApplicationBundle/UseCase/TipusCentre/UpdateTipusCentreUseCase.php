@@ -21,19 +21,21 @@ class UpdateTipusCentreUseCase
     {
 
         $tipusCentreFindUseCase = new FindTipusCentreUseCase($this->tipusCentreRepository);
-        $entity = $tipusCentreFindUseCase->run($params['id']); 
+        $tipusCentre = $tipusCentreFindUseCase->run($params['id']);
 
-        if (null === $entity) {
+        if (null === $tipusCentre) {
             //@todo excepcions
             throw new \Exception("no s'ha trobat l'entitat");
         }
 
-            //@todo validació de variables per lògica complexa (que el nom sigui la composició de 3 + 2, ...)
-            //   les validacions d'entitat haurien d'anar repetides a tots els uses cases o no?
-            //   
+        $descriCat = $params['descriCat'];
+        $descriEng = $params['descriEng'];
+        $descriEsp = $params['descriEsp'];
 
-        $entity = $this->tipusCentreRepository->update($params); 
+        $tipusCentre->update($descriCat, $descriEsp, $descriEng);
+        
+        $tipusCentre = $this->tipusCentreRepository->update($params);
 
-        return $entity;
+        return $tipusCentre;
     }
 }

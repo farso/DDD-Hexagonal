@@ -79,9 +79,7 @@ class CentreController extends Controller
             throw $this->createNotFoundException('Unable to find Centre entity.');
         }
 
-        $deleteFormBuilder = $this->createDeleteForm($centre->getId());
-
-        $deleteForm = $deleteFormBuilder->getForm();
+        $deleteForm = $this->createDeleteForm($centre->getId());
 
         return $this->render('centre/show.html.twig', array(
             'centre' => $centre,
@@ -95,7 +93,6 @@ class CentreController extends Controller
      */
     public function editAction(Request $request, $id)
     {
-
         $em = $this->getDoctrine()->getManager();
 
         $centreRepository = $em->getRepository('DomainBundle:Centre\Centre');
@@ -105,8 +102,7 @@ class CentreController extends Controller
             throw $this->createNotFoundException('Unable to find Centre entity.');
         }
 
-        $deleteFormBuilder = $this->createDeleteForm($id);
-        $deleteForm = $deleteFormBuilder->getForm();
+        $deleteForm = $this->createDeleteForm($id);
 
         //prova @todo TRANSFORMER CAP A ARRAY PER LA VISTA
         $values = [ 'nombre' => $centre->getNombre(),
@@ -155,8 +151,7 @@ class CentreController extends Controller
             throw $this->createNotFoundException('Unable to find Centre entity.');
         }
 
-        $deleteFormBuilder = $this->createDeleteForm($id);
-        $deleteForm = $deleteFormBuilder->getForm();
+        $deleteForm = $this->createDeleteForm($id);
         $deleteForm->handleRequest($request);
 
         if ($deleteForm->isSubmitted() && $deleteForm->isValid()) {
@@ -178,6 +173,6 @@ class CentreController extends Controller
             ->setAction($this->generateUrl('centre_delete', array('id' => $id)))
             ->setMethod('DELETE');
 
-        return $centreDeleteForm;
+        return $centreDeleteForm->getForm();
     }
 }
