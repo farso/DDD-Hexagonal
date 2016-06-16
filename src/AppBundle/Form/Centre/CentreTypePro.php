@@ -23,7 +23,7 @@ class CentreTypePro
         if (null === $values) {
             $this->formBuilder = $formFactory->createBuilder();
         } else {
-            $this->formBuilder = $formFactory->createBuilder(FormType::class,$values);
+            $this->formBuilder = $formFactory->createBuilder(FormType::class, $values);
         }
     }
 
@@ -39,10 +39,10 @@ class CentreTypePro
             ->add('codiOficial')
             ->add('color');
 
-        return $formBuilder;
+        return $formBuilder->getForm();
     }
 
-    public static function deleteForm(FormFactory $formFactory)
+    public static function deleteFormBuilder(FormFactory $formFactory)
     {
         $centreTypePro = new self($formFactory);
         $formBuilder = $centreTypePro->formBuilder;
@@ -50,21 +50,4 @@ class CentreTypePro
         return $formBuilder;
     }
 
-
-    public function getForm()
-    {
-        return $this->formBuilder
-            ->getForm();
-    }
-
-    /**
-     * @param OptionsResolver $resolver
-     */
-    public function configureOptions(OptionsResolver $resolver)
-    {
-        echo ' hola ';die();
-        $resolver->setDefaults(array(
-            'data_class' => 'Uic\Domain\Entity\Centre\Centre'
-        ));
-    }
 }

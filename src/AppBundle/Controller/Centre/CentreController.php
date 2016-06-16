@@ -9,7 +9,6 @@ use Uic\Application\UseCase\Centre\UpdateCentreUseCase;
 use Uic\Application\UseCase\Centre\CreateCentreUseCase;
 use Uic\Application\UseCase\Centre\DeleteCentreUseCase;
 
-
 /**
  * Centre controller.
  *
@@ -39,8 +38,7 @@ class CentreController extends Controller
     public function newAction(Request $request)
     {
         
-        $newFormBuilder = CentreTypePro::newForm($this->get('form.factory'));
-        $newForm = $newFormBuilder->getForm();
+        $newForm = CentreTypePro::newForm($this->get('form.factory'));
         
         $newForm->handleRequest($request);
         if ($newForm->isSubmitted() && $newForm->isValid()) {
@@ -71,7 +69,7 @@ class CentreController extends Controller
 
         $em = $this->getDoctrine()->getManager();
 
-        $centreRepository = $em->getRepository('UicDomainBundle:Centre\Centre');        
+        $centreRepository = $em->getRepository('UicDomainBundle:Centre\Centre');
 
         $centre = $centreRepository->find($id);
 
@@ -99,7 +97,7 @@ class CentreController extends Controller
         $em = $this->getDoctrine()->getManager();
 
         $centreRepository = $em->getRepository('UicDomainBundle:Centre\Centre');
-        $centre = $centreRepository->find($id);        
+        $centre = $centreRepository->find($id);
 
         if (!$centre) {
             throw $this->createNotFoundException('Unable to find Centre entity.');
@@ -116,8 +114,7 @@ class CentreController extends Controller
                     'color' => $centre->getColor()
                     ];
 
-        $editFormBuilder = CentreTypePro::newForm($this->get('form.factory'), $values);
-        $editForm = $editFormBuilder->getForm();
+        $editForm = CentreTypePro::newForm($this->get('form.factory'), $values);
 
         $editForm->handleRequest($request);
 
@@ -128,7 +125,7 @@ class CentreController extends Controller
             $paramsEntity = $request->request->get('form');
             $paramsEntity['id'] = $id;
 
-            $centre = $centreUpdateUseCase->run($paramsEntity); 
+            $centre = $centreUpdateUseCase->run($paramsEntity);
 
             return $this->redirectToRoute('centre_index');
         }
@@ -163,8 +160,7 @@ class CentreController extends Controller
         if ($deleteForm->isSubmitted() && $deleteForm->isValid()) {
 
             $centreDeleteUseCase = new DeleteCentreUseCase($em->getRepository('UicDomainBundle:Centre\Centre'));
-            $centreDeleteUseCase->run($id); 
-
+            $centreDeleteUseCase->run($id);
         }
 
         return $this->redirectToRoute('centre_index');
@@ -173,7 +169,7 @@ class CentreController extends Controller
 
     private function createDeleteForm($id)
     {
-        $centreDeleteForm = CentreTypePro::deleteForm($this->get('form.factory'));
+        $centreDeleteForm = CentreTypePro::deleteFormBuilder($this->get('form.factory'));
 
         $centreDeleteForm
             ->setAction($this->generateUrl('centre_delete', array('id' => $id)))
@@ -181,5 +177,4 @@ class CentreController extends Controller
 
         return $centreDeleteForm;
     }
-
 }
