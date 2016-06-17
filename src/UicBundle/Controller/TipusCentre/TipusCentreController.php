@@ -8,9 +8,8 @@ use UicBundle\Application\UseCase\TipusCentre\CreateTipusCentreUseCase;
 use UicBundle\Application\UseCase\TipusCentre\FindTipusCentreUseCase;
 use UicBundle\Application\UseCase\TipusCentre\UpdateTipusCentreUseCase;
 use UicBundle\Application\UseCase\TipusCentre\DeleteTipusCentreUseCase;
-use UicBundle\Entity\TipusCentre\TipusCentre;
-use UicBundle\Factory\TipusCentreFactoryInf;
-use UicBundle\Form\TipusCentre\TipusCentreTypePro;
+use UicBundle\Domain\Entity\TipusCentre\TipusCentre;
+use UicBundle\Infrastructure\Form\TipusCentre\TipusCentreTypePro;
 
 /**
  * TipusCentre\TipusCentre controller.

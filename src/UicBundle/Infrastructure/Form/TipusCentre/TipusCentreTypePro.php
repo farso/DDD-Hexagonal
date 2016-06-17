@@ -1,6 +1,6 @@
 <?php
 
-namespace UicBundle\Form\TipusCentre;
+namespace UicBundle\Infrastructure\Form\TipusCentre;
 
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;

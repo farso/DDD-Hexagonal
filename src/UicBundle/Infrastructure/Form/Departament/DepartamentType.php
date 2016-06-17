@@ -1,6 +1,6 @@
 <?php
 
-namespace UicBundle\Form\Departament;
+namespace UicBundle\Infrastructure\Form\Departament;
 
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
