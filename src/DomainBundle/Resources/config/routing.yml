@@ -1,3 +1,0 @@
-domain_homepage:
-    path:     /
-    defaults: { _controller: DomainBundle:Default:index }

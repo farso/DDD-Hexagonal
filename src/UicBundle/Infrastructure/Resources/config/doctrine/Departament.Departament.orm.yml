@@ -1,0 +1,28 @@
+UicBundle\Entity\Departament\Departament:
+    type: entity
+    table: departamentos
+    schema: hexagonal
+    repositoryClass: UicBundle\Adapter\Repository\DepartamentRepositoryDoctrine
+    id:
+        id:
+            type: guid
+            id: true
+            column: uuid
+    fields:
+        nombre:
+            type: string
+            length: '50'
+            nullable: true
+        centreId:
+            type: guid
+            nullable: true
+            column: uuid_centro
+        codigoMec:
+            type: integer
+            nullable: true
+            column: codigo_mec
+        centreOficialId:
+            type: guid
+            nullable: true
+            column: uuid_centro_oficial
+    lifecycleCallbacks: {  }
