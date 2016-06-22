@@ -27,18 +27,5 @@ class CentreType extends AbstractType
                 'choice_label' => 'descriCat'
                 ))*/
         ;
-
-
-
-    }
-    
-    /**
-     * @param OptionsResolver $resolver
-     */
-    public function configureOptions(OptionsResolver $resolver)
-    {
-        $resolver->setDefaults(array(
-            'data_class' => 'UicBundle\Entity\Centre\Centre'
-        ));
     }
 }

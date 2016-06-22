@@ -20,14 +20,4 @@ class TipusCentreType extends AbstractType
             ->add('descriEng')
         ;
     }
-    
-    /**
-     * @param OptionsResolver $resolver
-     */
-    public function configureOptions(OptionsResolver $resolver)
-    {
-        $resolver->setDefaults(array(
-            'data_class' => 'UicBundle\Entity\TipusCentre\TipusCentre'
-        ));
-    }
 }

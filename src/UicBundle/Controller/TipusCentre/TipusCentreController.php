@@ -9,7 +9,7 @@ use UicBundle\Application\UseCase\TipusCentre\FindTipusCentreUseCase;
 use UicBundle\Application\UseCase\TipusCentre\UpdateTipusCentreUseCase;
 use UicBundle\Application\UseCase\TipusCentre\DeleteTipusCentreUseCase;
 use UicBundle\Domain\Entity\TipusCentre\TipusCentre;
-use UicBundle\Infrastructure\Form\TipusCentre\TipusCentreTypePro;
+use UicBundle\Infrastructure\Form\TipusCentre\TipusCentreType;
 
 /**
  * TipusCentre\TipusCentre controller.
@@ -38,8 +38,7 @@ class TipusCentreController extends Controller
      */
     public function newAction(Request $request)
     {
-
-        $newForm = TipusCentreTypePro::newForm($this->get('form.factory'));
+        $newForm = $this->createForm('UicBundle\Infrastructure\Form\TipusCentre\TipusCentreType');
 
         $newForm->handleRequest($request);
 
@@ -49,7 +48,7 @@ class TipusCentreController extends Controller
 
             $createTipusCentreUseCase = new CreateTipusCentreUseCase($em->getRepository('UicBundle:TipusCentre\TipusCentre'));
 
-            $paramsEntity = $request->request->get(TipusCentreTypePro::NOM_FORM);
+            $paramsEntity = $request->request->get($newForm->getName());
 
             $tipusCentre = $createTipusCentreUseCase->run($paramsEntity);
 
@@ -107,7 +106,8 @@ class TipusCentreController extends Controller
                     ];
 
         $deleteForm = $this->createDeleteForm($tipusCentre->getId());
-        $editForm = TipusCentreTypePro::newForm($this->get('form.factory'), $values);
+        $editForm = $this->createForm('UicBundle\Infrastructure\Form\TipusCentre\TipusCentreType', $values);
+
         $editForm->handleRequest($request);
 
         if ($editForm->isSubmitted() && $editForm->isValid()) {
@@ -115,7 +115,7 @@ class TipusCentreController extends Controller
        
             $tipusCentreUpdateUseCase = new UpdateTipusCentreUseCase($em->getRepository('UicBundle:TipusCentre\TipusCentre'));
 
-            $paramsEntity = $request->request->get(TipusCentreTypePro::NOM_FORM);
+            $paramsEntity = $request->request->get($editForm->getName());
             $paramsEntity['id'] = $id;
 
             $tipusCentre = $tipusCentreUpdateUseCase->run($paramsEntity);
@@ -167,12 +167,10 @@ class TipusCentreController extends Controller
      */
     private function createDeleteForm($id)
     {
-        $tipusCentreDeleteFormBuilder = TipusCentreTypePro::deleteFormBuilder($this->get('form.factory'));
-
-        $tipusCentreDeleteFormBuilder
+        return $this->createFormBuilder()
             ->setAction($this->generateUrl('tipuscentre_delete', array('id' => $id)))
-            ->setMethod('DELETE');
-
-        return $tipusCentreDeleteFormBuilder->getForm();
+            ->setMethod('DELETE')
+            ->getForm()
+        ;
     }
 }

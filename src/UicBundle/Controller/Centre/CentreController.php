@@ -4,11 +4,11 @@ namespace UicBundle\Controller\Centre;
 
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
-use UicBundle\Infrastructure\Form\Centre\CentreTypePro;
+use UicBundle\Infrastructure\Form\Centre\CentreType;
 use UicBundle\Application\UseCase\Centre\UpdateCentreUseCase;
 use UicBundle\Application\UseCase\Centre\CreateCentreUseCase;
 use UicBundle\Application\UseCase\Centre\DeleteCentreUseCase;
-use UicBundle\Domain\Entity\Centre\Centre;
+use UicBundle\Domain\Model\Centre\Centre;
 
 /**
  * Centre controller.
@@ -39,7 +39,7 @@ class CentreController extends Controller
     public function newAction(Request $request)
     {
         
-        $newForm = CentreTypePro::newForm($this->get('form.factory'));
+        $newForm = $this->createForm('UicBundle\Infrastructure\Form\Centre\CentreType');
         
         $newForm->handleRequest($request);
         if ($newForm->isSubmitted() && $newForm->isValid()) {
@@ -49,10 +49,9 @@ class CentreController extends Controller
             $centreRepository = $em->getRepository('UicBundle:Centre\Centre');
             
             $centreCreateUseCase = new CreateCentreUseCase($centreRepository);
-            $paramsEntity = $request->request->get('form');
+            $paramsEntity = $request->request->get($newForm->getName());
 
             $centre = $centreCreateUseCase->run($paramsEntity);
-            //$centre = new Centre($request);
 
             return $this->redirectToRoute('centre_index');
         }
@@ -112,7 +111,7 @@ class CentreController extends Controller
                     'color' => $centre->getColor()
                     ];
 
-        $editForm = CentreTypePro::newForm($this->get('form.factory'), $values);
+        $editForm = $this->createForm('UicBundle\Infrastructure\Form\Centre\CentreType', $values);
 
         $editForm->handleRequest($request);
 
@@ -120,7 +119,7 @@ class CentreController extends Controller
        
             $centreUpdateUseCase = new UpdateCentreUseCase($em->getRepository('UicBundle:Centre\Centre'));
 
-            $paramsEntity = $request->request->get('form');
+            $paramsEntity = $request->request->get($editForm->getName());
             $paramsEntity['id'] = $id;
 
             $centre = $centreUpdateUseCase->run($paramsEntity);
@@ -167,12 +166,10 @@ class CentreController extends Controller
 
     private function createDeleteForm($id)
     {
-        $centreDeleteForm = CentreTypePro::deleteFormBuilder($this->get('form.factory'));
-
-        $centreDeleteForm
+        return $this->createFormBuilder()
             ->setAction($this->generateUrl('centre_delete', array('id' => $id)))
-            ->setMethod('DELETE');
-
-        return $centreDeleteForm->getForm();
+            ->setMethod('DELETE')
+            ->getForm()
+        ;
     }
 }
