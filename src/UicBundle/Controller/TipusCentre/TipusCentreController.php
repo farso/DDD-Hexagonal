@@ -138,14 +138,7 @@ class TipusCentreController extends Controller
 
         $em = $this->getDoctrine()->getManager();
 
-        $tipusCentreFindUseCase = new FindTipusCentreUseCase($em->getRepository('UicBundle:TipusCentre\TipusCentre'));
-        $tipusCentre = $tipusCentreFindUseCase->run($id);
-
-        if (!$tipusCentre) {
-            throw $this->createNotFoundException('Unable to find TipusCentre entity.');
-        }
-
-        $deleteForm = $this->createDeleteForm($tipusCentre->getId());
+        $deleteForm = $this->createDeleteForm($id);
         $deleteForm->handleRequest($request);
 
         if ($deleteForm->isSubmitted() && $deleteForm->isValid()) {

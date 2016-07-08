@@ -143,13 +143,6 @@ class CentreController extends Controller
     {
         $em = $this->getDoctrine()->getManager();
 
-        $centreRepository = $em->getRepository('UicBundle:Centre\Centre');
-        $centre = $centreRepository->find($id);
-
-        if (!$centre) {
-            throw $this->createNotFoundException('Unable to find Centre entity.');
-        }
-
         $deleteForm = $this->createDeleteForm($id);
         $deleteForm->handleRequest($request);
 
