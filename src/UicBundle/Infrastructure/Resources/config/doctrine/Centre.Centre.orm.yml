@@ -32,4 +32,16 @@ UicBundle\Domain\Entity\Centre\Centre:
             length: '8'
             column: color
             nullable: true
+    manyToOne:
+        tipusCentre:
+          targetEntity: UicBundle\Domain\Entity\TipusCentre\TipusCentre
+          joinColumn:
+            name: tipus
+            referencedColumnName: uuid
+
+    embedded:
+        address:
+            class: UicBundle\Domain\Entity\Centre\Address
+            columnPrefix: address_
+
     lifecycleCallbacks: {  }

@@ -47,8 +47,9 @@ class CentreController extends Controller
             $em = $this->getDoctrine()->getManager();
 
             $centreRepository = $em->getRepository('UicBundle:Centre\Centre');
+            $tipusCentreRepository = $em->getRepository('UicBundle:TipusCentre\TipusCentre');
             
-            $centreCreateUseCase = new CreateCentreUseCase($centreRepository);
+            $centreCreateUseCase = new CreateCentreUseCase($centreRepository, $tipusCentreRepository);
             $paramsEntity = $request->request->get($newForm->getName());
 
             $centre = $centreCreateUseCase->run($paramsEntity);
@@ -108,8 +109,9 @@ class CentreController extends Controller
                     'codi' => $centre->getCodi(),
                     'codiOficial' => $centre->getCodiOficial(),
                     'mailCentre' => $centre->getMailCentre(),
-                    'color' => $centre->getColor()
-                    ];
+                    'color' => $centre->getColor(),
+                    'tipusCentre' => $centre->getTipusCentre(),
+                    'carrer' => $centre->getAddress()->getCarrer()];
 
         $editForm = $this->createForm('UicBundle\Infrastructure\Form\Centre\CentreType', $values);
 
@@ -117,7 +119,7 @@ class CentreController extends Controller
 
         if ($editForm->isSubmitted() && $editForm->isValid()) {
        
-            $centreUpdateUseCase = new UpdateCentreUseCase($em->getRepository('UicBundle:Centre\Centre'));
+            $centreUpdateUseCase = new UpdateCentreUseCase($em->getRepository('UicBundle:Centre\Centre'), $em->getRepository('UicBundle:TipusCentre\TipusCentre'));
 
             $paramsEntity = $request->request->get($editForm->getName());
             $paramsEntity['id'] = $id;

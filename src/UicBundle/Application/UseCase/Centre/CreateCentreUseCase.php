@@ -5,6 +5,7 @@ namespace UicBundle\Application\UseCase\Centre;
 use UicBundle\Application\Contract\CentreRepositoryInterface;
 use UicBundle\Application\Contract\TipusCentreRepositoryInterface;
 use UicBundle\Domain\Entity\Centre\Centre;
+use UicBundle\Domain\Entity\Centre\Address;
 use UicBundle\Application\UseCase\Centre\FindOneByCentreUseCase;
 use UicBundle\Application\UseCase\TipusCentre\FindOneByTipusCentreUseCase;
 use UicBundle\Application\Factory\CentreFactory;
@@ -23,11 +24,10 @@ class CreateCentreUseCase
     */
     private $tipusCentreRepository;
 
-    public function __construct(CentreRepositoryInterface $centreRepository)
-    // , TipusCentreRepositoryInterface $tipusCentreRepository)
+    public function __construct(CentreRepositoryInterface $centreRepository, TipusCentreRepositoryInterface $tipusCentreRepository)
     {
         $this->centreRepository = $centreRepository;
-        // $this->tipusCentreRepository = $tipusCentreRepository;
+        $this->tipusCentreRepository = $tipusCentreRepository;
     }
 
     public function run(array $params)
@@ -54,10 +54,12 @@ class CreateCentreUseCase
                
                
         // tipusCentre
-        // $tipusCentreFindOneByUseCase = new FindOneByTipusCentreUseCase($this->tipusCentreRepository);
-        // $tipusCentreDom = $tipusCentreFindOneByUseCase->run(array('id' => $params['tipusCentre']));
-      
-        // $params['tipusCentre'] = $tipusCentreDom;
+        $tipusCentre = $this->tipusCentreRepository->find($params['idTipusCentre']);
+        $params['tipusCentre'] = $tipusCentre;
+
+        $address = new Address($params['carrer']);
+        $params['address'] = $address;
+
         $centreFactory = new CentreFactory();
         $centre = $centreFactory->create($params);
         

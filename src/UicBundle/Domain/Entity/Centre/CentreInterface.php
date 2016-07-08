@@ -3,6 +3,8 @@
 namespace UicBundle\Domain\Entity\Centre;
 
 use UicBundle\Domain\Entity\EntityInterface;
+use UicBundle\Domain\Entity\TipusCentre\TipusCentre;
+use UicBundle\Domain\Entity\Centre\Address;
 
 /**
  * CentreInterface
@@ -23,6 +25,8 @@ interface CentreInterface extends EntityInterface
     public function getColor();
 
     public function getTipusCentre();
+
+    public function getAddress();
     
-    public function update($nom, $codi, $mailCentre, $codiOficial, $color);
+    public function update($nom, $codi, $mailCentre, $codiOficial, $color, TipusCentre $tipusCentre, Address $address);
 }

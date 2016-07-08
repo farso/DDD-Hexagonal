@@ -27,25 +27,10 @@ class CentreFactory
         $mailCentre = $centreInf['mailCentre'];
         $codiOficial = $centreInf['codiOficial'];
         $color = $centreInf['color'];
-        //$tipusCentre = $centreInf['tipusCentre']; // arriba un tipusCentre de domini buscar per use case
+        $tipusCentre = $centreInf['tipusCentre']; // arriba un tipusCentre de domini buscar per use case
+        $address = $centreInf['address']; // value object
 
         $centreId = new CentreId();
-        //return new Centre($centreId, $nom, $codi, $mailCentre, $codiOficial, $color, $tipusCentre);
-        return new Centre($centreId, $nom, $codi, $mailCentre, $codiOficial, $color);
-    }
-
-    public static function instance(array $centreInf) {
-
-        //@todo comprovacio dels noms de les key de l'array.
-        $id = $centreInf['id'];
-        $nom = $centreInf['nombre'];
-        $codi = $centreInf['codi'];
-        $mailCentre = $centreInf['mailCentre'];
-        $codiOficial = $centreInf['codiOficial'];
-        $color = $centreInf['color'];
-        $tipusCentre = $centreInf['tipusCentre']; // arriba un tipusCentre de domini buscar per use case
-
-        $centreId = new CentreId($id);
-        return new Centre($centreId, $nom, $codi, $mailCentre, $codiOficial, $color, $tipusCentre);
+        return new Centre($centreId, $nom, $codi, $mailCentre, $codiOficial, $color, $tipusCentre, $address);
     }
 }

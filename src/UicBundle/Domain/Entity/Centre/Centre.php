@@ -2,6 +2,7 @@
 //1.0.2
 namespace UicBundle\Domain\Entity\Centre;
 
+use UicBundle\Domain\Entity\Centre\Address;
 use UicBundle\Domain\Entity\Centre\CentreId;
 use UicBundle\Domain\Entity\Entity;
 use UicBundle\Domain\Entity\TipusCentre\TipusCentre;
@@ -47,7 +48,13 @@ class Centre extends Entity implements CentreInterface
      */
     protected $tipusCentre;
 
-    public function __construct(CentreId $id, $nom, $codi, $mailCentre, $codiOficial, $color)
+    /**
+     * @var Address
+     */
+    protected $address;
+
+
+    public function __construct(CentreId $id, $nom, $codi, $mailCentre, $codiOficial, $color, TipusCentre $tipusCentre, Address $address)
     {
         $this->id = $id;
         $this->codi = $codi;
@@ -55,7 +62,8 @@ class Centre extends Entity implements CentreInterface
         $this->mailCentre = $mailCentre;
         $this->codiOficial = $codiOficial;
         $this->color = $color;
-        // $this->tipusCentre = $tipusCentre;
+        $this->tipusCentre = $tipusCentre;
+        $this->address = $address;
     }
 
 
@@ -128,14 +136,24 @@ class Centre extends Entity implements CentreInterface
         return $this->tipusCentre;
     }
 
-    public function update($nom, $codi, $mailCentre, $codiOficial, $color)
+    /**
+     * [getAddress description]
+     * @return Address address
+     */
+    public function getAddress()
     {
+        return $this->address;
+    }
 
+    public function update($nom, $codi, $mailCentre, $codiOficial, $color, TipusCentre $tipusCentre, Address $address)
+    {
         //@todo validació atributs d'entitat (que siguin enters, char(1), ...)
         $this->nombre = $nom;
         $this->codi = $codi;
         $this->mailCentre = $mailCentre;
         $this->codiOficial = $codiOficial;
         $this->color = $color;
+        $this->tipusCentre = $tipusCentre;
+        $this->address = $address;
     }
 }

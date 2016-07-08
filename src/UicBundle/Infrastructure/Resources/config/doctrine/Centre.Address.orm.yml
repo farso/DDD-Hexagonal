@@ -1,0 +1,5 @@
+UicBundle\Domain\Entity\Centre\Address:
+  type: embeddable
+  fields:
+    carrer: 
+      type: string

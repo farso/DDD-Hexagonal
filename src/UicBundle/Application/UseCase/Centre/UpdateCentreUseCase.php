@@ -3,6 +3,7 @@
 namespace UicBundle\Application\UseCase\Centre;
 
 use UicBundle\Application\Contract\CentreRepositoryInterface;
+use UicBundle\Application\Contract\TipusCentreRepositoryInterface;
 
 class UpdateCentreUseCase
 {
@@ -12,9 +13,16 @@ class UpdateCentreUseCase
     */
     private $centreRepository;
 
-    public function __construct(CentreRepositoryInterface $centreRepository)
+    /**
+    *
+    * var TipusCentreRepositoryInterface
+    */
+    private $tipusCentreRepository;
+
+    public function __construct(CentreRepositoryInterface $centreRepository, TipusCentreRepositoryInterface $tipusCentreRepository)
     {
         $this->centreRepository = $centreRepository;
+        $this->tipusCentreRepository = $tipusCentreRepository;
     }
 
     public function run(array $params)
@@ -34,10 +42,11 @@ class UpdateCentreUseCase
         $codiOficial = $params['codiOficial'];
         $color = $params['color'];
 
-        $entity->update($nom, $codi, $mailCentre, $codiOficial, $color);
+        $tipusCentre = $this->tipusCentreRepository->find($params['idTipusCentre']);
 
+        $entity->update($nom, $codi, $mailCentre, $codiOficial, $color, $tipusCentre);
 
-        $entity = $this->centreRepository->update($params);
+        $entity = $this->centreRepository->update();
 
         return $entity;
     }
