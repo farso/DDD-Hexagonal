@@ -23,7 +23,7 @@ class CentreType extends AbstractType
             ->add('mailCentre')
             ->add('codiOficial')
             ->add('color')
-            ->add('idTipusCentre', EntityType::class, array(
+            ->add('tipusCentre', EntityType::class, array(
                 'class' => 'UicBundle:TipusCentre\TipusCentre',
                 'choice_label' => 'descriCat',
                 'choice_value' => 'id',

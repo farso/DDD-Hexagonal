@@ -115,6 +115,7 @@ class CentreController extends Controller
 
         $editForm = $this->createForm('UicBundle\Infrastructure\Form\Centre\CentreType', $values);
 
+
         $editForm->handleRequest($request);
 
         if ($editForm->isSubmitted() && $editForm->isValid()) {
@@ -129,8 +130,7 @@ class CentreController extends Controller
             return $this->redirectToRoute('centre_index');
         }
 
-        return $this->render('centre/edit.html.twig', array(
-            'centre' => $centre,
+        return $this->render('centre/edit.html.twig', array(            
             'edit_form' => $editForm->createView(),
             'delete_form' => $deleteForm->createView(),
         ));

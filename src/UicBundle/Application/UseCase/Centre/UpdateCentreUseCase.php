@@ -4,6 +4,7 @@ namespace UicBundle\Application\UseCase\Centre;
 
 use UicBundle\Application\Contract\CentreRepositoryInterface;
 use UicBundle\Application\Contract\TipusCentreRepositoryInterface;
+use UicBundle\Domain\Entity\Centre\Address;
 
 class UpdateCentreUseCase
 {
@@ -41,10 +42,12 @@ class UpdateCentreUseCase
         $mailCentre = $params['mailCentre'];
         $codiOficial = $params['codiOficial'];
         $color = $params['color'];
+        
+        $tipusCentre = $this->tipusCentreRepository->find($params['tipusCentre']);
 
-        $tipusCentre = $this->tipusCentreRepository->find($params['idTipusCentre']);
+        $address = new Address($params['carrer']);        
 
-        $entity->update($nom, $codi, $mailCentre, $codiOficial, $color, $tipusCentre);
+        $entity->update($nom, $codi, $mailCentre, $codiOficial, $color, $tipusCentre,$address);
 
         $entity = $this->centreRepository->update();
 

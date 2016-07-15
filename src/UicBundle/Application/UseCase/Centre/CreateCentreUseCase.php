@@ -54,7 +54,7 @@ class CreateCentreUseCase
                
                
         // tipusCentre
-        $tipusCentre = $this->tipusCentreRepository->find($params['idTipusCentre']);
+        $tipusCentre = $this->tipusCentreRepository->find($params['tipusCentre']);
         $params['tipusCentre'] = $tipusCentre;
 
         $address = new Address($params['carrer']);
