@@ -5,37 +5,18 @@ namespace UicBundle\Application\UseCase\Centre;
 use UicBundle\Application\Contract\CentreRepositoryInterface;
 use UicBundle\Application\Contract\TipusCentreRepositoryInterface;
 use UicBundle\Domain\Entity\Centre\Address;
+use UicBundle\Application\UseCase\Centre\CentreUseCase;
 
-class UpdateCentreUseCase
+class UpdateCentreUseCase extends CentreUseCase
 {
-    /**
-    *
-    * var CentreRepositoryInterface
-    */
-    private $centreRepository;
-
-    /**
-    *
-    * var TipusCentreRepositoryInterface
-    */
-    private $tipusCentreRepository;
-
-    public function __construct(CentreRepositoryInterface $centreRepository, TipusCentreRepositoryInterface $tipusCentreRepository)
-    {
-        $this->centreRepository = $centreRepository;
-        $this->tipusCentreRepository = $tipusCentreRepository;
-    }
-
     public function run(array $params)
     {
 
         $centreFindUseCase = new FindCentreUseCase($this->centreRepository);
         $entity = $centreFindUseCase->run($params['id']);
 
-        if (null === $entity) {
-            //@todo excepcions
-            throw new \Exception("no s'ha trobat l'entitat");
-        }
+        $this->codeExists($params['codi'],$params['id']);
+        $this->nameExists($params['nombre'],$params['id']);
 
         $nom = $params['nombre'];
         $codi = $params['codi'];

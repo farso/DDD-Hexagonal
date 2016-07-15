@@ -3,15 +3,10 @@
 namespace UicBundle\Application\UseCase\Centre;
 
 use UicBundle\Application\Contract\CentreRepositoryInterface;
+use UicBundle\Application\UseCase\Centre\CentreUseCase;
 
-class FindByCentreUseCase
+class FindByCentreUseCase extends CentreUseCase
 {
-	/**
-	*
-	* var CentreRepositoryInterface
-	*/
-	private $centreRepository;
-
 	public function __construct(CentreRepositoryInterface $centreRepository)
 	{
 		$this->centreRepository = $centreRepository;

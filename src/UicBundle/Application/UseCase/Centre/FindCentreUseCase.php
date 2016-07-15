@@ -3,15 +3,11 @@
 namespace UicBundle\Application\UseCase\Centre;
 
 use UicBundle\Application\Contract\CentreRepositoryInterface;
+use UicBundle\Application\UseCase\Centre\CentreUseCase;
 
-class FindCentreUseCase
+class FindCentreUseCase extends CentreUseCase
 {
-	/**
-	*
-	* var CentreRepositoryInterface
-	*/
-	private $centreRepository;
-
+	
 	public function __construct(CentreRepositoryInterface $centreRepository)
 	{
 		$this->centreRepository = $centreRepository;
@@ -19,6 +15,12 @@ class FindCentreUseCase
 
 	public function run($id)
 	{
-		return $this->centreRepository->find($id);
+		$entity = $this->centreRepository->find($id);
+		
+		if (!$entity) {
+            throw $this->createNotFoundException('Unable to find Centre entity.');
+        }
+
+		return $entity;
 	}
 }

@@ -3,14 +3,10 @@
 namespace UicBundle\Application\UseCase\Centre;
 
 use UicBundle\Application\Contract\CentreRepositoryInterface;
+use UicBundle\Application\UseCase\Centre\CentreUseCase;
 
-class DeleteCentreUseCase
+class DeleteCentreUseCase extends CentreUseCase
 {
-    /**
-    *
-    * var CentreRepositoryInterface
-    */
-    private $centreRepository;
 
     public function __construct(CentreRepositoryInterface $centreRepository)
     {
@@ -21,11 +17,6 @@ class DeleteCentreUseCase
     {
         $centreFindUseCase = new FindCentreUseCase($this->centreRepository);
         $entity = $centreFindUseCase->run($id);
-
-        if (!$entity) {
-            throw $this->createNotFoundException('Unable to find Centre entity.');
-        }
-
         $this->centreRepository->delete($entity);
     }
 }
