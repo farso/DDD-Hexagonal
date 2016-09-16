@@ -3,6 +3,7 @@ namespace UicBundle\Application\UseCase\Centre;
 
 use UicBundle\Application\Contract\CentreRepositoryInterface;
 use UicBundle\Application\Contract\TipusCentreRepositoryInterface;
+use UicBundle\Application\UseCase\Centre\CreateCentreException;
 use Doctrine\Common\Collections\Criteria;
 
 class CentreUseCase  {
@@ -39,7 +40,8 @@ class CentreUseCase  {
 		$centre = $this->centreRepository->matching($criteria);
 
         if (count($centre) != 0) {
-            throw new \Exception('ja existeix el codi!!');
+            throw new CreateCentreException('ja existeix el codi!!', 
+            	CreateCentreException::THROW_CODI_REPETIT);
         }
 	}
 
@@ -55,7 +57,8 @@ class CentreUseCase  {
 		$centre = $this->centreRepository->matching($criteria);
 
 	    if (count($centre) != 0) {
-            throw new \Exception('ja existeix el nom!!');
+            throw new CreateCentreException('ja existeix el nom!!', 
+            	CreateCentreException::THROW_NOM_REPETIT);
         }
 
 	}

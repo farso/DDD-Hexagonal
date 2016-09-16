@@ -4,20 +4,13 @@ namespace UicBundle\Application\UseCase\Centre;
 
 use UicBundle\Domain\Entity\Centre\Centre;
 use UicBundle\Domain\Entity\Centre\Address;
-use UicBundle\Application\UseCase\Centre\FindOneByCentreUseCase;
-use UicBundle\Application\UseCase\TipusCentre\FindOneByTipusCentreUseCase;
 use UicBundle\Application\Factory\CentreFactory;
 use UicBundle\Application\UseCase\Centre\CentreUseCase;
 
 class CreateCentreUseCase extends CentreUseCase
 {
-   
     public function run(array $params)
     {
-
-        //@todo FALTA SABER COM FUNCIONA EL FINDBY PER FER-HO SERVIR CORRECTAMENT
-        // $centreFindOneByUseCase = new FindOneByCentreUseCase($this->centreRepository);
-        // $entity = $centreFindOneByUseCase->run(array("codi"=>$params['codi']));
 
         $this->codeExists($params['codi']);
         $this->nameExists($params['nombre']);

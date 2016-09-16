@@ -6,14 +6,18 @@ use UicBundle\Application\Contract\CentreRepositoryInterface;
 use UicBundle\Application\Contract\TipusCentreRepositoryInterface;
 use UicBundle\Domain\Entity\Centre\Address;
 use UicBundle\Application\UseCase\Centre\CentreUseCase;
+use UicBundle\Application\UseCase\Centre\UpdateCentreException;
 
 class UpdateCentreUseCase extends CentreUseCase
 {
     public function run(array $params)
     {
+        $entity = $this->centreRepository->find($params['id']);
 
-        $centreFindUseCase = new FindCentreUseCase($this->centreRepository);
-        $entity = $centreFindUseCase->run($params['id']);
+        if (!$entity) {
+            throw new DeleteCentreException('Unable to find Centre entity.', 
+                UpdateCentreException::THROW_NOT_FOUND);
+        }
 
         $this->codeExists($params['codi'],$params['id']);
         $this->nameExists($params['nombre'],$params['id']);

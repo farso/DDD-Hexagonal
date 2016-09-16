@@ -4,6 +4,7 @@ namespace UicBundle\Application\UseCase\Centre;
 
 use UicBundle\Application\Contract\CentreRepositoryInterface;
 use UicBundle\Application\UseCase\Centre\CentreUseCase;
+use UicBundle\Application\UseCase\Centre\DeleteCentreException;
 
 class DeleteCentreUseCase extends CentreUseCase
 {
@@ -15,8 +16,14 @@ class DeleteCentreUseCase extends CentreUseCase
 
     public function run($id)
     {
-        $centreFindUseCase = new FindCentreUseCase($this->centreRepository);
-        $entity = $centreFindUseCase->run($id);
+        $entity = $this->centreRepository->find($id);
+
+        if (!$entity) {
+            throw new DeleteCentreException('Unable to find Centre entity.', 
+                DeleteCentreException::THROW_NOT_FOUND);
+        }
+
+
         $this->centreRepository->delete($entity);
     }
 }
