@@ -2,6 +2,7 @@
 
 namespace UicBundle\Application\Contract;
 
+use UicBundle\Domain\Entity\Centre\Centre;
 /**
  * CentreRepository
  *
@@ -10,4 +11,27 @@ namespace UicBundle\Application\Contract;
  */
 interface CentreRepositoryInterface  extends RepositoryInterface
 {
+    /**
+     * Flushes all changes to objects that have been queued up to now to the database.
+     * This effectively synchronizes the in-memory state of managed objects with the
+     * database.
+     *
+     * If an entity is explicitly passed to this method only this entity and
+     * the cascade-persist semantics + scheduled inserts/removals are synchronized.
+     * @param  Centre $entity
+     * @return Centre
+     */
+    public function create(Centre $entity);
+
+    /**
+     * Removes an entity instance.
+     *
+     * A removed entity will be removed from the database at or before transaction commit
+     * or as a result of the flush operation.
+     *
+     * @param Centre $entity The entity instance to remove.
+     *
+     * @return void
+     */
+    public function delete(Centre $entity);
 }

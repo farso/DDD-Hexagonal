@@ -6,7 +6,6 @@
     <table>
         <thead>
             <tr>
-                <th>Id</th>
                 <th>Descricat</th>
                 <th>Descriesp</th>
                 <th>Descrieng</th>
@@ -16,8 +15,7 @@
         <tbody>
         {% for tipusCentre in tipusCentres %}
             <tr>
-                <td><a href="{{ path('tipuscentre_show', { 'id': tipusCentre.id }) }}">{{ tipusCentre.id }}</a></td>
-                <td>{{ tipusCentre.descriCat }}</td>
+                <td><a href="{{ path('tipuscentre_show', { 'id': tipusCentre.id }) }}">{{ tipusCentre.descriCat }}</a></td>
                 <td>{{ tipusCentre.descriEsp }}</td>
                 <td>{{ tipusCentre.descriEng }}</td>
                 <td>

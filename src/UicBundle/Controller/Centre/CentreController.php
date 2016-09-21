@@ -4,11 +4,9 @@ namespace UicBundle\Controller\Centre;
 
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
-use UicBundle\Infrastructure\Form\Centre\CentreType;
 use UicBundle\Application\UseCase\Centre\UpdateCentreUseCase;
 use UicBundle\Application\UseCase\Centre\CreateCentreUseCase;
 use UicBundle\Application\UseCase\Centre\DeleteCentreUseCase;
-use UicBundle\Domain\Model\Centre\Centre;
 
 /**
  * Centre controller.
@@ -34,13 +32,14 @@ class CentreController extends Controller
 
     /**
      * Creates a new Centre entity.
-     *
+     * @param Request $request
+     * @return \Symfony\Component\HttpFoundation\RedirectResponse|\Symfony\Component\HttpFoundation\Response
      */
     public function newAction(Request $request)
     {
         
         $newForm = $this->createForm('UicBundle\Infrastructure\Form\Centre\CentreType');
-        
+
         $newForm->handleRequest($request);
         if ($newForm->isSubmitted() && $newForm->isValid()) {
 
@@ -48,7 +47,7 @@ class CentreController extends Controller
 
             $centreRepository = $em->getRepository('UicBundle:Centre\Centre');
             $tipusCentreRepository = $em->getRepository('UicBundle:TipusCentre\TipusCentre');
-            
+
             $centreCreateUseCase = new CreateCentreUseCase($centreRepository, $tipusCentreRepository);
             $paramsEntity = $request->request->get($newForm->getName());
 
@@ -64,7 +63,8 @@ class CentreController extends Controller
 
     /**
      * Finds and displays a Centre entity.
-     *
+     * @param $id
+     * @return \Symfony\Component\HttpFoundation\Response
      */
     public function showAction($id)
     {
@@ -89,7 +89,9 @@ class CentreController extends Controller
 
     /**
      * Displays a form to edit an existing Centre entity.
-     *
+     * @param Request $request
+     * @param $id
+     * @return \Symfony\Component\HttpFoundation\RedirectResponse|\Symfony\Component\HttpFoundation\Response
      */
     public function editAction(Request $request, $id)
     {
@@ -97,6 +99,7 @@ class CentreController extends Controller
 
         $centreRepository = $em->getRepository('UicBundle:Centre\Centre');
         $centre = $centreRepository->find($id);
+
 
         if (!$centre) {
             throw $this->createNotFoundException('Unable to find Centre entity.');
@@ -113,13 +116,15 @@ class CentreController extends Controller
                     'tipusCentre' => $centre->getTipusCentre(),
                     'carrer' => $centre->getAddress()->getCarrer()];
 
+
         $editForm = $this->createForm('UicBundle\Infrastructure\Form\Centre\CentreType', $values);
 
 
         $editForm->handleRequest($request);
 
         if ($editForm->isSubmitted() && $editForm->isValid()) {
-       
+
+
             $centreUpdateUseCase = new UpdateCentreUseCase($em->getRepository('UicBundle:Centre\Centre'), $em->getRepository('UicBundle:TipusCentre\TipusCentre'));
 
             $paramsEntity = $request->request->get($editForm->getName());
@@ -130,7 +135,7 @@ class CentreController extends Controller
             return $this->redirectToRoute('centre_index');
         }
 
-        return $this->render('centre/edit.html.twig', array(            
+        return $this->render('centre/edit.html.twig', array(
             'edit_form' => $editForm->createView(),
             'delete_form' => $deleteForm->createView(),
         ));
@@ -139,7 +144,9 @@ class CentreController extends Controller
 
     /**
      * Deletes a Centre entity.
-     *
+     * @param Request $request
+     * @param $id
+     * @return \Symfony\Component\HttpFoundation\RedirectResponse
      */
     public function deleteAction(Request $request, $id)
     {

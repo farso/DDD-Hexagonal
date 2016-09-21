@@ -5,7 +5,6 @@ namespace UicBundle\Controller\TipusCentre;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use UicBundle\Application\UseCase\TipusCentre\CreateTipusCentreUseCase;
-use UicBundle\Application\UseCase\TipusCentre\FindTipusCentreUseCase;
 use UicBundle\Application\UseCase\TipusCentre\UpdateTipusCentreUseCase;
 use UicBundle\Application\UseCase\TipusCentre\DeleteTipusCentreUseCase;
 use UicBundle\Domain\Entity\TipusCentre\TipusCentre;
@@ -34,7 +33,8 @@ class TipusCentreController extends Controller
 
     /**
      * Creates a new TipusCentre\TipusCentre entity.
-     *
+     * @param Request $request
+     * @return \Symfony\Component\HttpFoundation\RedirectResponse|\Symfony\Component\HttpFoundation\Response
      */
     public function newAction(Request $request)
     {
@@ -64,14 +64,15 @@ class TipusCentreController extends Controller
 
     /**
      * Finds and displays a TipusCentre\TipusCentre entity.
-     *
+     * @param $id
+     * @return \Symfony\Component\HttpFoundation\Response
      */
     public function showAction($id)
     {
         $em = $this->getDoctrine()->getManager();
 
-        $tipusCentreFindUseCase = new FindTipusCentreUseCase($em->getRepository('UicBundle:TipusCentre\TipusCentre'));
-        $tipusCentre = $tipusCentreFindUseCase->run($id);
+        $tipusCentreRespository = $em->getRepository('UicBundle:TipusCentre\TipusCentre');
+        $tipusCentre = $tipusCentreRespository->find($id);
 
         if (!$tipusCentre) {
             throw $this->createNotFoundException('Unable to find TipusCentre entity.');
@@ -87,14 +88,16 @@ class TipusCentreController extends Controller
 
     /**
      * Displays a form to edit an existing TipusCentre\TipusCentre entity.
-     *
+     * @param Request $request
+     * @param $id
+     * @return \Symfony\Component\HttpFoundation\RedirectResponse|\Symfony\Component\HttpFoundation\Response
      */
     public function editAction(Request $request, $id)
     {
         $em = $this->getDoctrine()->getManager();
 
-        $tipusCentreFindUseCase = new FindTipusCentreUseCase($em->getRepository('UicBundle:TipusCentre\TipusCentre'));
-        $tipusCentre = $tipusCentreFindUseCase->run($id);
+        $tipusCentreRespository = $em->getRepository('UicBundle:TipusCentre\TipusCentre');
+        $tipusCentre = $tipusCentreRespository->find($id);
 
         if (!$tipusCentre) {
             throw $this->createNotFoundException('Unable to find TipusCentre entity.');
@@ -105,7 +108,7 @@ class TipusCentreController extends Controller
                     'descriEng' => $tipusCentre->getDescriEng(),
                     ];
 
-        $deleteForm = $this->createDeleteForm($tipusCentre->getId());
+        $deleteForm = $this->createDeleteForm($id);
         $editForm = $this->createForm('UicBundle\Infrastructure\Form\TipusCentre\TipusCentreType', $values);
 
         $editForm->handleRequest($request);
@@ -131,7 +134,9 @@ class TipusCentreController extends Controller
 
     /**
      * Deletes a TipusCentre\TipusCentre entity.
-     *
+     * @param Request $request
+     * @param $id
+     * @return \Symfony\Component\HttpFoundation\RedirectResponse
      */
     public function deleteAction(Request $request, $id)
     {
@@ -154,7 +159,7 @@ class TipusCentreController extends Controller
     /**
      * Creates a form to delete a TipusCentre\TipusCentre entity.
      *
-     * @param TipusCentre $tipusCentre The TipusCentre\TipusCentre entity
+     * @param $id
      *
      * @return \Symfony\Component\Form\Form The form
      */
