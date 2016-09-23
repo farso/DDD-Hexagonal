@@ -2,6 +2,8 @@
 
 namespace UicBundle\Application\Contract;
 
+use UicBundle\Domain\Entity\TipusCentre\TipusCentre;
+
 /**
  * TipusCentreRepository
  *
@@ -10,4 +12,26 @@ namespace UicBundle\Application\Contract;
  */
 interface TipusCentreRepositoryInterface  extends RepositoryInterface
 {
+    /**
+     * Flushes all changes to objects that have been queued up to now to the database.
+     * This effectively synchronizes the in-memory state of managed objects with the
+     * database.
+     *
+     * If an entity is explicitly passed to this method only this entity and
+     * the cascade-persist semantics + scheduled inserts/removals are synchronized.
+     * @param TipusCentre $tipusCentre
+     * @return TipusCentre
+     */
+    public function create(TipusCentre $tipusCentre);
+
+    /**
+     * Removes an entity instance.
+     *
+     * A removed entity will be removed from the database at or before transaction commit
+     * or as a result of the flush operation.
+     *
+     * @param TipusCentre $tipusCentre
+     * @return void
+     */
+    public function delete(TipusCentre $tipusCentre);
 }

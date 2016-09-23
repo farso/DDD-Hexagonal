@@ -2,10 +2,8 @@
 
 namespace UicBundle\Application\UseCase\Centre;
 
-use UicBundle\Domain\Entity\Centre\Centre;
 use UicBundle\Domain\Entity\Centre\Address;
 use UicBundle\Application\Factory\CentreFactory;
-use UicBundle\Application\UseCase\Centre\CentreUseCase;
 
 class CreateCentreUseCase extends CentreUseCase
 {

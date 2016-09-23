@@ -3,11 +3,7 @@
 namespace UicBundle\Infrastructure\Domain\Model\TipusCentre;
 
 use \Doctrine\ORM\EntityRepository;
-use \Doctrine\ORM\EntityManager;
 use UicBundle\Application\Contract\TipusCentreRepositoryInterface;
-use UicBundle\Application\Factory\TipusCentreFactory;
-use UicBundle\Factory\TipusCentreFactoryInf;
-use UicBundle\Adapter\Logs\LogsAdapter;
 use UicBundle\Domain\Entity\TipusCentre\TipusCentre;
 
 /**
@@ -78,7 +74,16 @@ class TipusCentreRepositoryDoctrine extends \Doctrine\ORM\EntityRepository imple
     }
 
 
-
+    /**
+     * Flushes all changes to objects that have been queued up to now to the database.
+     * This effectively synchronizes the in-memory state of managed objects with the
+     * database.
+     *
+     * If an entity is explicitly passed to this method only this entity and
+     * the cascade-persist semantics + scheduled inserts/removals are synchronized.
+     * @param TipusCentre $tipusCentre
+     * @return TipusCentre
+     */
     public function create(TipusCentre $tipusCentre)
     {
         $em = $this->getEntityManager();
@@ -93,6 +98,7 @@ class TipusCentreRepositoryDoctrine extends \Doctrine\ORM\EntityRepository imple
         return $tipusCentre;
     }
 
+
     public function update()
     {
         $em = $this->getEntityManager();
@@ -105,7 +111,15 @@ class TipusCentreRepositoryDoctrine extends \Doctrine\ORM\EntityRepository imple
     }
 
 
-
+    /**
+     * Removes an entity instance.
+     *
+     * A removed entity will be removed from the database at or before transaction commit
+     * or as a result of the flush operation.
+     *
+     * @param TipusCentre $tipusCentre
+     * @return void
+     */
     public function delete(TipusCentre $tipusCentre)
     {
         $em = $this->getEntityManager();
