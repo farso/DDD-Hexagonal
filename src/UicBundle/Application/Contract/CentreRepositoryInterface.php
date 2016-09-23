@@ -27,7 +27,7 @@ interface CentreRepositoryInterface  extends RepositoryInterface
      * @param Centre $entity
      * @return Centre
      */
-    public function update(Centre $entity);
+    public function update();
 
     /**
      * Removes an entity instance.

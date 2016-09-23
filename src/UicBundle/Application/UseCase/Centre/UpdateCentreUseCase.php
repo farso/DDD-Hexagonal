@@ -10,32 +10,34 @@ use UicBundle\Application\UseCase\Centre\UpdateCentreException;
 
 class UpdateCentreUseCase extends CentreUseCase
 {
-    public function run(array $params)
+    public function run(UpdateCentreRequest $request)
     {
-        $entity = $this->centreRepository->find($params['id']);
+        $entity = $this->centreRepository->find($request->getId());
 
         if (!$entity) {
             throw new DeleteCentreException('Unable to find Centre entity.', 
                 UpdateCentreException::THROW_NOT_FOUND);
         }
 
-        $this->codeExists($params['codi'],$params['id']);
-        $this->nameExists($params['nombre'],$params['id']);
+        $this->codeExists($request->getCodi(),$request->getId());
+        $this->nameExists($request->getNom(),$request->getId());
 
-        $nom = $params['nombre'];
-        $codi = $params['codi'];
-        $mailCentre = $params['mailCentre'];
-        $codiOficial = $params['codiOficial'];
-        $color = $params['color'];
-        
-        $tipusCentre = $this->tipusCentreRepository->find($params['tipusCentre']);
 
-        $address = new Address($params['carrer']);        
+        $tipusCentre = $this->tipusCentreRepository->find($request->getTipusCentre());
+        $address = new Address($request->getCarrer());
+
+        $nom = $request->getNom();
+        $codi = $request->getCodi();
+        $mailCentre= $request->getMailCentre();
+        $codiOficial = $request->getCodiOficial();
+        $color = $request->getColor();
 
         $entity->update($nom, $codi, $mailCentre, $codiOficial, $color, $tipusCentre,$address);
 
-        $entity = $this->centreRepository->update();
+        $this->centreRepository->update();
 
-        return $entity;
+        $this->centreDataTransformer->write($entity);
+
+        return $this->centreDataTransformer->read();
     }
 }

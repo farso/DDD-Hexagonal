@@ -3,6 +3,7 @@ namespace UicBundle\Application\UseCase\Centre;
 
 use UicBundle\Application\Contract\CentreRepositoryInterface;
 use UicBundle\Application\Contract\TipusCentreRepositoryInterface;
+use UicBundle\Application\DataTransformer\Centre\CentreDataTransformer;
 use UicBundle\Application\UseCase\Centre\CreateCentreException;
 use Doctrine\Common\Collections\Criteria;
 
@@ -20,10 +21,13 @@ class CentreUseCase  {
     */
     protected $tipusCentreRepository;
 
-    public function __construct(CentreRepositoryInterface $centreRepository, TipusCentreRepositoryInterface $tipusCentreRepository)
+    protected $centreDataTransformer;
+
+    public function __construct(CentreRepositoryInterface $centreRepository, TipusCentreRepositoryInterface $tipusCentreRepository, CentreDataTransformer $centreDataTransformer)
     {
         $this->centreRepository = $centreRepository;
         $this->tipusCentreRepository = $tipusCentreRepository;
+        $this->centreDataTransformer = $centreDataTransformer;
     }
 
 

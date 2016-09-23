@@ -14,9 +14,9 @@ class DeleteCentreUseCase extends CentreUseCase
         $this->centreRepository = $centreRepository;
     }
 
-    public function run($id)
+    public function run(DeleteCentreRequest $request)
     {
-        $entity = $this->centreRepository->find($id);
+        $entity = $this->centreRepository->find($request->getId());
 
         if (!$entity) {
             throw new DeleteCentreException('Unable to find Centre entity.', 

@@ -7,28 +7,45 @@ use UicBundle\Application\Factory\CentreFactory;
 
 class CreateCentreUseCase extends CentreUseCase
 {
-    public function run(array $params)
+    public function run(CreateCentreRequest $request)
     {
+        $this->codeExists($request->getCodi());
+        $this->nameExists($request->getNom());
 
-        $this->codeExists($params['codi']);
-        $this->nameExists($params['nombre']);
+        $tipusCentre = $this->tipusCentreRepository->find($request->getTipusCentre());
 
-        //@todo validació de variables per lògica complexa (que el nom sigui la composició de 3 + 2, ...)
-        //   les validacions d'entitat haurien d'anar repetides a tots els uses cases o no?
-               
-               
-        // tipusCentre
-        $tipusCentre = $this->tipusCentreRepository->find($params['tipusCentre']);
-        $params['tipusCentre'] = $tipusCentre;
+        $address = new Address($request->getCarrer());
 
-        $address = new Address($params['carrer']);
-        $params['address'] = $address;
+        $params = $this->requestToArray($request, $tipusCentre, $address);
 
         $centreFactory = new CentreFactory();
         $centre = $centreFactory->create($params);
         
         $this->centreRepository->create($centre);
 
-        return $centre;
+        //transformer -> write($centre)
+        $this->centreDataTransformer->write($centre);
+
+        return $this->centreDataTransformer->read();
+    }
+
+    /**
+     * @param CreateCentreRequest $request
+     * @param $tipusCentre
+     * @param $params
+     * @param $address
+     * @return mixed
+     */
+    private function requestToArray(CreateCentreRequest $request, $tipusCentre, $address)
+    {
+        $params = array();
+        $params['tipusCentre'] = $tipusCentre;
+        $params['address'] = $address;
+        $params['nombre'] = $request->getNom();
+        $params['codi'] = $request->getCodi();
+        $params['mailCentre'] = $request->getMailCentre();
+        $params['codiOficial'] = $request->getCodiOficial();
+        $params['color'] = $request->getColor();
+        return $params;
     }
 }

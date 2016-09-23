@@ -4,6 +4,10 @@ namespace UicBundle\Controller\Centre;
 
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
+use UicBundle\Application\DataTransformer\Centre\CentreObjectDataTransformer;
+use UicBundle\Application\UseCase\Centre\CreateCentreRequest;
+use UicBundle\Application\UseCase\Centre\DeleteCentreRequest;
+use UicBundle\Application\UseCase\Centre\UpdateCentreRequest;
 use UicBundle\Application\UseCase\Centre\UpdateCentreUseCase;
 use UicBundle\Application\UseCase\Centre\CreateCentreUseCase;
 use UicBundle\Application\UseCase\Centre\DeleteCentreUseCase;
@@ -48,10 +52,21 @@ class CentreController extends Controller
             $centreRepository = $em->getRepository('UicBundle:Centre\Centre');
             $tipusCentreRepository = $em->getRepository('UicBundle:TipusCentre\TipusCentre');
 
-            $centreCreateUseCase = new CreateCentreUseCase($centreRepository, $tipusCentreRepository);
+            $centreObjectDataTransformer = new CentreObjectDataTransformer();
+
+            $centreCreateUseCase = new CreateCentreUseCase($centreRepository, $tipusCentreRepository, $centreObjectDataTransformer);
             $paramsEntity = $request->request->get($newForm->getName());
 
-            $centre = $centreCreateUseCase->run($paramsEntity);
+            $createCentreRequest = new CreateCentreRequest();
+            $createCentreRequest->setCarrer($paramsEntity['carrer']);
+            $createCentreRequest->setCodi($paramsEntity['codi']);
+            $createCentreRequest->setCodiOficial($paramsEntity['codiOficial']);
+            $createCentreRequest->setColor($paramsEntity['color']);
+            $createCentreRequest->setMailCentre($paramsEntity['mailCentre']);
+            $createCentreRequest->setTipusCentre($paramsEntity['tipusCentre']);
+            $createCentreRequest->setNom($paramsEntity['nombre']);
+
+            $centre = $centreCreateUseCase->run($createCentreRequest);
 
             return $this->redirectToRoute('centre_index');
         }
@@ -124,13 +139,21 @@ class CentreController extends Controller
 
         if ($editForm->isSubmitted() && $editForm->isValid()) {
 
-
-            $centreUpdateUseCase = new UpdateCentreUseCase($em->getRepository('UicBundle:Centre\Centre'), $em->getRepository('UicBundle:TipusCentre\TipusCentre'));
+            $centreObjectDataTranformer = new CentreObjectDataTransformer();
+            $centreUpdateUseCase = new UpdateCentreUseCase($em->getRepository('UicBundle:Centre\Centre'), $em->getRepository('UicBundle:TipusCentre\TipusCentre'), $centreObjectDataTranformer);
 
             $paramsEntity = $request->request->get($editForm->getName());
-            $paramsEntity['id'] = $id;
 
-            $centre = $centreUpdateUseCase->run($paramsEntity);
+            $updateCentreRequest = new UpdateCentreRequest();
+            $updateCentreRequest->setId($id);
+            $updateCentreRequest->setCarrer($paramsEntity['carrer']);
+            $updateCentreRequest->setCodi($paramsEntity['codi']);
+            $updateCentreRequest->setCodiOficial($paramsEntity['codiOficial']);
+            $updateCentreRequest->setColor($paramsEntity['color']);
+            $updateCentreRequest->setMailCentre($paramsEntity['mailCentre']);
+            $updateCentreRequest->setTipusCentre($paramsEntity['tipusCentre']);
+            $updateCentreRequest->setNom($paramsEntity['nombre']);
+            $centre = $centreUpdateUseCase->run($updateCentreRequest);
 
             return $this->redirectToRoute('centre_index');
         }
@@ -158,7 +181,9 @@ class CentreController extends Controller
         if ($deleteForm->isSubmitted() && $deleteForm->isValid()) {
 
             $centreDeleteUseCase = new DeleteCentreUseCase($em->getRepository('UicBundle:Centre\Centre'));
-            $centreDeleteUseCase->run($id);
+            $deleteCentreRequest = new DeleteCentreRequest();
+            $deleteCentreRequest->setId($id);
+            $centreDeleteUseCase->run($deleteCentreRequest);
 
         }
 
