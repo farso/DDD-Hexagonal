@@ -15,6 +15,21 @@ use UicBundle\Infrastructure\Domain\Model\RepositoryMock;
 
 final class TipusCentreRepositoryMock extends RepositoryMock  implements TipusCentreRepositoryInterface
 {
+    public function create(TipusCentre $tipusCentre)
+    {
+        parent::create($tipusCentre);
+    }
+
+    public function update(TipusCentre $tipusCentre)
+    {
+        parent::update($tipusCentre);
+    }
+
+    public function delete(TipusCentre $tipusCentre)
+    {
+        parent::delete($tipusCentre);
+    }
+
     public function matching($arg)
     {
         // TODO: Implement matching() method.

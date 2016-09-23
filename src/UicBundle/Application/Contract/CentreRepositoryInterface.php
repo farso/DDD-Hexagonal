@@ -24,6 +24,12 @@ interface CentreRepositoryInterface  extends RepositoryInterface
     public function create(Centre $entity);
 
     /**
+     * @param Centre $entity
+     * @return Centre
+     */
+    public function update(Centre $entity);
+
+    /**
      * Removes an entity instance.
      *
      * A removed entity will be removed from the database at or before transaction commit

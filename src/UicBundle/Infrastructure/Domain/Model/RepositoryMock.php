@@ -57,6 +57,16 @@ abstract class RepositoryMock
         $this->entities[] = $entity;
     }
 
+    public function update(Entity $entity)
+    {
+        // TODO: Implement update() method.
+    }
+
+    public function delete(Entity $entity)
+    {
+        // TODO: Implement delete() method.
+    }
+
     abstract protected function matching($arg);
 
     abstract protected function fill();
