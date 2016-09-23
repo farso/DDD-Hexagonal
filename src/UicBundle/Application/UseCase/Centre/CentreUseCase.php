@@ -54,6 +54,8 @@ class CentreUseCase  {
  			$criteria->andWhere(Criteria::expr()->neq("id",$id));
 		}
 
+		// TODO Observació aros: matching() és funció pròpia de Doctrine?
+        // Hauriem de posar una capa per sobre per desconnectarnos del framework
 		$centre = $this->centreRepository->matching($criteria);
 
 	    if (count($centre) != 0) {
