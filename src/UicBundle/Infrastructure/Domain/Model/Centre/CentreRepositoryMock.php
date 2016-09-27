@@ -16,19 +16,31 @@ final class CentreRepositoryMock extends RepositoryMock implements CentreReposit
         parent::create($centre);
     }
 
-    public function update(Centre $centre)
-    {
-        parent::update($centre);
-    }
+//    public function update(Centre $centre)
+//    {
+//        parent::update($centre);
+//    }
 
     public function delete(Centre $centre)
     {
         parent::delete($centre);
     }
 
-    public function matching($arg)
+    public function exists($fieldName, $fieldValue, $id = null)
     {
-        // TODO: Implement matching() method.
+        $centres = array();
+
+        foreach ($this->entities as $centre) {
+            if ($fieldName == "codi" && $fieldValue == $centre->getCodi()) {
+                $centres[] = $centre;
+            }
+
+            if ($fieldName == "nombre" && $fieldValue == $centre->getNombre()) {
+                $centres[] = $centre;
+            }
+        }
+
+        return $centres;
     }
 
     public function fill()

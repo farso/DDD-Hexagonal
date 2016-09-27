@@ -40,4 +40,6 @@ interface CentreRepositoryInterface  extends RepositoryInterface
      * @return void
      */
     public function delete(Centre $entity);
+
+    public function exists($fieldName, $fieldValue, $id);
 }

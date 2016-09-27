@@ -2,6 +2,7 @@
 
 namespace UicBundle\Infrastructure\Domain\Model\Centre;
 
+use Doctrine\Common\Collections\Criteria;
 use \Doctrine\ORM\EntityRepository;
 use UicBundle\Application\Contract\CentreRepositoryInterface;
 use UicBundle\Domain\Entity\Centre\Centre;
@@ -14,6 +15,17 @@ use UicBundle\Domain\Entity\Centre\Centre;
  */
 class CentreRepositoryDoctrine extends EntityRepository implements CentreRepositoryInterface
 {
+    public function exists($fieldName, $fieldValue, $id)
+    {
+        $criteria = Criteria::create()
+            ->where(Criteria::expr()->eq("$fieldName", $fieldValue));
+
+        if (!empty($id)){
+            $criteria->andWhere(Criteria::expr()->neq("id", $id));
+        }
+
+        return $this->matching($criteria);
+    }
 
     /**
      * Finds an entity by its primary key / identifier.

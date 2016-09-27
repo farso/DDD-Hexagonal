@@ -2,12 +2,17 @@
 
 use Behat\Behat\Tester\Exception\PendingException;
 use Behat\Behat\Context\SnippetAcceptingContext;
-use Behat\Gherkin\Node\PyStringNode;
-use Behat\Gherkin\Node\TableNode;
+//use Behat\Gherkin\Node\PyStringNode;
+//use Behat\Gherkin\Node\TableNode;
 use \UicBundle\Application\UseCase\Centre\CreateCentreUseCase;
 use \UicBundle\Infrastructure\Domain\Model\TipusCentre\TipusCentreRepositoryMock;
 use \UicBundle\Infrastructure\Domain\Model\Centre\CentreRepositoryMock;
 use \UicBundle\Application\UseCase\Centre\CreateCentreException;
+use \UicBundle\Application\DataTransformer\Centre\CentreObjectDataTransformer;
+use \UicBundle\Application\UseCase\Centre\CreateCentreRequest;
+
+require_once 'PHPUnit/Autoload.php';
+require_once 'PHPUnit/Framework/Assert/Functions.php';
 
 /**
  * Defines application features from the specific context.
@@ -16,6 +21,8 @@ class FeatureContext implements SnippetAcceptingContext
 {
     private $centreRepository;
     private $tipusCentreRepository;
+    private $centreDataTransformer;
+    private $message;
 
     /**
      * Initializes context.
@@ -29,6 +36,8 @@ class FeatureContext implements SnippetAcceptingContext
         $this->centreRepository = new CentreRepositoryMock();
         $this->tipusCentreRepository = new TipusCentreRepositoryMock();
         $this->tipusCentreRepository->fill();
+        $this->centreDataTransformer = new CentreObjectDataTransformer();
+        $this->message = '';
     }
 
     /**
@@ -44,11 +53,17 @@ class FeatureContext implements SnippetAcceptingContext
      */
     public function iCreateANewCentreWithCodeAndName($code, $name)
     {
-        $createCentreUseCase = new CreateCentreUseCase($this->centreRepository, $this->tipusCentreRepository);
+        $createCentreUseCase = new CreateCentreUseCase($this->centreRepository, $this->tipusCentreRepository, $this->centreDataTransformer);
         $tipusCentres = $this->tipusCentreRepository->findAll();
-        $createCentreUseCase->run(
-            array('codi' => $code, 'nombre' => $name, 'tipusCentre' => $tipusCentres[0]->getId(), 'carrer' => 'aaaa', 'codiOficial' => 'b83s', 'color' => 'blau', 'mailCentre' => 'ass@sfs.es')
-        );
+        $request = new CreateCentreRequest();
+        $request->setCodi($code);
+        $request->setNom($name);
+        $request->setTipusCentre($tipusCentres[0]->getId());
+        $request->setCarrer('carrer');
+        $request->setCodiOficial('b832s');
+        $request->setColor('blau');
+        $request->setMailCentre('ass@ssfg.es');
+        $createCentreUseCase->run($request);
     }
 
     /**
@@ -56,13 +71,23 @@ class FeatureContext implements SnippetAcceptingContext
      */
     public function iCreateANewCentreWithRepeatedCodeAndName($code, $name)
     {
-        $createCentreUseCase = new CreateCentreUseCase($this->centreRepository, $this->tipusCentreRepository);
+        $createCentreUseCase = new CreateCentreUseCase($this->centreRepository, $this->tipusCentreRepository, $this->centreDataTransformer);
         $tipusCentres = $this->tipusCentreRepository->findAll();
-        $createCentreUseCase->run(
-            array('codi' => $code, 'nombre' => $name, 'tipusCentre' => $tipusCentres[0]->getId(), 'carrer' => 'aaaa', 'codiOficial' => 'b83s', 'color' => 'blau', 'mailCentre' => 'ass@sfs.es')
-        );
-        PHPUnit_Framework_Assert::expectException(CreateCentreException::class);
-        PHPUnit_Framework_Assert::expectExceptionCode(CreateCentreException::THROW_CODI_REPETIT);
+        $request = new CreateCentreRequest();
+        $request->setCodi($code);
+        $request->setNom($name);
+        $request->setTipusCentre($tipusCentres[0]->getId());
+        $request->setCarrer('carrer');
+        $request->setCodiOficial('b832s');
+        $request->setColor('blau');
+        $request->setMailCentre('ass@ssfg.es');
+
+        try {
+            $createCentreUseCase->run($request);
+        }
+        catch (CreateCentreException $exception) {
+            $this->message = $exception->getMessage();
+        }
     }
 
     /**
@@ -70,13 +95,23 @@ class FeatureContext implements SnippetAcceptingContext
      */
     public function iCreateANewCentreWithCodeAndRepeatedName($code, $name)
     {
-        $createCentreUseCase = new CreateCentreUseCase($this->centreRepository, $this->tipusCentreRepository);
+        $createCentreUseCase = new CreateCentreUseCase($this->centreRepository, $this->tipusCentreRepository, $this->centreDataTransformer);
         $tipusCentres = $this->tipusCentreRepository->findAll();
-        $createCentreUseCase->run(
-            array('codi' => $code, 'nombre' => $name, 'tipusCentre' => $tipusCentres[0]->getId(), 'carrer' => 'aaaa', 'codiOficial' => 'b83s', 'color' => 'blau', 'mailCentre' => 'ass@sfs.es')
-        );
-        PHPUnit_Framework_Assert::expectException(CreateCentreException::class);
-        PHPUnit_Framework_Assert::expectExceptionCode(CreateCentreException::THROW_NOM_REPETIT);
+        $request = new CreateCentreRequest();
+        $request->setCodi($code);
+        $request->setNom($name);
+        $request->setTipusCentre($tipusCentres[0]->getId());
+        $request->setCarrer('carrer');
+        $request->setCodiOficial('b832s');
+        $request->setColor('blau');
+        $request->setMailCentre('ass@ssfg.es');
+
+        try {
+            $createCentreUseCase->run($request);
+        }
+        catch (CreateCentreException $exception) {
+            $this->message = $exception->getMessage();
+        }
     }
 
     /**
@@ -84,15 +119,15 @@ class FeatureContext implements SnippetAcceptingContext
      */
     public function iShouldSee($message)
     {
-        PHPUnit_Framework_Assert::assertEquals($message, "Centre created correctly");
+        assertEquals($message, $this->message);
     }
 
     /**
      * @Then there should be :count centre(s) in the list
      */
-    public function thereShouldBeCentreSInTheList($count)
+    public function thereShouldBeCentresInTheList($count)
     {
-        PHPUnit_Framework_Assert::assertEquals(count($this->centreRepository->findAll()), $count);
+        assertEquals(count($this->centreRepository->findAll()), $count);
     }
 
     /**
@@ -101,8 +136,17 @@ class FeatureContext implements SnippetAcceptingContext
     public function oneCentreWithCode($code)
     {
         $this->centreRepository->removeAll();
-        $createCentreUseCase = new CreateCentreUseCase($this->centreRepository, $this->tipusCentreRepository);
-        $createCentreUseCase->run(array('codi' => $code, 'nombre' => 'indefinit'));
+        $tipusCentres = $this->tipusCentreRepository->findAll();
+        $createCentreUseCase = new CreateCentreUseCase($this->centreRepository, $this->tipusCentreRepository, $this->centreDataTransformer);
+        $request = new CreateCentreRequest();
+        $request->setCodi($code);
+        $request->setNom('oooooo');
+        $request->setTipusCentre($tipusCentres[0]->getId());
+        $request->setCarrer('carrer');
+        $request->setCodiOficial('b832s');
+        $request->setColor('blau');
+        $request->setMailCentre('ass@ssfg.es');
+        $createCentreUseCase->run($request);
     }
 
     /**
@@ -111,7 +155,16 @@ class FeatureContext implements SnippetAcceptingContext
     public function oneCentreWithName($name)
     {
         $this->centreRepository->removeAll();
-        $createCentreUseCase = new CreateCentreUseCase($this->centreRepository, $this->tipusCentreRepository);
-        $createCentreUseCase->run(array('codi' => 'OOO', 'nombre' => $name));
+        $tipusCentres = $this->tipusCentreRepository->findAll();
+        $createCentreUseCase = new CreateCentreUseCase($this->centreRepository, $this->tipusCentreRepository, $this->centreDataTransformer);
+        $request = new CreateCentreRequest();
+        $request->setCodi('OOO');
+        $request->setNom($name);
+        $request->setTipusCentre($tipusCentres[0]->getId());
+        $request->setCarrer('carrer');
+        $request->setCodiOficial('b832s');
+        $request->setColor('blau');
+        $request->setMailCentre('ass@ssfg.es');
+        $createCentreUseCase->run($request);
     }
 }

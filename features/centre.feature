@@ -16,17 +16,16 @@ Feature: Create centre
   Scenario: Create first centre
     Given there are no centres created
     When I create a new centre with code "FCS" and name "Medicina i Ciències de la Salut"
-    Then I should see "Centre created correctly"
-    And there should be 1 centre(s) in the list
+    Then there should be 1 centres in the list
 
   Scenario: Create centre with repeated code
     Given one centre with code "ARQ"
     When I create a new centre with repeated code "ARQ" and name "Escola d'Arquitectura"
-    Then I should see "There alredy exist centres with the same code"
-    And there should be 1 centre(s) in the list
+    Then I should see "ja existeix el codi!!"
+    And there should be 1 centres in the list
 
   Scenario: Create centre with repeated name
     Given one centre with name "Facultat de Dret"
     When I create a new centre with code "CJP" and repeated name "Facultat de Dret"
-    Then I should see "There alredy exist centres with the same name"
-    And there should be 1 centre(s) in the list
+    Then I should see "ja existeix el nom!!"
+    And there should be 1 centres in the list

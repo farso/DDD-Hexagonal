@@ -8,6 +8,7 @@ namespace UicBundle\Infrastructure\Domain\Model;
  * Time: 10:03
  */
 
+use Doctrine\Common\Collections\Criteria;
 use UicBundle\Domain\Entity\Entity;
 
 /**
@@ -57,7 +58,7 @@ abstract class RepositoryMock
         $this->entities[] = $entity;
     }
 
-    public function update(Entity $entity)
+    public function update()
     {
         // TODO: Implement update() method.
     }
@@ -67,7 +68,7 @@ abstract class RepositoryMock
         // TODO: Implement delete() method.
     }
 
-    abstract protected function matching($arg);
+    abstract protected function exists($fieldName, $fieldValue, $id = null);
 
     abstract protected function fill();
 

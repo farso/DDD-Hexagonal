@@ -5,7 +5,6 @@ use UicBundle\Application\Contract\CentreRepositoryInterface;
 use UicBundle\Application\Contract\TipusCentreRepositoryInterface;
 use UicBundle\Application\DataTransformer\Centre\CentreDataTransformer;
 use UicBundle\Application\UseCase\Centre\CreateCentreException;
-use Doctrine\Common\Collections\Criteria;
 
 class CentreUseCase  {
 	
@@ -30,18 +29,9 @@ class CentreUseCase  {
         $this->centreDataTransformer = $centreDataTransformer;
     }
 
-
-	protected function codeExists($codi,$id =null){
-
-
-		$criteria = Criteria::create()
-		    ->where(Criteria::expr()->eq("codi", $codi));
-		
-		if (!empty($id)){
- 			$criteria->andWhere(Criteria::expr()->neq("id",$id));
-		}
-
-		$centre = $this->centreRepository->matching($criteria);
+	protected function codeExists($codi, $id = null)
+    {
+		$centre = $this->centreRepository->exists("codi", $codi, $id);
 
         if (count($centre) != 0) {
             throw new CreateCentreException('ja existeix el codi!!', 
@@ -49,18 +39,9 @@ class CentreUseCase  {
         }
 	}
 
-	protected function nameExists($nombre,$id =null){
-
-		$criteria = Criteria::create()
-		    ->where(Criteria::expr()->eq("nombre",$nombre));
-		
-		if (!empty($id)){
- 			$criteria->andWhere(Criteria::expr()->neq("id",$id));
-		}
-
-		// TODO Observació aros: matching() és funció pròpia de Doctrine?
-        // Hauriem de posar una capa per sobre per desconnectarnos del framework
-		$centre = $this->centreRepository->matching($criteria);
+	protected function nameExists($nombre, $id = null)
+    {
+        $centre = $this->centreRepository->exists("nombre", $nombre, $id);
 
 	    if (count($centre) != 0) {
             throw new CreateCentreException('ja existeix el nom!!', 

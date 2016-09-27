@@ -8,6 +8,7 @@
 
 namespace UicBundle\Infrastructure\Domain\Model\TipusCentre;
 
+use Doctrine\Common\Collections\Criteria;
 use UicBundle\Application\Contract\TipusCentreRepositoryInterface;
 use UicBundle\Domain\Entity\TipusCentre\TipusCentre;
 use UicBundle\Domain\Entity\TipusCentre\TipusCentreId;
@@ -30,9 +31,9 @@ final class TipusCentreRepositoryMock extends RepositoryMock  implements TipusCe
         parent::delete($tipusCentre);
     }
 
-    public function matching($arg)
+    public function exists($fieldName, $fieldValue, $id = null)
     {
-        // TODO: Implement matching() method.
+        // TODO: Implement exists() method.
     }
 
     public function fill()
