@@ -53,7 +53,7 @@ abstract class RepositoryMock
         // TODO: Implement findOneBy() method.
     }
 
-    public function create(Entity $entity)
+    public function createEntity(Entity $entity)
     {
         $this->entities[] = $entity;
     }
@@ -63,7 +63,7 @@ abstract class RepositoryMock
         // TODO: Implement update() method.
     }
 
-    public function delete(Entity $entity)
+    public function deleteEntity(Entity $entity)
     {
         // TODO: Implement delete() method.
     }

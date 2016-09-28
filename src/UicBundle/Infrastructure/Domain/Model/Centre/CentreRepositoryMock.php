@@ -13,7 +13,7 @@ final class CentreRepositoryMock extends RepositoryMock implements CentreReposit
 {
     public function create(Centre $centre)
     {
-        parent::create($centre);
+        parent::createEntity($centre);
     }
 
 //    public function update(Centre $centre)
@@ -23,7 +23,7 @@ final class CentreRepositoryMock extends RepositoryMock implements CentreReposit
 
     public function delete(Centre $centre)
     {
-        parent::delete($centre);
+        parent::deleteEntity($centre);
     }
 
     public function exists($fieldName, $fieldValue, $id = null)

@@ -18,17 +18,12 @@ final class TipusCentreRepositoryMock extends RepositoryMock  implements TipusCe
 {
     public function create(TipusCentre $tipusCentre)
     {
-        parent::create($tipusCentre);
-    }
-
-    public function update(TipusCentre $tipusCentre)
-    {
-        parent::update($tipusCentre);
+        // TODO
     }
 
     public function delete(TipusCentre $tipusCentre)
     {
-        parent::delete($tipusCentre);
+        // TODO
     }
 
     public function exists($fieldName, $fieldValue, $id = null)
