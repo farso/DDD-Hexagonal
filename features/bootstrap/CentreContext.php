@@ -17,7 +17,7 @@ require_once 'PHPUnit/Framework/Assert/Functions.php';
 /**
  * Defines application features from the specific context.
  */
-class FeatureContext implements SnippetAcceptingContext
+class CentreContext implements SnippetAcceptingContext
 {
     private $centreRepository;
     private $tipusCentreRepository;
@@ -166,5 +166,21 @@ class FeatureContext implements SnippetAcceptingContext
         $request->setColor('blau');
         $request->setMailCentre('ass@ssfg.es');
         $createCentreUseCase->run($request);
+    }
+
+    /**
+     * @When I delete a centre with id :arg1
+     */
+    public function iDeleteACentreWithId($arg1)
+    {
+        throw new PendingException();
+    }
+
+    /**
+     * @Given exist :arg1 centres created
+     */
+    public function existCentresCreated($arg1)
+    {
+        throw new PendingException();
     }
 }
