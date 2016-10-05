@@ -4,7 +4,10 @@ namespace UicBundle\Controller\TipusCentre;
 
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
+use UicBundle\Application\UseCase\TipusCentre\CreateTipusCentreRequest;
 use UicBundle\Application\UseCase\TipusCentre\CreateTipusCentreUseCase;
+use UicBundle\Application\UseCase\TipusCentre\DeleteTipusCentreRequest;
+use UicBundle\Application\UseCase\TipusCentre\UpdateTipusCentreRequest;
 use UicBundle\Application\UseCase\TipusCentre\UpdateTipusCentreUseCase;
 use UicBundle\Application\UseCase\TipusCentre\DeleteTipusCentreUseCase;
 use UicBundle\Domain\Entity\TipusCentre\TipusCentre;
@@ -50,11 +53,16 @@ class TipusCentreController extends Controller
 
             $paramsEntity = $request->request->get($newForm->getName());
 
-            $tipusCentre = $createTipusCentreUseCase->run($paramsEntity);
+            $createTipusCentreRequest = new CreateTipusCentreRequest();
+            $createTipusCentreRequest->setDescriCat($paramsEntity['descriCat']);
+            $createTipusCentreRequest->setDescriEng($paramsEntity['descriEng']);
+            $createTipusCentreRequest->setDescriEsp($paramsEntity['descriEsp']);
 
-            
+
+            $tipusCentre = $createTipusCentreUseCase->run($createTipusCentreRequest);
+
+
             return $this->redirectToRoute('tipuscentre_index');
-
         }
 
         return $this->render('tipuscentre/new.html.twig', array(
@@ -119,9 +127,14 @@ class TipusCentreController extends Controller
             $tipusCentreUpdateUseCase = new UpdateTipusCentreUseCase($em->getRepository('UicBundle:TipusCentre\TipusCentre'));
 
             $paramsEntity = $request->request->get($editForm->getName());
-            $paramsEntity['id'] = $id;
 
-            $tipusCentre = $tipusCentreUpdateUseCase->run($paramsEntity);
+            $updateTipusCentreRequest = new UpdateTipusCentreRequest();
+            $updateTipusCentreRequest->setId($id);
+            $updateTipusCentreRequest->setDescriCat($paramsEntity['descriCat']);
+            $updateTipusCentreRequest->setDescriEsp($paramsEntity['descriEsp']);
+            $updateTipusCentreRequest->setDescriEng($paramsEntity['descriEng']);
+
+            $tipusCentre = $tipusCentreUpdateUseCase->run($updateTipusCentreRequest);
 
             return $this->redirectToRoute('tipuscentre_index');
         }
@@ -149,7 +162,9 @@ class TipusCentreController extends Controller
         if ($deleteForm->isSubmitted() && $deleteForm->isValid()) {
 
             $tipusCentreDeleteUseCase = new DeleteTipusCentreUseCase($em->getRepository('UicBundle:TipusCentre\TipusCentre'));
-            $tipusCentreDeleteUseCase->run($id);
+            $tipusCentreDeleteRequest = new DeleteTipusCentreRequest();
+            $tipusCentreDeleteRequest->setId($id);
+            $tipusCentreDeleteUseCase->run($tipusCentreDeleteRequest);
 
         }
 

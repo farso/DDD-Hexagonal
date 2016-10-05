@@ -7,15 +7,28 @@ use UicBundle\Application\Factory\TipusCentreFactory;
 
 class CreateTipusCentreUseCase extends TipusCentreUseCase
 {
-    public function run(array $params)
+    public function run(CreateTipusCentreRequest $createTipusCentreRequest)
     {
-        $this->nameExists($params['descriCat']);
+        $descriCat = $createTipusCentreRequest->getDescriCat();
+
+        $this->nameExists($descriCat);
 
         $tipusCentreFactory = new TipusCentreFactory();
-        $tipusCentre = $tipusCentreFactory->create($params);
+        $tipusCentre = $tipusCentreFactory->create($this->requestToArray($createTipusCentreRequest));
         
         $tipusCentre = $this->tipusCentreRepository->create($tipusCentre);
 
         return $tipusCentre;
     }
+
+
+    private function requestToArray(CreateTipusCentreRequest $createTipusCentreRequest)
+    {
+        $params = array();
+        $params['descriCat'] = $createTipusCentreRequest->getDescriCat();
+        $params['descriEsp'] = $createTipusCentreRequest->getDescriEsp();
+        $params['descriEng'] = $createTipusCentreRequest->getDescriEng();
+        return $params;
+    }
+
 }

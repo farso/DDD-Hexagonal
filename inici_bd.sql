@@ -66,5 +66,11 @@ WITH (
   OIDS=FALSE
 );
 
+ALTER TABLE "hexagonal"."centros"
+  ADD COLUMN "address_carrer" VARCHAR;
+
+COMMENT ON COLUMN "hexagonal"."centros"."address_carrer"
+IS 'carrer';
+
 
 

@@ -5,7 +5,3 @@ app_centre:
 app_tipuscentre:
     resource: "@UicBundle/Infrastructure/Resources/config/routing/tipuscentre_tipuscentre.yml"
     prefix:   /tipuscentre
-
-app_departaments:
-    resource: "@UicBundle/Infrastructure/Resources/config/routing/departament_departament.yml"
-    prefix:   /departament

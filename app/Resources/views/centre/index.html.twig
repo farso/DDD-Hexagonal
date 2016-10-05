@@ -25,7 +25,7 @@
                 <td>{{ centre.mailCentre }}</td>
                 <td>{{ centre.color }}</td>
                 <td>
-                    {% if centre.tipusCentre is defined %}
+                    {% if centre.tipusCentre is not null %}
                         {{ centre.tipusCentre.descriCat }}
                     {% endif %}
                 </td>
