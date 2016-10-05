@@ -2,11 +2,10 @@
 //1.0.2
 namespace UicBundle\Domain\Entity\TipusCentre;
 
-use UicBundle\Domain\Entity\EntityInterface;
 /**
  * CentreInterface
  */
-interface TipusCentreInterface extends  EntityInterface
+interface TipusCentreInterface
 {
     
     public function getId();

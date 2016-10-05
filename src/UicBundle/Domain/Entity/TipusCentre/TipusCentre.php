@@ -3,12 +3,12 @@
 namespace UicBundle\Domain\Entity\TipusCentre;
 
 use UicBundle\Domain\Entity\TipusCentre\TipusCentreId;
-use UicBundle\Domain\Entity\Entity;
+
 
 /**
  * TipusCentre
  */
-class TipusCentre  extends Entity implements TipusCentreInterface
+class TipusCentre  implements TipusCentreInterface
 {
     /**
      * @var TipusCentreId

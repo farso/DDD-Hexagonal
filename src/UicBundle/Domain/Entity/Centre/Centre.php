@@ -4,13 +4,12 @@ namespace UicBundle\Domain\Entity\Centre;
 
 use UicBundle\Domain\Entity\Centre\Address;
 use UicBundle\Domain\Entity\Centre\CentreId;
-use UicBundle\Domain\Entity\Entity;
 use UicBundle\Domain\Entity\TipusCentre\TipusCentre;
 
 /**
  * Centre
  */
-class Centre extends Entity implements CentreInterface
+class Centre implements CentreInterface
 {
     /**
      * @var CentreId
