@@ -4,6 +4,7 @@ namespace UicBundle\Controller\TipusCentre;
 
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
+use UicBundle\Application\DataTransformer\TipusCentre\TipusCentreObjectDataTransformer;
 use UicBundle\Application\UseCase\TipusCentre\CreateTipusCentreRequest;
 use UicBundle\Application\UseCase\TipusCentre\CreateTipusCentreUseCase;
 use UicBundle\Application\UseCase\TipusCentre\DeleteTipusCentreRequest;
@@ -49,7 +50,8 @@ class TipusCentreController extends Controller
 
             $em = $this->getDoctrine()->getManager();
 
-            $createTipusCentreUseCase = new CreateTipusCentreUseCase($em->getRepository('UicBundle:TipusCentre\TipusCentre'));
+            $tipusCentreObjectDataTransformer = new TipusCentreObjectDataTransformer();
+            $createTipusCentreUseCase = new CreateTipusCentreUseCase($em->getRepository('UicBundle:TipusCentre\TipusCentre'), $tipusCentreObjectDataTransformer);
 
             $paramsEntity = $request->request->get($newForm->getName());
 
@@ -58,9 +60,7 @@ class TipusCentreController extends Controller
             $createTipusCentreRequest->setDescriEng($paramsEntity['descriEng']);
             $createTipusCentreRequest->setDescriEsp($paramsEntity['descriEsp']);
 
-
             $tipusCentre = $createTipusCentreUseCase->run($createTipusCentreRequest);
-
 
             return $this->redirectToRoute('tipuscentre_index');
         }
@@ -123,8 +123,9 @@ class TipusCentreController extends Controller
 
         if ($editForm->isSubmitted() && $editForm->isValid()) {
             // si tot és vàlid, es fa el COMMIT de la transacció
-       
-            $tipusCentreUpdateUseCase = new UpdateTipusCentreUseCase($em->getRepository('UicBundle:TipusCentre\TipusCentre'));
+
+            $tipusCentreObjectDataTransformer = new TipusCentreObjectDataTransformer();
+            $tipusCentreUpdateUseCase = new UpdateTipusCentreUseCase($em->getRepository('UicBundle:TipusCentre\TipusCentre'), $tipusCentreObjectDataTransformer);
 
             $paramsEntity = $request->request->get($editForm->getName());
 

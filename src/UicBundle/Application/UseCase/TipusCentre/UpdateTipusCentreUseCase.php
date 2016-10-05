@@ -21,8 +21,11 @@ class UpdateTipusCentreUseCase extends TipusCentreUseCase
 
         $entity->update($descriCat, $descriEsp, $descriEng);
         
-        $tipusCentre = $this->tipusCentreRepository->update();
+        $this->tipusCentreRepository->update();
 
-        return $tipusCentre;
+
+        $this->tipusCentreDataTransformer->write($entity);
+
+        return $this->tipusCentreDataTransformer->read();
     }
 }

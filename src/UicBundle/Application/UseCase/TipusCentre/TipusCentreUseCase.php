@@ -2,6 +2,7 @@
 namespace UicBundle\Application\UseCase\TipusCentre;
 
 use UicBundle\Application\Contract\TipusCentreRepositoryInterface;
+use UicBundle\Application\DataTransformer\TipusCentre\TipusCentreDataTransformer;
 use UicBundle\Application\UseCase\TipusCentre\CreateTipusCentreException;
 use Doctrine\Common\Collections\Criteria;
 
@@ -13,9 +14,12 @@ class TipusCentreUseCase  {
     */
     protected $tipusCentreRepository;
 
-    public function __construct(TipusCentreRepositoryInterface $tipusCentreRepository)
+    protected $tipusCentreDataTransformer;
+
+    public function __construct(TipusCentreRepositoryInterface $tipusCentreRepository, TipusCentreDataTransformer $tipusCentreDataTransformer)
     {
         $this->tipusCentreRepository = $tipusCentreRepository;
+        $this->tipusCentreDataTransformer = $tipusCentreDataTransformer;
     }
 
 	protected function nameExists($nombre,$id =null){

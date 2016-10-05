@@ -3,10 +3,16 @@
 namespace UicBundle\Application\UseCase\TipusCentre;
 
 
-
+use UicBundle\Application\Contract\TipusCentreRepositoryInterface;
 
 class DeleteTipusCentreUseCase extends TipusCentreUseCase
 {
+
+    public function __construct(TipusCentreRepositoryInterface $tipusCentreRepository)
+    {
+        $this->tipusCentreRepository = $tipusCentreRepository;
+    }
+
     public function run(DeleteTipusCentreRequest $request)
     {
         $entity = $this->tipusCentreRepository->find($request->getId());

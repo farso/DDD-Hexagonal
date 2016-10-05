@@ -18,7 +18,10 @@ class CreateTipusCentreUseCase extends TipusCentreUseCase
         
         $tipusCentre = $this->tipusCentreRepository->create($tipusCentre);
 
-        return $tipusCentre;
+
+        $this->tipusCentreDataTransformer->write($tipusCentre);
+
+        return $this->tipusCentreDataTransformer->read();
     }
 
 
