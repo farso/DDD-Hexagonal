@@ -73,4 +73,13 @@ COMMENT ON COLUMN "hexagonal"."centros"."address_carrer"
 IS 'carrer';
 
 
+CREATE TABLE "public"."event" (
+  "event_id" INTEGER, 
+  "event_body" TEXT, 
+  "type_name" "varchar", 
+  "occurred_on" TIMESTAMP WITHOUT TIME ZONE, 
+  PRIMARY KEY("event_id")
+) WITH OIDS;
+
+
 

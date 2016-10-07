@@ -2,6 +2,7 @@
 //1.0.2
 namespace UicBundle\Domain\Entity\Centre;
 
+use UicBundle\DDD\Domain\DomainEventPublisher;
 use UicBundle\Domain\Entity\Centre\Address;
 use UicBundle\Domain\Entity\Centre\CentreId;
 use UicBundle\Domain\Entity\TipusCentre\TipusCentre;
@@ -63,6 +64,11 @@ class Centre implements CentreInterface
         $this->color = $color;
         $this->tipusCentre = $tipusCentre;
         $this->address = $address;
+
+        DomainEventPublisher::instance()->publish(
+            new CentreCreated()
+        );
+
     }
 
 
