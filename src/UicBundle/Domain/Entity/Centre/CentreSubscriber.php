@@ -8,15 +8,14 @@
 
 namespace UicBundle\Domain\Entity\Centre;
 
-
-use UicBundle\DDD\Domain\DomainEvent;
-use UicBundle\DDD\Domain\DomainEventSubscriber;
+use uic\ddd\Domain\DomainEvent;
+use uic\ddd\Domain\DomainEventSubscriber;
 
 class CentreSubscriber implements DomainEventSubscriber
 {
     public function handle($aDomainEvent)
     {
-        echo ' handle de '.get_class($aDomainEvent).' occurred on '. $aDomainEvent->occurredOn()->getTimestamp();
+        echo ' handle de '.get_class($aDomainEvent).' occurred on '. $aDomainEvent->occurredOn()->getTimestamp();die();
     }
 
 

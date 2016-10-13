@@ -11,10 +11,10 @@ use UicBundle\Application\UseCase\Centre\UpdateCentreRequest;
 use UicBundle\Application\UseCase\Centre\UpdateCentreUseCase;
 use UicBundle\Application\UseCase\Centre\CreateCentreUseCase;
 use UicBundle\Application\UseCase\Centre\DeleteCentreUseCase;
-use UicBundle\DDD\Domain\DomainEventPublisher;
-use UicBundle\DDD\Domain\PersistDomainEventSubscriber;
-use UicBundle\DDD\Infrastructure\DoctrineEventStore;
+
+use uic\ddd\Domain\DomainEventPublisher;
 use UicBundle\Domain\Entity\Centre\CentreSubscriber;
+
 
 /**
  * Centre controller.
@@ -28,18 +28,21 @@ class CentreController extends Controller
     }
 
 
+
+
     /**
      * Lists all Centre entities.
      *
      */
     public function indexAction()
     {
-
-
-
         $em = $this->getDoctrine()->getManager();
 
-        DomainEventPublisher::instance()->subscribe(new PersistDomainEventSubscriber($em->getRepository('UicBundle\DDD\Domain\StoredEvent')));
+//        DomainEventPublisher::instance()->subscribe(
+//            new PersistDomainEventSubscriber(
+//                $em->getRepository('UicBundle\DDD\Domain\StoredEvent')
+//            )
+//        );
 
         $centreRepository = $em->getRepository('UicBundle:Centre\Centre');
         $centres = $centreRepository->findAll();
