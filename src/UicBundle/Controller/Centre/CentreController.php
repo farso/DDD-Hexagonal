@@ -23,13 +23,6 @@ use UicBundle\Application\Subscribers\Centre\CentreSubscriber;
  */
 class CentreController extends Controller
 {
-    public function __construct()
-    {
-        DomainEventPublisher::instance()->subscribe(new CentreSubscriber());
-    }
-
-
-
 
     /**
      * Lists all Centre entities.
@@ -61,12 +54,6 @@ class CentreController extends Controller
         if ($newForm->isSubmitted() && $newForm->isValid()) {
 
             $em = $this->getDoctrine()->getManager();
-
-            DomainEventPublisher::instance()->subscribe(
-                new PersistDomainEventSubscriber(
-                    $em->getRepository('UicDDD:StoredEvent')
-                )
-            );
 
             $centreRepository = $em->getRepository('UicBundle:Centre\Centre');
             $tipusCentreRepository = $em->getRepository('UicBundle:TipusCentre\TipusCentre');
