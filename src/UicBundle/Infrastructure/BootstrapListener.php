@@ -25,7 +25,11 @@ class BootstrapListener
 
     public function bootstrapSubscribers(FilterControllerEvent $event)
     {
-        DomainEventPublisher::instance()->subscribe(new CentreSubscriber());
+        DomainEventPublisher::instance()->subscribe(
+            new CentreSubscriber(
+                $this->em->getRepository('UicBundle:TipusCentre\TipusCentre')
+            )
+        );
 
         DomainEventPublisher::instance()->subscribe(
             new PersistDomainEventSubscriber(
