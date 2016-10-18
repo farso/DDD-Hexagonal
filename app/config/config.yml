@@ -66,6 +66,11 @@ doctrine:
                 dir: "%kernel.root_dir%/../src/UicBundle/Infrastructure/Resources/config/doctrine"    
                 is_bundle: false
                 prefix: UicBundle\Domain\Entity
+            UicDDD:
+                type: yml
+                dir: "%kernel.root_dir%/../vendor/uic/ddd/src/Infrastructure/config/doctrine"
+                is_bundle: false
+                prefix: uic\ddd\Domain
 
 
 # Swiftmailer Configuration

@@ -13,7 +13,8 @@ use UicBundle\Application\UseCase\Centre\CreateCentreUseCase;
 use UicBundle\Application\UseCase\Centre\DeleteCentreUseCase;
 
 use uic\ddd\Domain\DomainEventPublisher;
-use UicBundle\Domain\Entity\Centre\CentreSubscriber;
+use uic\ddd\Application\PersistDomainEventSubscriber;
+use UicBundle\Application\Subscribers\Centre\CentreSubscriber;
 
 
 /**
@@ -38,12 +39,6 @@ class CentreController extends Controller
     {
         $em = $this->getDoctrine()->getManager();
 
-//        DomainEventPublisher::instance()->subscribe(
-//            new PersistDomainEventSubscriber(
-//                $em->getRepository('UicBundle\DDD\Domain\StoredEvent')
-//            )
-//        );
-
         $centreRepository = $em->getRepository('UicBundle:Centre\Centre');
         $centres = $centreRepository->findAll();
 
@@ -66,6 +61,12 @@ class CentreController extends Controller
         if ($newForm->isSubmitted() && $newForm->isValid()) {
 
             $em = $this->getDoctrine()->getManager();
+
+            DomainEventPublisher::instance()->subscribe(
+                new PersistDomainEventSubscriber(
+                    $em->getRepository('UicDDD:StoredEvent')
+                )
+            );
 
             $centreRepository = $em->getRepository('UicBundle:Centre\Centre');
             $tipusCentreRepository = $em->getRepository('UicBundle:TipusCentre\TipusCentre');

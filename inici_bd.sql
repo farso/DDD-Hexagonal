@@ -81,5 +81,6 @@ CREATE TABLE "public"."event" (
   PRIMARY KEY("event_id")
 ) WITH OIDS;
 
+create sequence public.event_event_id_seq increment 1 minvalue 1 start 1;
 
 
