@@ -81,6 +81,10 @@ sudo sed -i "s/^;date.timezone =$/date.timezone = \"Europe\/Madrid\"/" /etc/php5
 echo "///////////////////////////////////////////////"
 echo "Setting postgres to accept connections"
 echo "///////////////////////////////////////////////"
+cp -a  /etc/postgresql/9.3/main/postgresql.conf   /etc/postgresql/9.3/main/postgresql.conf2
+cp -a  /etc/postgresql/9.3/main/pg_hba.conf /etc/postgresql/9.3/main/pg_hba.conf2
+awk 'NR==59 {$0="listen_addresses='\''*'\''"} 1' /etc/postgresql/9.3/main/postgresql.conf > /etc/postgresql/9.3/main/postgresql.conf2
+mv /etc/postgresql/9.3/main/postgresql.conf2  /etc/postgresql/9.3/main/postgresql.conf
 
 sudo cp /vagrant/pg_hba.conf /etc/postgresql/9.3/main/pg_hba.conf
 
