@@ -1,8 +1,6 @@
  -- Table: hexagonal.tipus_centres
 
 -- DROP TABLE hexagonal.tipus_centres;
-CREATE DATABASE hexagonal;
-
 CREATE SCHEMA hexagonal;
 
 CREATE TABLE hexagonal.tipus_centres
