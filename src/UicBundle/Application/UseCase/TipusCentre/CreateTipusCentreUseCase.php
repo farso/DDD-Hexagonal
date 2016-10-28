@@ -2,8 +2,7 @@
 
 namespace UicBundle\Application\UseCase\TipusCentre;
 
-
-use UicBundle\Application\Factory\TipusCentreFactory;
+use UicBundle\Domain\Entity\TipusCentre\TipusCentre;
 
 class CreateTipusCentreUseCase extends TipusCentreUseCase
 {
@@ -13,8 +12,7 @@ class CreateTipusCentreUseCase extends TipusCentreUseCase
 
         $this->nameExists($descriCat);
 
-        $tipusCentreFactory = new TipusCentreFactory();
-        $tipusCentre = $tipusCentreFactory->create($this->requestToArray($createTipusCentreRequest));
+        $tipusCentre = TipusCentre::create($this->requestToArray($createTipusCentreRequest));
         
         $tipusCentre = $this->tipusCentreRepository->create($tipusCentre);
 

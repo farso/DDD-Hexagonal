@@ -38,7 +38,7 @@ class CentreSubscriber implements DomainEventSubscriber
 
 
         // prova *** de cridar un use case des d'un subscriber:
-        $tipusCentreObjectDataTransformer = new TipusCentreObjectDataTransformer();
+/*        $tipusCentreObjectDataTransformer = new TipusCentreObjectDataTransformer();
         $tipusCentreUpdateUseCase = new UpdateTipusCentreUseCase($this->tipusCentreRepository, $tipusCentreObjectDataTransformer);
 
         $updateTipusCentreRequest = new UpdateTipusCentreRequest();
@@ -47,7 +47,7 @@ class CentreSubscriber implements DomainEventSubscriber
         
 
         $tipusCentre = $tipusCentreUpdateUseCase->run($updateTipusCentreRequest);
-
+*/
     }
 
 

@@ -3,7 +3,7 @@
 namespace UicBundle\Application\UseCase\Centre;
 
 use UicBundle\Domain\Entity\Centre\Address;
-use UicBundle\Application\Factory\CentreFactory;
+use UicBundle\Domain\Entity\Centre\Centre;
 
 class CreateCentreUseCase extends CentreUseCase
 {
@@ -18,8 +18,7 @@ class CreateCentreUseCase extends CentreUseCase
 
         $params = $this->requestToArray($request, $tipusCentre, $address);
 
-        $centreFactory = new CentreFactory();
-        $centre = $centreFactory->create($params);
+        $centre = Centre::create($params);
         
         $this->centreRepository->create($centre);
 

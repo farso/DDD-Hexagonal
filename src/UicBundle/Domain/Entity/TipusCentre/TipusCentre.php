@@ -31,12 +31,30 @@ class TipusCentre  implements TipusCentreInterface
     protected $descriEng;
 
 
-    public function __construct(TipusCentreId $id, $descriCat, $descriEsp, $descriEng)
+    private function __construct(TipusCentreId $id, $descriCat, $descriEsp, $descriEng)
     {
         $this->id = $id;
         $this->descriEsp = $descriEsp;
         $this->descriCat = $descriCat;
         $this->descriEng = $descriEng;
+    }
+
+    /**
+     * Es genera una nova instància de DOMINI a partir d'una de INF
+     * @param  array $tipusCentreInf [description]
+     * @return [type]            [description]
+     */
+    public static function create(array $tipusCentreInf)
+    {
+
+        //@todo comprovacio dels noms de les key de l'array.
+
+        $descriCat = $tipusCentreInf['descriCat'];
+        $descriEsp = $tipusCentreInf['descriEsp'];
+        $descriEng = $tipusCentreInf['descriEng'];
+
+        $tipusCentreId = new TipusCentreId();
+        return new self($tipusCentreId, $descriCat, $descriEsp, $descriEng);
     }
 
 
