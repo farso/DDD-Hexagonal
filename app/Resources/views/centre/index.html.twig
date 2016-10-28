@@ -6,22 +6,30 @@
     <table>
         <thead>
             <tr>
+                <th>Codi</th>
                 <th>Nombre</th>
                 <th>Codigo Oficial</th>
                 <th>Email</th>
                 <th>Color</th>
                 <th>Tipus centre</th>
+                <th>Address_carrer</th>
                 <th>Actions</th>
             </tr>
         </thead>
         <tbody>
         {% for centre in centres %}
             <tr>
+                <td>{{ centre.codi }}</td>
                 <td>{{ centre.nombre | upper }}</td>
                 <td>{{ centre.codiOficial }}</td>
                 <td>{{ centre.mailCentre }}</td>
                 <td>{{ centre.color }}</td>
-                <td>{# centre.tipusCentre.descriCat #}</td>
+                <td>
+                    {% if centre.tipusCentre is not null %}
+                        {{ centre.tipusCentre.descriCat }}
+                    {% endif %}
+                </td>
+                <td>{{ centre.address.carrer }}</td>
                 <td>
                     <ul>
                         <li>

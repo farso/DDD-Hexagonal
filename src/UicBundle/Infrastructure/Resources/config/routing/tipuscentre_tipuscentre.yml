@@ -1,0 +1,24 @@
+tipuscentre_index:
+    path:     /
+    defaults: { _controller: "UicBundle:TipusCentre/TipusCentre:index" }
+    methods:  GET
+
+tipuscentre_show:
+    path:     /{id}/show
+    defaults: { _controller: "UicBundle:TipusCentre/TipusCentre:show" }
+    methods:  GET
+
+tipuscentre_new:
+    path:     /new
+    defaults: { _controller: "UicBundle:TipusCentre/TipusCentre:new" }
+    methods:  [GET, POST]
+
+tipuscentre_edit:
+    path:     /{id}/edit
+    defaults: { _controller: "UicBundle:TipusCentre/TipusCentre:edit" }
+    methods:  [GET, POST]
+
+tipuscentre_delete:
+    path:     /{id}/delete
+    defaults: { _controller: "UicBundle:TipusCentre/TipusCentre:delete" }
+    methods:  DELETE

@@ -1,0 +1,7 @@
+app_centre:
+    resource: "@UicBundle/Infrastructure/Resources/config/routing/centre_centre.yml"
+    prefix:   /centre
+
+app_tipuscentre:
+    resource: "@UicBundle/Infrastructure/Resources/config/routing/tipuscentre_tipuscentre.yml"
+    prefix:   /tipuscentre

@@ -1,0 +1,7 @@
+# behat.yml
+default:
+  suites:
+    centres_features:
+      paths: [ %paths.base%/features/centres ]
+      contexts:
+        - CentreContext

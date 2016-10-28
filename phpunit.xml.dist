@@ -12,8 +12,8 @@
     </php>
 
     <testsuites>
-        <testsuite name="Project Test Suite">
-            <directory>tests</directory>
+        <testsuite name="Application Centres Tests">
+            <directory>src/UicBundle/Tests/Application/UseCase/Centre</directory>
         </testsuite>
     </testsuites>
 

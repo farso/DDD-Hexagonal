@@ -13,17 +13,33 @@
 echo "///////////////////////////////////////////////"
 echo "Installing rabbitmq..."
 echo "///////////////////////////////////////////////"
-sudo apt-get update -y
-sudo echo "deb http://www.rabbitmq.com/debian testing main" >> /etc/apt/sources.list
-wget https://www.rabbitmq.com/rabbitmq-signing-key-public.asc
-sudo apt-key add rabbitmq-signing-key-public.asc
-sudo apt-get install rabbitmq-server --force-yes -y
+sudo su
+
+# Add Debian Wheezy backports repository to obtain init-system-helpers
+gpg --keyserver pgpkeys.mit.edu --recv-key 7638D0442B90D010
+gpg -a --export 7638D0442B90D010 | sudo apt-key add -
+echo 'deb http://ftp.debian.org/debian wheezy-backports main' | sudo tee /etc/apt/sources.list.d/wheezy_backports.list
+
+# Add Erlang Solutions repository to obtain esl-erlang
+wget -O- https://packages.erlang-solutions.com/debian/erlang_solutions.asc | sudo apt-key add -
+echo 'deb https://packages.erlang-solutions.com/debian wheezy contrib' | sudo tee /etc/apt/sources.list.d/esl.list
+
+sudo apt-get update
+sudo apt-get install  --assume-yes init-system-helpers socat esl-erlang
+
+# continue with RabbitMQ installation as explained above
+wget -O- https://www.rabbitmq.com/rabbitmq-release-signing-key.asc | sudo apt-key add -
+echo 'deb http://www.rabbitmq.com/debian/ testing main' | sudo tee /etc/apt/sources.list.d/rabbitmq.list
+
+sudo apt-get update
+sudo apt-get install  --assume-yes rabbitmq-server
+
 sudo rabbitmq-plugins enable rabbitmq_management
 sudo rabbitmqctl add_user admin nimda
 sudo rabbitmqctl set_user_tags admin administrator
 sudo rabbitmqctl set_permissions -p / admin ".*" ".*" ".*"
 
-sudo apt-get update -y
+
 echo "///////////////////////////////////////////////"
 echo "Installing php..."
 echo "///////////////////////////////////////////////"
@@ -69,21 +85,15 @@ cp -a  /etc/postgresql/9.3/main/postgresql.conf   /etc/postgresql/9.3/main/postg
 cp -a  /etc/postgresql/9.3/main/pg_hba.conf /etc/postgresql/9.3/main/pg_hba.conf2
 awk 'NR==59 {$0="listen_addresses='\''*'\''"} 1' /etc/postgresql/9.3/main/postgresql.conf > /etc/postgresql/9.3/main/postgresql.conf2
 mv /etc/postgresql/9.3/main/postgresql.conf2  /etc/postgresql/9.3/main/postgresql.conf
-awk 'NR==86 {$0="host all all 172.20.2.0/24 trust"} 1' /etc/postgresql/9.3/main/pg_hba.conf > /etc/postgresql/9.3/main/pg_hba.conf2
-mv /etc/postgresql/9.3/main/pg_hba.conf2 /etc/postgresql/9.3/main/pg_hba.conf
 
-awk 'NR==85 {$0=""} 1' /etc/postgresql/9.3/main/pg_hba.conf > /tmp/pg_hba.conf2
-awk 'NR==85 {$0="local   all             postgres                                trust"} 1' /tmp/pg_hba.conf2 > /tmp/pg_hba.conf3
-mv /tmp/pg_hba.conf3 /etc/postgresql/9.3/main/pg_hba.conf 
-sudo /etc/init.d/postgresql reload
+sudo cp /vagrant/pg_hba.conf /etc/postgresql/9.3/main/pg_hba.conf
+
+sudo /etc/init.d/postgresql stop
+sudo /etc/init.d/postgresql start
 
 psql -U postgres < /vagrant/inici_bd.sql
-
-alias ll='ls -la --color' 
-
-echo "////////////////////////////////////////////////////////"
-echo "Copy the folders /application and /domain to vendor/uic/"
-echo "////////////////////////////////////////////////////////"
-cp -fr /application /vagrant/vendor/uic/
-cp -fr /domain /vagrant/vendor/uic/
-
+echo "///////////////////////////////////////////////"
+echo "System settings"
+echo "///////////////////////////////////////////////"
+alias ll='ls -la --color'
+source /vagrant/script.sh 

@@ -1,8 +1,6 @@
  -- Table: hexagonal.tipus_centres
 
 -- DROP TABLE hexagonal.tipus_centres;
-CREATE DATABASE hexagonal;
-
 CREATE SCHEMA hexagonal;
 
 CREATE TABLE hexagonal.tipus_centres
@@ -66,5 +64,21 @@ WITH (
   OIDS=FALSE
 );
 
+ALTER TABLE "hexagonal"."centros"
+  ADD COLUMN "address_carrer" VARCHAR;
+
+COMMENT ON COLUMN "hexagonal"."centros"."address_carrer"
+IS 'carrer';
+
+
+CREATE TABLE "public"."event" (
+  "event_id" INTEGER, 
+  "event_body" TEXT, 
+  "type_name" "varchar", 
+  "occurred_on" TIMESTAMP WITHOUT TIME ZONE, 
+  PRIMARY KEY("event_id")
+) WITH OIDS;
+
+create sequence public.event_event_id_seq increment 1 minvalue 1 start 1;
 
 
