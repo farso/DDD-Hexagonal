@@ -37,6 +37,8 @@
         "ramsey/uuid": "^3.2",
         "php-amqplib/php-amqplib": "2.5.*",
         "behat/behat": "3.2.x-dev",
+        "twitter/bootstrap": "3.*",
+        "components/jquery": "3.*",
         "uic/ddd": "dev-master"
     },
     "require-dev": {
