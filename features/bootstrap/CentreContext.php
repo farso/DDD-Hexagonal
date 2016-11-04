@@ -11,8 +11,8 @@ use \UicBundle\Application\UseCase\Centre\CreateCentreException;
 use \UicBundle\Application\DataTransformer\Centre\CentreObjectDataTransformer;
 use \UicBundle\Application\UseCase\Centre\CreateCentreRequest;
 
-//require_once 'PHPUnit/Autoload.php';
-//require_once 'PHPUnit/Framework/Assert/Functions.php';
+require_once 'PHPUnit/Autoload.php';
+require_once 'PHPUnit/Framework/Assert/Functions.php';
 
 /**
  * Defines application features from the specific context.
