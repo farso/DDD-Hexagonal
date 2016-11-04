@@ -33,8 +33,22 @@ final class TipusCentreRepositoryMock extends RepositoryMock  implements TipusCe
 
     public function fill()
     {
-        $tipusCentre1 = new TipusCentre(new TipusCentreId(), "Tipus Centre 1", "Tipo Centro 1", "Center Type 1");
-        $tipusCentre2 = new TipusCentre(new TipusCentreId(), "Tipus Centre 2", "Tipo Centro 2", "Center Type 2");
+        $tipusCentre1 = TipusCentre::create(
+            array(
+                "descriCat" => "Tipus Centre 1",
+                "descriEsp" => "Tipo Centro 1",
+                "descriEng" => "Center Type 1"
+            )
+        );
+
+        $tipusCentre2 = TipusCentre::create(
+            array(
+                "descriCat" => "Tipus Centre 2",
+                "descriEsp" => "Tipo Centro 2",
+                "descriEng" => "Center Type 2"
+            )
+        );
+
         $this->entities[] = $tipusCentre1;
         $this->entities[] = $tipusCentre2;
     }
