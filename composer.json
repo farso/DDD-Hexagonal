@@ -39,7 +39,9 @@
         "behat/behat": "3.2.x-dev",
         "twitter/bootstrap": "3.*",
         "components/jquery": "3.*",
-        "uic/ddd": "dev-master"
+        "uic/ddd": "dev-master",
+        "twbs/bootstrap": "^3.3",
+        "symfony/assetic-bundle": "^2.8"
     },
     "require-dev": {
         "sensio/generator-bundle": "^3.0",

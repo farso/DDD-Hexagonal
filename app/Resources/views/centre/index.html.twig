@@ -1,49 +1,51 @@
 {% extends 'base.html.twig' %}
 
 {% block body %}
-    <h1>Centre list</h1>
+    <h3>Centre list</h3>
 
-    <table>
-        <thead>
-            <tr>
-                <th>Codi</th>
-                <th>Nombre</th>
-                <th>Codigo Oficial</th>
-                <th>Email</th>
-                <th>Color</th>
-                <th>Tipus centre</th>
-                <th>Address_carrer</th>
-                <th>Actions</th>
-            </tr>
-        </thead>
-        <tbody>
-        {% for centre in centres %}
-            <tr>
-                <td>{{ centre.codi }}</td>
-                <td>{{ centre.nombre | upper }}</td>
-                <td>{{ centre.codiOficial }}</td>
-                <td>{{ centre.mailCentre }}</td>
-                <td>{{ centre.color }}</td>
-                <td>
-                    {% if centre.tipusCentre is not null %}
-                        {{ centre.tipusCentre.descriCat }}
-                    {% endif %}
-                </td>
-                <td>{{ centre.address.carrer }}</td>
-                <td>
-                    <ul>
-                        <li>
-                            <a href="{{ path('centre_show', { 'id': centre.id }) }}">show</a>
-                        </li>
-                        <li>
-                            <a href="{{ path('centre_edit', { 'id': centre.id }) }}">edit</a>
-                        </li>
-                    </ul>
-                </td>
-            </tr>
-        {% endfor %}
-        </tbody>
-    </table>
+    <div class="table-responsive">
+        <table class="table">
+            <thead>
+                <tr>
+                    <th>Codi</th>
+                    <th>Nombre</th>
+                    <th>Codigo Oficial</th>
+                    <th>Email</th>
+                    <th>Color</th>
+                    <th>Tipus centre</th>
+                    <th>Address_carrer</th>
+                    <th>Actions</th>
+                </tr>
+            </thead>
+            <tbody>
+            {% for centre in centres %}
+                <tr>
+                    <td>{{ centre.codi }}</td>
+                    <td>{{ centre.nombre | upper }}</td>
+                    <td>{{ centre.codiOficial }}</td>
+                    <td>{{ centre.mailCentre }}</td>
+                    <td>{{ centre.color }}</td>
+                    <td>
+                        {% if centre.tipusCentre is not null %}
+                            {{ centre.tipusCentre.descriCat }}
+                        {% endif %}
+                    </td>
+                    <td>{{ centre.address.carrer }}</td>
+                    <td>
+                        <ul>
+                            <li>
+                                <a href="{{ path('centre_show', { 'id': centre.id }) }}">show</a>
+                            </li>
+                            <li>
+                                <a href="{{ path('centre_edit', { 'id': centre.id }) }}">edit</a>
+                            </li>
+                        </ul>
+                    </td>
+                </tr>
+            {% endfor %}
+            </tbody>
+        </table>
+    </div>
 
     <ul>
         <li>

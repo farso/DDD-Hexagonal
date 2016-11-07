@@ -37,6 +37,7 @@ framework:
 twig:
     debug:            "%kernel.debug%"
     strict_variables: "%kernel.debug%"
+    cache:            false
 
 # Doctrine Configuration
 doctrine:
@@ -85,4 +86,10 @@ swiftmailer:
 sensio_framework_extra:
     request:
         converters: true
-        auto_convert: false 
+        auto_convert: false
+
+assetic:
+    debug:          '%kernel.debug%'
+    use_controller: '%kernel.debug%'
+    filters:
+        cssrewrite: ~
