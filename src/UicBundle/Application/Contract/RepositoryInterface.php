@@ -1,7 +1,6 @@
 <?php
 
 namespace UicBundle\Application\Contract;
-use UicBundle\Domain\Entity\Entity;
 
 /**
  * RepositoryInterface
@@ -53,19 +52,5 @@ interface RepositoryInterface
      * @return object|null The entity instance or NULL if the entity can not be found.
      */
     function findOneBy(array $criteria, array $orderBy = null);
-
-
-
-
-    /**
-     * Flushes all changes to objects that have been queued up to now to the database.
-     * This effectively synchronizes the in-memory state of managed objects with the
-     * database.
-     *
-     * @param Entity    $entity
-     * @throws \Doctrine\ORM\OptimisticLockException If a version check on an entity that
-     *         makes use of optimistic locking fails.
-     */
-    //public function update(Entity $entity);
 
 }

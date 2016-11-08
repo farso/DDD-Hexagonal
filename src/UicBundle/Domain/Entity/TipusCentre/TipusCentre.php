@@ -2,9 +2,6 @@
 //1.0.2
 namespace UicBundle\Domain\Entity\TipusCentre;
 
-use UicBundle\Domain\Entity\TipusCentre\TipusCentreId;
-
-
 /**
  * TipusCentre
  */

@@ -8,8 +8,7 @@
 
 namespace UicBundle\Application\Subscribers\Centre;
 
-use uic\ddd\Domain\DomainEvent;
-use uic\ddd\Application\DomainEventSubscriber;
+use uic\ddd\Application\Event\DomainEventSubscriber;
 use UicBundle\Domain\Entity\Centre\CentreCreated;
 
 // prova ***

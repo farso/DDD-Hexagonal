@@ -3,7 +3,6 @@
 namespace UicBundle\Domain\Entity\Centre;
 
 use UicBundle\Domain\Entity\TipusCentre\TipusCentre;
-use UicBundle\Domain\Entity\Centre\Address;
 
 /**
  * CentreInterface
