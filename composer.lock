@@ -3273,12 +3273,12 @@
             "source": {
                 "type": "git",
                 "url": "https://bitbucket.org/uicengineering/ddd.git",
-                "reference": "9d5dfe48a15360f9f85773f2eb86b992f675494b"
+                "reference": "12385b8dfd8df6095f0e2f6e9bc6f931bb052d3a"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://bitbucket.org/uicengineering/ddd/get/9d5dfe48a15360f9f85773f2eb86b992f675494b.zip",
-                "reference": "9d5dfe48a15360f9f85773f2eb86b992f675494b",
+                "url": "https://bitbucket.org/uicengineering/ddd/get/12385b8dfd8df6095f0e2f6e9bc6f931bb052d3a.zip",
+                "reference": "12385b8dfd8df6095f0e2f6e9bc6f931bb052d3a",
                 "shasum": ""
             },
             "type": "library",
@@ -3287,7 +3287,7 @@
                     "uic\\ddd\\": "src"
                 }
             },
-            "time": "2016-11-08 10:59:53"
+            "time": "2016-11-08 11:46:53"
         },
         {
             "name": "webmozart/assert",

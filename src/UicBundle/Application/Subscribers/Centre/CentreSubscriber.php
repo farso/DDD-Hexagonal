@@ -20,12 +20,12 @@ use UicBundle\Application\Contract\TipusCentreRepositoryInterface;
 class CentreSubscriber implements DomainEventSubscriber
 {
     // prova ***
-    private $tipusCentreRepository;
+    //private $tipusCentreRepository;
 
     // prova ***
-    public function __construct(TipusCentreRepositoryInterface $tipusCentreRepository)
+    public function __construct(/*TipusCentreRepositoryInterface $tipusCentreRepository*/)
     {
-        $this->tipusCentreRepository = $tipusCentreRepository;
+        // $this->tipusCentreRepository = $tipusCentreRepository;
     }
 
     public function handle($aDomainEvent)

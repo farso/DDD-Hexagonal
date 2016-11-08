@@ -27,7 +27,8 @@ class BootstrapListener
     {
         DomainEventPublisher::instance()->subscribe(
             new CentreSubscriber(
-                $this->em->getRepository('UicBundle:TipusCentre\TipusCentre')
+                //** prova
+                //$this->em->getRepository('UicBundle:Centre\Centre')
             )
         );
 
