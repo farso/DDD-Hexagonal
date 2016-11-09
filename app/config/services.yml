@@ -15,3 +15,23 @@ services:
         tags:
             - { name: kernel.event_listener, event: kernel.controller, method: bootstrapSubscribers }
 
+    # example of repository as service
+    # from controller: $this->get('app.eventstore')
+    app.eventstore:
+        class: Doctrine\ORM\EntityRepository
+        factory: ['@doctrine.orm.entity_manager', getRepository]
+        arguments:
+            - uic\ddd\Domain\Event\StoredEvent
+
+    app.publishedmessagetracker:
+        class: Doctrine\ORM\EntityRepository
+        factory: ['@doctrine.orm.entity_manager', getRepository]
+        arguments:
+            - uic\ddd\Domain\Notification\PublishedMessage
+
+    app.spread:
+        class: UicBundle\Command\PushNotificationsCommand
+        arguments: ["@doctrine.orm.entity_manager", "@app.eventstore", "@app.publishedmessagetracker","spread"]
+        tags:
+            - { name: console.command }
+
