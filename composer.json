@@ -40,7 +40,8 @@
         "twitter/bootstrap": "3.*",
         "components/jquery": "3.*",
         "uic/ddd": "dev-master",
-        "jms/serializer": "^1.4"
+        "jms/serializer": "^1.4",
+        "oldsound/rabbitmq-bundle": "^1.8"
     },
     "require-dev": {
         "sensio/generator-bundle": "^3.0",

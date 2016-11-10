@@ -35,3 +35,6 @@ services:
         tags:
             - { name: console.command }
 
+    centre_created_consumer_service:
+        class: UicBundle\Infrastructure\Messaging\PhpAmqpLib\PhpAmqpLibCentreCreatedConsumer
+
