@@ -50,4 +50,11 @@ final class TipusCentreRepositoryMock extends RepositoryMock  implements TipusCe
         $this->entities[] = $tipusCentre1;
         $this->entities[] = $tipusCentre2;
     }
+
+    public function getFirstTipusCentre()
+    {
+        if (sizeof($this->entities) == 0) $this->fill();
+
+        return $this->entities[0];
+    }
 }
