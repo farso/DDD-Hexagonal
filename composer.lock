@@ -3609,6 +3609,9 @@
                     "uic\\ddd\\": "src"
                 }
             },
+            "support": {
+                "source": "https://bitbucket.org/uicengineering/ddd/src/45e80e1ebe1159eaea456f35f58e05db2709f81a/?at=master"
+            },
             "time": "2016-11-09 15:20:41"
         },
         {
