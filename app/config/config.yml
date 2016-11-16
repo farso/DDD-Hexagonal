@@ -91,9 +91,7 @@ sensio_framework_extra:
 assetic:
     debug:          '%kernel.debug%'
     use_controller: '%kernel.debug%'
-    filters:
-        cssrewrite: ~
-        auto_convert: false
+
 
 old_sound_rabbit_mq:
     connections:
