@@ -8,8 +8,7 @@
 
 namespace UicBundle\Application\Subscribers\Centre;
 
-use uic\ddd\Domain\DomainEvent;
-use uic\ddd\Application\DomainEventSubscriber;
+use uic\ddd\Application\Event\DomainEventSubscriber;
 use UicBundle\Domain\Entity\Centre\CentreCreated;
 
 // prova ***
@@ -21,12 +20,12 @@ use UicBundle\Application\Contract\TipusCentreRepositoryInterface;
 class CentreSubscriber implements DomainEventSubscriber
 {
     // prova ***
-    private $tipusCentreRepository;
+    //private $tipusCentreRepository;
 
     // prova ***
-    public function __construct(TipusCentreRepositoryInterface $tipusCentreRepository)
+    public function __construct(/*TipusCentreRepositoryInterface $tipusCentreRepository*/)
     {
-        $this->tipusCentreRepository = $tipusCentreRepository;
+        // $this->tipusCentreRepository = $tipusCentreRepository;
     }
 
     public function handle($aDomainEvent)

@@ -4,7 +4,6 @@ namespace UicBundle\Application\UseCase\Centre;
 use UicBundle\Application\Contract\CentreRepositoryInterface;
 use UicBundle\Application\Contract\TipusCentreRepositoryInterface;
 use UicBundle\Application\DataTransformer\Centre\CentreDataTransformer;
-use UicBundle\Application\UseCase\Centre\CreateCentreException;
 
 class CentreUseCase  {
 	

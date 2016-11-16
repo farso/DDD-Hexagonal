@@ -8,10 +8,8 @@
 
 namespace UicBundle\Infrastructure\Domain\Model\TipusCentre;
 
-use Doctrine\Common\Collections\Criteria;
 use UicBundle\Application\Contract\TipusCentreRepositoryInterface;
 use UicBundle\Domain\Entity\TipusCentre\TipusCentre;
-use UicBundle\Domain\Entity\TipusCentre\TipusCentreId;
 use UicBundle\Infrastructure\Domain\Model\RepositoryMock;
 
 final class TipusCentreRepositoryMock extends RepositoryMock  implements TipusCentreRepositoryInterface

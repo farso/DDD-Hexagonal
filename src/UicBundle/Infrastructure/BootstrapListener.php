@@ -4,8 +4,8 @@ namespace UicBundle\Infrastructure;
 
 use Symfony\Component\HttpKernel\Event\FilterControllerEvent;
 use Doctrine\ORM\EntityManager;
-use uic\ddd\Domain\DomainEventPublisher;
-use uic\ddd\Application\PersistDomainEventSubscriber;
+use uic\ddd\Domain\Event\DomainEventPublisher;
+use uic\ddd\Application\Event\PersistDomainEventSubscriber;
 use UicBundle\Application\Subscribers\Centre\CentreSubscriber;
 
 /**
@@ -27,13 +27,14 @@ class BootstrapListener
     {
         DomainEventPublisher::instance()->subscribe(
             new CentreSubscriber(
-                $this->em->getRepository('UicBundle:TipusCentre\TipusCentre')
+                //** prova
+                //$this->em->getRepository('UicBundle:Centre\Centre')
             )
         );
 
         DomainEventPublisher::instance()->subscribe(
             new PersistDomainEventSubscriber(
-                $this->em->getRepository('UicDDD:StoredEvent')
+                $this->em->getRepository('UicDDD:Event\StoredEvent')
             )
         );
     }

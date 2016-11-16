@@ -81,4 +81,14 @@ CREATE TABLE "public"."event" (
 
 create sequence public.event_event_id_seq increment 1 minvalue 1 start 1;
 
+CREATE TABLE "public"."event_published_message_tracker" (
+  "tracker_id" INTEGER,
+  "most_recent_published_message_id" INTEGER,
+  "type_name" "varchar",
+  PRIMARY KEY("tracker_id") 
+) WITH OIDS;
 
+create sequence public.event_published_message_tracker_id_seq increment 1 minvalue 1 start 1;
+
+alter sequence "public"."event_published_message_tracker_id_seq" rename to "event_published_message_tracker_tracker_id";
+alter sequence event_published_message_tracker_tracker_id rename to event_published_message_tracker_tracker_id_seq;

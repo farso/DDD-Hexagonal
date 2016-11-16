@@ -2,11 +2,7 @@
 
 namespace UicBundle\Application\UseCase\Centre;
 
-use UicBundle\Application\Contract\CentreRepositoryInterface;
-use UicBundle\Application\Contract\TipusCentreRepositoryInterface;
 use UicBundle\Domain\Entity\Centre\Address;
-use UicBundle\Application\UseCase\Centre\CentreUseCase;
-use UicBundle\Application\UseCase\Centre\UpdateCentreException;
 
 class UpdateCentreUseCase extends CentreUseCase
 {

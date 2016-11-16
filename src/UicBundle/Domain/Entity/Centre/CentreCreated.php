@@ -8,8 +8,8 @@
 
 namespace UicBundle\Domain\Entity\Centre;
 
-use uic\ddd\Domain\DomainEvent;
-use uic\ddd\Domain\PublishableDomainEvent;
+use uic\ddd\Domain\Event\DomainEvent;
+use uic\ddd\Domain\Event\PublishableDomainEvent;
 
 class CentreCreated implements DomainEvent, PublishableDomainEvent
 {

@@ -12,10 +12,6 @@ use UicBundle\Application\UseCase\Centre\UpdateCentreUseCase;
 use UicBundle\Application\UseCase\Centre\CreateCentreUseCase;
 use UicBundle\Application\UseCase\Centre\DeleteCentreUseCase;
 
-use uic\ddd\Domain\DomainEventPublisher;
-use uic\ddd\Application\PersistDomainEventSubscriber;
-use UicBundle\Application\Subscribers\Centre\CentreSubscriber;
-
 
 /**
  * Centre controller.

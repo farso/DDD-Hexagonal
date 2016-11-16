@@ -3,7 +3,6 @@ namespace UicBundle\Application\UseCase\TipusCentre;
 
 use UicBundle\Application\Contract\TipusCentreRepositoryInterface;
 use UicBundle\Application\DataTransformer\TipusCentre\TipusCentreDataTransformer;
-use UicBundle\Application\UseCase\TipusCentre\CreateTipusCentreException;
 use Doctrine\Common\Collections\Criteria;
 
 class TipusCentreUseCase  {

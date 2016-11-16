@@ -11,8 +11,7 @@ use UicBundle\Application\UseCase\TipusCentre\DeleteTipusCentreRequest;
 use UicBundle\Application\UseCase\TipusCentre\UpdateTipusCentreRequest;
 use UicBundle\Application\UseCase\TipusCentre\UpdateTipusCentreUseCase;
 use UicBundle\Application\UseCase\TipusCentre\DeleteTipusCentreUseCase;
-use UicBundle\Domain\Entity\TipusCentre\TipusCentre;
-use UicBundle\Infrastructure\Form\TipusCentre\TipusCentreType;
+
 
 /**
  * TipusCentre\TipusCentre controller.

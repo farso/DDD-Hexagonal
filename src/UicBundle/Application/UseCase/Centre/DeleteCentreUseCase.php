@@ -3,8 +3,6 @@
 namespace UicBundle\Application\UseCase\Centre;
 
 use UicBundle\Application\Contract\CentreRepositoryInterface;
-use UicBundle\Application\UseCase\Centre\CentreUseCase;
-use UicBundle\Application\UseCase\Centre\DeleteCentreException;
 
 class DeleteCentreUseCase extends CentreUseCase
 {
