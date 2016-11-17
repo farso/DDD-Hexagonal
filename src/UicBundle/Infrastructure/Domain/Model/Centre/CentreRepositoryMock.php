@@ -31,16 +31,34 @@ final class CentreRepositoryMock extends RepositoryMock implements CentreReposit
         $centres = array();
 
         foreach ($this->entities as $centre) {
-            if ($fieldName == "codi" && $fieldValue == $centre->getCodi()) {
-                $centres[] = $centre;
+
+            if ($centre->getId() != $id) {
+                if ($fieldName == "codi" && $fieldValue == $centre->getCodi()) {
+                    $centres[] = $centre;
+                }
+
+                if ($fieldName == "nombre" && $fieldValue == $centre->getNombre()) {
+                    $centres[] = $centre;
+                }
             }
 
-            if ($fieldName == "nombre" && $fieldValue == $centre->getNombre()) {
-                $centres[] = $centre;
+        }
+        return $centres;
+    }
+
+    public function findOneBy(array $criteria, array $orderBy = null)
+    {
+        $centre = null;
+
+        foreach ($this->entities as $centre) {
+
+            foreach($criteria as $key => $value) {
+
+                if ($key == 'nombre' && $value == $centre->getNombre()) return $centre;
             }
         }
 
-        return $centres;
+        return $centre;
     }
 
     public function fill()

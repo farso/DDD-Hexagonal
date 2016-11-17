@@ -11,6 +11,10 @@ use \UicBundle\Application\UseCase\Centre\CreateCentreException;
 use \UicBundle\Application\DataTransformer\Centre\CentreObjectDataTransformer;
 use \UicBundle\Application\UseCase\Centre\CreateCentreRequest;
 
+use \UicBundle\Application\UseCase\Centre\UpdateCentreUseCase;
+use \UicBundle\Application\UseCase\Centre\UpdateCentreRequest;
+use \UicBundle\Domain\Model\Entity\Centre\Centre;
+
 require_once 'PHPUnit/Autoload.php';
 require_once 'PHPUnit/Framework/Assert/Functions.php';
 
@@ -23,6 +27,7 @@ class CentreContext implements SnippetAcceptingContext
     private $tipusCentreRepository;
     private $centreDataTransformer;
     private $message;
+    private $idUpdatedCentre;
 
     /**
      * Initializes context.
@@ -183,4 +188,76 @@ class CentreContext implements SnippetAcceptingContext
     {
         throw new PendingException();
     }
+
+    /**
+     * @Given a centre with name :arg1
+     */
+    public function aCentreWithName($arg1)
+    {
+        $this->centreRepository->removeAll();
+        $tipusCentres = $this->tipusCentreRepository->findAll();
+        $createCentreUseCase = new CreateCentreUseCase($this->centreRepository, $this->tipusCentreRepository, $this->centreDataTransformer);
+        $request = new CreateCentreRequest();
+        $request->setCodi('OOO');
+        $request->setNom($arg1);
+        $request->setTipusCentre($tipusCentres[0]->getId());
+        $request->setCarrer('carrer');
+        $request->setCodiOficial('b832s');
+        $request->setColor('blau');
+        $request->setMailCentre('ass@ssfg.es');
+        $createCentreUseCase->run($request);
+
+    }
+
+    /**
+     * @When I update the name of the centre with name :arg1 to :arg2
+     */
+    public function iUpdateTheNameOfTheCentreWithNameTo($arg1, $arg2)
+    {
+        $centre = $this->centreRepository->findOneBy(array('nombre' => $arg1));
+
+        $updateCentreUseCase = new UpdateCentreUseCase($this->centreRepository, $this->tipusCentreRepository, $this->centreDataTransformer);
+
+        $updateCentreRequest = new UpdateCentreRequest();
+        $updateCentreRequest->setTipusCentre($centre->getTipusCentre()->getId());
+        $updateCentreRequest->setMailCentre($centre->getMailCentre());
+        $updateCentreRequest->setNom($arg2);
+        $updateCentreRequest->setColor($centre->getColor());
+        $updateCentreRequest->setCodiOficial($centre->getCodiOficial());
+        $updateCentreRequest->setCarrer($centre->getAddress()->getCarrer());
+        $updateCentreRequest->setCodi($centre->getCodi());
+        $updateCentreRequest->setId($centre->getId());
+
+        $updateCentreUseCase->run($updateCentreRequest);
+
+        $this->idUpdatedCentre = $centre->getId();
+    }
+
+    /**
+     * @Then the name of the centre with changed to :arg1
+     */
+    public function theNameOfTheCentreWithChangedTo($arg1)
+    {
+        $centre = $this->centreRepository->find($this->idUpdatedCentre);
+
+        assertEquals($arg1, $centre->getNombre());
+    }
+   
+    /**
+     * @Then I should see the exception :arg1
+     */
+    public function iShouldSeeTheException($arg1)
+    {
+        throw new PendingException();
+    }
+
+    /**
+     * @Then there should be a center with the name :arg1
+     */
+    public function thereShouldBeACenterWithTheName($arg1)
+    {
+        throw new PendingException();
+    }
+
+
 }
