@@ -5,7 +5,19 @@ security:
     # http://symfony.com/doc/current/book/security.html#where-do-users-come-from-user-providers
     providers:
         in_memory:
-            memory: ~
+            memory:
+                users:
+                    ddt:
+                        password: $2y$12$TFOCKYuK7h9E9OsosuTkmukMXTLo7sEZC/kgN4qypw8QmQq2VtXM.
+                        roles: 'ROLE_USER'
+                    admin:
+                        password: $2y$12$FmDlBUQJDJSLwwWYVMQ2c.ehwGiNXNsiSS8N19UDpHuepFZtgX4si
+                        roles: 'ROLE_ADMIN'
+
+    encoders:
+        Symfony\Component\Security\Core\User\User:
+            algorithm: bcrypt
+            cost: 12
 
     firewalls:
         # disables authentication for assets and the profiler, adapt it according to your needs
@@ -13,12 +25,17 @@ security:
             pattern: ^/(_(profiler|wdt)|css|images|js)/
             security: false
 
-        main:
+        default:
             anonymous: ~
-            # activate different ways to authenticate
+            http_basic: ~
+            logout:
+                path:   /logout
+                target: /
 
-            # http_basic: ~
-            # http://symfony.com/doc/current/book/security.html#a-configuring-how-your-users-will-authenticate
+    role_hierarchy:
+        ROLE_ADMIN: ROLE_USER
 
-            # form_login: ~
-            # http://symfony.com/doc/current/cookbook/security/form_login_setup.html
+    access_control:
+        # require ROLE_ADMIN for /admin*
+        - { path: ^/tipuscentre, roles: ROLE_ADMIN }
+        - { path: ^/centre, roles: ROLE_USER }
